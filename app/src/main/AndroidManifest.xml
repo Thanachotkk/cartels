@@ -8,16 +8,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Main.MainActivity">
+        android:theme="@style/AppTheme.NoActionBar">
+
+        <activity android:name=".SplashScreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Main.MainActivity">
+        </activity>
         <activity android:name=".Authentication.AuthenticationActivity" />
-        <activity android:name=".SplashScreen.SplashScreenActivity"></activity>
+
     </application>
 
 </manifest>
