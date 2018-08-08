@@ -8,9 +8,8 @@ import com.internship.nilecon.cartels.Authentication.AuthenticationActivity
 import com.internship.nilecon.cartels.R
 
 class SplashScreenActivity : AppCompatActivity() {
-
-    private var handler: Handler? = null
-    private var runnable: Runnable? = null
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
     private var delay_time: Long = 0
     private var time = 1500L
 
@@ -32,14 +31,14 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         delay_time = time
-        handler!!.postDelayed(runnable, delay_time)
+        handler.postDelayed(runnable, delay_time)
         time = System.currentTimeMillis()
     }
 
 
     override fun onPause() {
         super.onPause()
-        handler!!.removeCallbacks(runnable)
+        handler.removeCallbacks(runnable)
         time = delay_time - (System.currentTimeMillis() - time)
     }
 }
