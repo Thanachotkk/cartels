@@ -1,7 +1,8 @@
-package com.internship.nilecon.cartels
+package com.internship.nilecon.cartels.Main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.internship.nilecon.cartels.R
 
 class MainActivity : AppCompatActivity() {
 
