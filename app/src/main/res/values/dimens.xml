@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_height">40dp</dimen>
+
+    <dimen name="dp_XXS">8dp</dimen>
+    <dimen name="dp_XS">12dp</dimen>
+    <dimen name="dp_S">16dp</dimen>
+    <dimen name="dp_M">20dp</dimen>
+    <dimen name="dp_L">24dp</dimen>
+</resources>

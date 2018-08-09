@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".Main.MainActivity">
         </activity>
-        <activity android:name=".Authentication.AuthenticationActivity" />
+        <activity android:name=".Introduction.IntroductionActivity" />
 
     </application>
 

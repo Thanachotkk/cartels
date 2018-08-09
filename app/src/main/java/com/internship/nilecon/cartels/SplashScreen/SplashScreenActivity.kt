@@ -4,7 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.internship.nilecon.cartels.Authentication.AuthenticationActivity
+import com.internship.nilecon.cartels.Introduction.IntroductionActivity
 import com.internship.nilecon.cartels.R
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class SplashScreenActivity : AppCompatActivity() {
         handler = Handler()
 
         runnable = Runnable {
-            val intent = Intent(this, AuthenticationActivity::class.java)
+            val intent = Intent(this, IntroductionActivity::class.java)
             startActivity(intent)
             finish()
         }
