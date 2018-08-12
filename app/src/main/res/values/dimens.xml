@@ -7,4 +7,12 @@
     <dimen name="dp_S">16dp</dimen>
     <dimen name="dp_M">20dp</dimen>
     <dimen name="dp_L">24dp</dimen>
+    <dimen name="dp_XL">28dp</dimen>
+
+    <dimen name="sp_XXS">8sp</dimen>
+    <dimen name="sp_XS">10sp</dimen>
+    <dimen name="sp_S">12sp</dimen>
+    <dimen name="sp_M">14sp</dimen>
+    <dimen name="sp_L">16sp</dimen>
+    <dimen name="sp_XL">18sp</dimen>
 </resources>

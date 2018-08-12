@@ -13,4 +13,76 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- ActionBar styles. -->
+    <style name="AppTheme.ActionBar"/>
+
+    <style name="AppTheme.ActionBar.Bar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">@color/colorTheme3</item>
+        <item name="android:padding">@dimen/dp_XS</item>
+    </style>
+
+    <style name="AppTheme.ActionBar.TitleText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/sp_XL</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="AppTheme.ActionBar.ButtonIcon">
+        <item name="android:layout_height">@dimen/dp_L</item>
+        <item name="android:layout_width">@dimen/dp_L</item>
+    </style>
+
+    <style name="AppTheme.ActionBar.ButtonIcon.Back">
+        <item name="android:background">@drawable/ic_arrow_back_white_24dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+
+    <!--Button styles. -->
+    <style name="AppTheme.Button">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_M</item>
+    </style>
+
+    <style name="AppTheme.Button.FillColorBlue">
+        <item name="android:background">@drawable/bg_button_fill_color_blue</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.Button.OutlineColorWhite">
+        <item name="android:background">@drawable/bg_button_outline_color_white</item>
+        <item name="android:textColor">@color/colorTheme3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--Text styles. -->
+    <style name="AppTheme.Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.Text.TitleBlueColor">
+        <item name="android:textSize">@dimen/sp_L</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTheme3</item>
+    </style>
+
+    <!--layout styles. -->
+    <style name="AppTheme.Layout"/>
+
+    <style name="AppTheme.Layout.Form">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:padding">@dimen/dp_M</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
 </resources>
