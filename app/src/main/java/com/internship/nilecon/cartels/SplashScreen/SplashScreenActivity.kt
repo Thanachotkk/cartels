@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.internship.nilecon.cartels.Introduction.Introduction
 import com.internship.nilecon.cartels.Introduction.IntroductionActivity
 import com.internship.nilecon.cartels.R
 

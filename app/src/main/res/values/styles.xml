@@ -14,7 +14,7 @@
     </style>
 
     <!-- ActionBar styles. -->
-    <style name="AppTheme.ActionBar"/>
+    <style name="AppTheme.ActionBar" />
 
     <style name="AppTheme.ActionBar.Bar">
         <item name="android:layout_width">match_parent</item>
@@ -75,7 +75,7 @@
     </style>
 
     <!--layout styles. -->
-    <style name="AppTheme.Layout"/>
+    <style name="AppTheme.Layout" />
 
     <style name="AppTheme.Layout.Form">
         <item name="android:layout_width">match_parent</item>
@@ -84,5 +84,9 @@
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center_horizontal</item>
     </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
