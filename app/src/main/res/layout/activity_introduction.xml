@@ -44,7 +44,7 @@
         android:padding="@dimen/dp_M">
         <TextView
             android:text="Continue with"
-            style="@style/AppTheme.Text.TitleBlueColor" />
+            style="@style/AppTheme.Form.Title.ThemeColor" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

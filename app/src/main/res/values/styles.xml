@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorTheme3</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -45,7 +45,7 @@
 
     <!--Button styles. -->
     <style name="AppTheme.Button">
-        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:layout_height">@dimen/input_height</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/sp_M</item>
     </style>
@@ -62,22 +62,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!--Text styles. -->
-    <style name="AppTheme.Text">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
 
-    <style name="AppTheme.Text.TitleBlueColor">
-        <item name="android:textSize">@dimen/sp_L</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorTheme3</item>
-    </style>
 
     <!--layout styles. -->
-    <style name="AppTheme.Layout" />
+    <style name="AppTheme.Form" />
 
-    <style name="AppTheme.Layout.Form">
+    <style name="AppTheme.Form.Layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:padding">@dimen/dp_M</item>
@@ -85,8 +75,51 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.Form.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
-    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.Form.Title.ThemeColor">
+        <item name="android:textSize">@dimen/sp_L</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTheme3</item>
+        <item name="android:layout_marginBottom">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Input"/>
+
+    <style name="AppTheme.Form.Input.RelativeLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:textSize">@dimen/sp_M</item>
+        <item name="android:paddingRight">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:textSize">@dimen/sp_M</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_marginLeft">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.Button" parent="AppTheme.Button.FillColorBlue">
+        <item name="android:layout_width">match_parent</item>
+    </style>
 
 </resources>

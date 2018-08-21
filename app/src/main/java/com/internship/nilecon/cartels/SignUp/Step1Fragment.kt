@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_step1.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,6 +43,11 @@ class Step1Fragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_step1, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupButtonBack()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -97,5 +103,11 @@ class Step1Fragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    private fun setupButtonBack(){
+        buttonBack.setOnClickListener {
+            activity!!.onBackPressed()
+        }
     }
 }

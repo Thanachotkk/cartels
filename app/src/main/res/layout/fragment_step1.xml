@@ -23,14 +23,33 @@
     </RelativeLayout>
 
     <LinearLayout
-        style="@style/AppTheme.Layout.Form"
+        style="@style/AppTheme.Form.Layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
         <TextView
-            style="@style/AppTheme.Text.TitleBlueColor"
+            style="@style/AppTheme.Form.Title.ThemeColor"
             android:text="Enter your mobile" />
+
+        <RelativeLayout
+            style="@style/AppTheme.Form.Input.RelativeLayout">
+
+            <EditText
+                style="@style/AppTheme.Form.Input.EditText"
+                android:inputType="number"
+                android:maxLength="10"
+                android:hint="0812345678"/>
+            <TextView
+               style="@style/AppTheme.Form.Input.TextView"
+                android:text="Mobile number"
+                />
+        </RelativeLayout>
+
+        <Button
+            style="@style/AppTheme.Form.Input.Button"
+            android:text="Next"
+            />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
