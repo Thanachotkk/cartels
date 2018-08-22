@@ -4,13 +4,11 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
-import kotlinx.android.synthetic.main.fragment_step1.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,13 +18,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [Step1Fragment.OnFragmentInteractionListener] interface
+ * [Step3Fragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [Step1Fragment.newInstance] factory method to
+ * Use the [Step3Fragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class Step1Fragment : Fragment() {
+class Step3Fragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -43,16 +41,11 @@ class Step1Fragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step1, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupButtonNext()
+        return inflater.inflate(R.layout.fragment_step3, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    private fun onFragmentInteraction(uri: Uri) {
+    fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
@@ -93,29 +86,18 @@ class Step1Fragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Step1Fragment.
+         * @return A new instance of fragment Step3Fragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                Step1Fragment().apply {
+                Step3Fragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }
     }
-    private fun setupButtonNext(){
 
-        buttonNext.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step2Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
-        }
-    }
+
 }

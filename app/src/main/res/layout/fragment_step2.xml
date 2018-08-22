@@ -7,66 +7,54 @@
     tools:context=".SignUp.Step2Fragment"
     android:background="@android:color/white">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayoutActionBar"
-        style="@style/AppTheme.ActionBar.Bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/buttonBack"
-            style="@style/AppTheme.ActionBar.ButtonIcon.Back" />
-
-        <TextView
-            style="@style/AppTheme.ActionBar.TitleText"
-            android:text="Step 2 / 4" />
-    </RelativeLayout>
-
     <LinearLayout
         style="@style/AppTheme.Form.Layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutActionBar">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            style="@style/AppTheme.Form.Title.LinearLayout.DualObjects">
+        <LinearLayout style="@style/AppTheme.Form.Title.LinearLayout.DualObjects">
+
             <TextView
                 style="@style/AppTheme.Form.Title.Text.ThemeColor.SingleObject"
-                android:text="Enter 6 digit code sent to"
-                android:gravity="left"/>
+                android:gravity="left"
+                android:text="Enter 6 digit code sent to" />
+
             <TextView
                 style="@style/AppTheme.Form.Title.Text.ThemeColor.SingleObject"
-                android:text="0852327560"
-                android:gravity="right"/>
+                android:gravity="right"
+                android:text="0852327560" />
         </LinearLayout>
 
-        <RelativeLayout
-            style="@style/AppTheme.Form.Input.RelativeLayout">
+        <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
+
             <EditText
                 style="@style/AppTheme.Form.Input.EditText"
                 android:hint="012345"
                 android:inputType="number"
-                android:maxLength="6"/>
+                android:maxLength="6" />
+
             <TextView
                 style="@style/AppTheme.Form.Input.TextView"
-                android:text="OTP"/>
+                android:text="OTP" />
         </RelativeLayout>
 
-        <LinearLayout
-            style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects">
+        <LinearLayout style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects">
+
             <Button
-                android:id="@+id/buttonSignIn"
-                android:text="Request new otp"
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"/>
+                android:id="@+id/buttonNewOtp"
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
+                android:text="Request new otp" />
+
             <LinearLayout
                 android:layout_width="@dimen/dp_XXS"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <Button
-                android:id="@+id/buttonSignUp"
-                android:text="Next"
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"/>
+                android:id="@+id/buttonNext"
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
+                android:text="Next" />
         </LinearLayout>
     </LinearLayout>
 

@@ -7,51 +7,34 @@
     tools:context=".SignUp.Step1Fragment"
     android:background="@android:color/white">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayoutActionBar"
-        style="@style/AppTheme.ActionBar.Bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/buttonBack"
-            style="@style/AppTheme.ActionBar.ButtonIcon.Back" />
-
-        <TextView
-            style="@style/AppTheme.ActionBar.TitleText"
-            android:text="Step 1 / 4" />
-    </RelativeLayout>
-
     <LinearLayout
         style="@style/AppTheme.Form.Layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutActionBar">
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             style="@style/AppTheme.Form.Title.Text.ThemeColor"
             android:text="Enter your mobile" />
 
-        <RelativeLayout
-            style="@style/AppTheme.Form.Input.RelativeLayout">
+        <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
 
             <EditText
                 style="@style/AppTheme.Form.Input.EditText"
+                android:hint="0812345678"
                 android:inputType="number"
-                android:maxLength="10"
-                android:hint="0812345678"/>
+                android:maxLength="10" />
+
             <TextView
-               style="@style/AppTheme.Form.Input.TextView"
-                android:text="Mobile number"
-                />
+                style="@style/AppTheme.Form.Input.TextView"
+                android:text="Mobile number" />
         </RelativeLayout>
 
         <Button
             android:id="@+id/buttonNext"
             style="@style/AppTheme.Form.Input.Button.FillColorBlue"
-            android:text="Next"
-            />
+            android:text="Next" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

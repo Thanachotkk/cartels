@@ -40,19 +40,19 @@ class Step2Fragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupButtonBack()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_step2, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupButtonNext()
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
+    fun onFragmentInteraction(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
@@ -105,9 +105,17 @@ class Step2Fragment : Fragment() {
                     }
                 }
     }
-    private fun setupButtonBack(){
-        buttonBack.setOnClickListener {
-            activity!!.onBackPressed()
+
+    private fun setupButtonNext(){
+        buttonNext.setOnClickListener {
+            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left,
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right)
+                    .replace(R.id.fragmentSignUp,Step3Fragment())
+                    .addToBackStack(this.javaClass.name)
+                    .commit()
         }
     }
 }
