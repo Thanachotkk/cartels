@@ -110,6 +110,4 @@ class Step2Fragment : Fragment() {
             activity!!.onBackPressed()
         }
     }
-
-    //อิอิอิ
 }
