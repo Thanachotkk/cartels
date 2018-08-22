@@ -7,8 +7,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_step2.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +37,11 @@ class Step2Fragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupButtonBack()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -97,5 +103,10 @@ class Step2Fragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+    private fun setupButtonBack(){
+        buttonBack.setOnClickListener {
+            activity!!.onBackPressed()
+        }
     }
 }
