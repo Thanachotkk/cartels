@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.fragment_step2.*
 
@@ -109,4 +110,6 @@ class Step2Fragment : Fragment() {
             activity!!.onBackPressed()
         }
     }
+
+    //อิอิอิ
 }
