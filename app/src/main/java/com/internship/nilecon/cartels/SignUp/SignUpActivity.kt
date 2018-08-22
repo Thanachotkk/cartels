@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.internship.nilecon.cartels.R
 
-class SignUpActivity : AppCompatActivity() ,Step1Fragment.OnFragmentInteractionListener{
+class SignUpActivity : AppCompatActivity()
+        ,Step1Fragment.OnFragmentInteractionListener
+        ,Step2Fragment.OnFragmentInteractionListener{
     override fun onFragmentInteraction(uri: Uri) {
     }
 

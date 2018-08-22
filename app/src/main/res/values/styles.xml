@@ -64,7 +64,7 @@
 
 
 
-    <!--layout styles. -->
+    <!--Form styles. -->
     <style name="AppTheme.Form" />
 
     <style name="AppTheme.Form.Layout">
@@ -73,18 +73,36 @@
         <item name="android:padding">@dimen/dp_M</item>
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@color/colorTheme3_opacity20</item>
     </style>
 
-    <style name="AppTheme.Form.Title">
+    <style name="AppTheme.Form.Title"/>
+
+    <style name="AppTheme.Form.Title.LinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Title.LinearLayout.DualObjects">
+        <item name="android:weightSum">2</item>
+    </style>
+
+    <style name="AppTheme.Form.Title.Text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="AppTheme.Form.Title.ThemeColor">
+    <style name="AppTheme.Form.Title.Text.ThemeColor">
         <item name="android:textSize">@dimen/sp_L</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorTheme3</item>
         <item name="android:layout_marginBottom">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Title.Text.ThemeColor.SingleObject">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginBottom">0dp</item>
     </style>
 
     <style name="AppTheme.Form.Input"/>
@@ -93,6 +111,24 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.LinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.LinearLayout.Horizontal">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects">
+        <item name="android:weightSum">2</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.LinearLayout.vertical">
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="AppTheme.Form.Input.EditText">
@@ -118,8 +154,20 @@
         <item name="android:layout_marginLeft">@dimen/dp_M</item>
     </style>
 
-    <style name="AppTheme.Form.Input.Button" parent="AppTheme.Button.FillColorBlue">
+    <style name="AppTheme.Form.Input.Button.FillColorBlue" parent="AppTheme.Button.FillColorBlue">
         <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.Button.FillColorBlue.SingleObject" parent="AppTheme.Button.FillColorBlue">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.Button.OutlineColorWhite" parent="AppTheme.Button.OutlineColorWhite">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.Button.OutlineColorWhite.SingleObject" parent="AppTheme.Button.OutlineColorWhite">
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

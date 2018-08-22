@@ -33,39 +33,29 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutAuthentication"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/colorTheme3_opacity20"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="@dimen/dp_M">
+        style="@style/AppTheme.Form.Layout">
         <TextView
             android:text="Continue with"
-            style="@style/AppTheme.Form.Title.ThemeColor" />
+            style="@style/AppTheme.Form.Title.Text.ThemeColor" />
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dp_M"
-            android:weightSum="2">
+            style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects"
+            android:layout_marginTop="@dimen/dp_M">
             <Button
                 android:id="@+id/buttonSignIn"
-                android:layout_weight="1"
                 android:text="sign in"
                 android:textAllCaps="true"
-                style="@style/AppTheme.Button.FillColorBlue"/>
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"/>
             <LinearLayout
                 android:layout_width="@dimen/dp_XXS"
                 android:layout_height="wrap_content"/>
             <Button
                 android:id="@+id/buttonSignUp"
-                android:layout_weight="1"
                 android:text="sign up"
                 android:textAllCaps="true"
-                style="@style/AppTheme.Button.OutlineColorWhite"/>
+                style="@style/AppTheme.Form.Input.Button.OutlineColorWhite.SingleObject"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
