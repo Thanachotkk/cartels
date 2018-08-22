@@ -32,15 +32,16 @@ class SignUpActivity : AppCompatActivity()
     }
 
     private fun setupFragmentSignUp(){
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentSignUp,Step1Fragment())
+                .commit()
+
         supportFragmentManager.addOnBackStackChangedListener {
             var tag = supportFragmentManager.findFragmentById(R.id.fragmentSignUp).javaClass.simpleName
-
-            if (tag == Step1Fragment().javaClass.simpleName){
-                textViewActionBar.text = "Step 1 / 4"
-            }else if (tag == Step2Fragment().javaClass.simpleName){
-                textViewActionBar.text = "Step 2 / 4"
-            }else if (tag == Step3Fragment().javaClass.simpleName){
-                textViewActionBar.text = "Step 3 / 4"
+            when (tag) {
+                Step1Fragment().javaClass.simpleName -> textViewActionBar.text = "Step 1 / 4"
+                Step2Fragment().javaClass.simpleName -> textViewActionBar.text = "Step 2 / 4"
+                Step3Fragment().javaClass.simpleName -> textViewActionBar.text = "Step 3 / 4"
             }
         }
     }

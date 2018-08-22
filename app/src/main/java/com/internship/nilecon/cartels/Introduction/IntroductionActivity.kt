@@ -1,5 +1,6 @@
 package com.internship.nilecon.cartels.Introduction
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +11,7 @@ import com.internship.nilecon.cartels.R
 import com.internship.nilecon.cartels.SignIn.SignInActivity
 import com.internship.nilecon.cartels.SignUp.SignUpActivity
 import kotlinx.android.synthetic.main.activity_introduction.*
-import java.util.ArrayList
+import java.util.*
 
 class IntroductionActivity : AppCompatActivity() {
 
@@ -25,7 +26,6 @@ class IntroductionActivity : AppCompatActivity() {
         setupButtonSignUp()
         setupButtonSignIn()
     }
-
 
     private fun setupViewPager(){
         var viewPagerIntroductionAdapter = ViewPagerIntroductionAdapter(this)
@@ -60,6 +60,8 @@ class IntroductionActivity : AppCompatActivity() {
                 dot!![position]!!.setImageResource(R.drawable.ic_active_dot)
             }
         })
+
+        Timer().scheduleAtFixedRate(AutoSlider(this,dot.size),2000,4000)
     }
 
     private fun getIntroductionList() : List<Introduction>{
@@ -87,6 +89,26 @@ class IntroductionActivity : AppCompatActivity() {
         buttonSignIn.setOnClickListener {
             var intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
+        }
+    }
+}
+
+class AutoSlider(activity: Activity, countOfImage: Int) : TimerTask() {
+    private var activity : Activity? = null
+    private var countOfImage : Int? = null
+
+    init {
+        this.activity = activity
+        this.countOfImage = countOfImage
+    }
+
+    override fun run() {
+        this.activity!!.runOnUiThread {
+            if (activity!!.viewPager.currentItem >= 0 && activity!!.viewPager.currentItem < countOfImage!! -1){
+                activity!!.viewPager.currentItem = activity!!.viewPager.currentItem +1
+            }else{
+                activity!!.viewPager.currentItem = 0
+            }
         }
     }
 }
