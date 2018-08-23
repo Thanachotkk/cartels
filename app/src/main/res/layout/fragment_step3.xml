@@ -16,10 +16,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        style="@style/AppTheme.Form.Title.Text.ThemeColor"
-        android:text="How may we address you" />
-    </LinearLayout>
+        <TextView
+            style="@style/AppTheme.Form.Title.Text.ThemeColor"
+            android:text="How may we address you" />
 
+        <RelativeLayout
+            style="@style/AppTheme.Form.Input.RelativeLayout">
+            <EditText
+                android:id="@+id/editTextName"
+                android:inputType="textPersonName"
+                style="@style/AppTheme.Form.Input.EditText.Insert"
+                android:hint="Jon Deolook"/>
+            <TextView
+                style="@style/AppTheme.Form.Input.TextView.Insert"
+                android:text="Name"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonNext"
+            style="@style/AppTheme.Form.Input.Button.FillColorBlue"
+            android:text="Next" />
+
+        <TextView
+            style="@style/AppTheme.Form.Title.Text.ThemeColor"
+            android:text="OR" />
+
+        <RelativeLayout
+            android:id="@+id/buttonGoogle"
+            style="@style/AppTheme.Form.Input.RelativeLayout.Button.Google">
+            <LinearLayout
+                style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
+                <ImageView
+                    style="@style/AppTheme.Form.Input.ImageView.Button.Google"/>
+                <TextView
+                    style="@style/AppTheme.Form.Input.TextView.Button.Google"
+                    android:text="connect with google"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/buttonFacebook"
+            style="@style/AppTheme.Form.Input.RelativeLayout.Button.Facebook">
+            <LinearLayout
+                style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
+                <ImageView
+                    style="@style/AppTheme.Form.Input.ImageView.Button.Facebook"/>
+                <TextView
+                    style="@style/AppTheme.Form.Input.TextView.Button.Facebook"
+                    android:text="connect with facebook"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

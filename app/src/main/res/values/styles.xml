@@ -113,6 +113,18 @@
         <item name="android:layout_marginBottom">@dimen/dp_M</item>
     </style>
 
+    <style name="AppTheme.Form.Input.RelativeLayout.Button">
+        <item name="android:layout_height">@dimen/input_height</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.RelativeLayout.Button.Google">
+        <item name="android:background">@drawable/bg_button_google</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.RelativeLayout.Button.Facebook">
+        <item name="android:background">@drawable/bg_button_facebook</item>
+    </style>
+
     <style name="AppTheme.Form.Input.LinearLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -121,6 +133,8 @@
 
     <style name="AppTheme.Form.Input.LinearLayout.Horizontal">
         <item name="android:orientation">horizontal</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects">
@@ -131,9 +145,27 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="AppTheme.Form.Input.ImageView"/>
+
+    <style name="AppTheme.Form.Input.ImageView.Button">
+        <item name="android:layout_width">@dimen/dp_S</item>
+        <item name="android:layout_height">@dimen/dp_S</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.ImageView.Button.Google">
+        <item name="android:src">@drawable/ic_google</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.ImageView.Button.Facebook">
+        <item name="android:src">@drawable/ic_facebook</item>
+    </style>
+
     <style name="AppTheme.Form.Input.EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/input_height</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.EditText.Insert">
         <item name="android:background">@drawable/bg_input</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:layout_margin">2dp</item>
@@ -146,6 +178,9 @@
     <style name="AppTheme.Form.Input.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.TextView.Insert">
         <item name="android:layout_centerVertical">true</item>
         <item name="android:elevation">4dp</item>
         <item name="android:textSize">@dimen/sp_M</item>
@@ -154,8 +189,22 @@
         <item name="android:layout_marginLeft">@dimen/dp_M</item>
     </style>
 
+    <style name="AppTheme.Form.Input.TextView.Button">
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:layout_marginLeft">@dimen/dp_XXS</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.TextView.Button.Google">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.TextView.Button.Facebook">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="AppTheme.Form.Input.Button.FillColorBlue" parent="AppTheme.Button.FillColorBlue">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/dp_M</item>
     </style>
 
     <style name="AppTheme.Form.Input.Button.FillColorBlue.SingleObject" parent="AppTheme.Button.FillColorBlue">
@@ -164,6 +213,7 @@
 
     <style name="AppTheme.Form.Input.Button.OutlineColorWhite" parent="AppTheme.Button.OutlineColorWhite">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/dp_M</item>
     </style>
 
     <style name="AppTheme.Form.Input.Button.OutlineColorWhite.SingleObject" parent="AppTheme.Button.OutlineColorWhite">

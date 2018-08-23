@@ -30,13 +30,13 @@
         <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
 
             <EditText
-                style="@style/AppTheme.Form.Input.EditText"
+                style="@style/AppTheme.Form.Input.EditText.Insert"
                 android:hint="012345"
                 android:inputType="number"
                 android:maxLength="6" />
 
             <TextView
-                style="@style/AppTheme.Form.Input.TextView"
+                style="@style/AppTheme.Form.Input.TextView.Insert"
                 android:text="OTP" />
         </RelativeLayout>
 

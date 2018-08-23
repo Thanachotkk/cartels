@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
-import kotlinx.android.synthetic.main.fragment_step3.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,13 +18,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [Step3Fragment.OnFragmentInteractionListener] interface
+ * [Step4Fragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [Step3Fragment.newInstance] factory method to
+ * Use the [Step4Fragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class Step3Fragment : Fragment() {
+class Step4Fragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -42,15 +41,7 @@ class Step3Fragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step3, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupButtonNext()
-        setupButtonGoogle()
-        setupButtonFacebook()
+        return inflater.inflate(R.layout.fragment_step4, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -95,57 +86,16 @@ class Step3Fragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Step3Fragment.
+         * @return A new instance of fragment Step4Fragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                Step3Fragment().apply {
+                Step4Fragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }
     }
-
-    private fun setupButtonNext(){
-        buttonNext.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
-        }
-    }
-
-    private fun setupButtonGoogle(){
-        buttonGoogle.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
-        }
-    }
-
-    private fun setupButtonFacebook(){
-        buttonFacebook.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
-        }
-    }
-
-
 }

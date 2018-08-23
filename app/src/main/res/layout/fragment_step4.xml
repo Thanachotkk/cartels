@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp.Step1Fragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUp.Step4Fragment"
     android:background="@android:color/white">
 
     <LinearLayout
@@ -16,25 +16,39 @@
 
         <TextView
             style="@style/AppTheme.Form.Title.Text.ThemeColor"
-            android:text="Enter your mobile" />
+            android:text="Enter your password" />
 
-        <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
-
+        <RelativeLayout
+            style="@style/AppTheme.Form.Input.RelativeLayout">
             <EditText
+                android:id="@+id/editTextPassword"
                 style="@style/AppTheme.Form.Input.EditText.Insert"
-                android:hint="0812345678"
-                android:inputType="number"
-                android:maxLength="10" />
-
+                android:inputType="textPassword"
+                android:maxLength="14"
+                android:hint="**************"/>
             <TextView
                 style="@style/AppTheme.Form.Input.TextView.Insert"
-                android:text="Mobile number" />
+                android:text="Password"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/AppTheme.Form.Input.RelativeLayout">
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
+                style="@style/AppTheme.Form.Input.EditText.Insert"
+                android:inputType="textPassword"
+                android:maxLength="14"
+                android:hint="**************"/>
+            <TextView
+                style="@style/AppTheme.Form.Input.TextView.Insert"
+                android:text="Confirm Password"/>
         </RelativeLayout>
 
         <Button
             android:id="@+id/buttonNext"
             style="@style/AppTheme.Form.Input.Button.FillColorBlue"
             android:text="Next" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
