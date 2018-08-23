@@ -6,4 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".SignIn.SignInActivity">
 
+    <RelativeLayout
+        android:id="@+id/relativeLayoutActionBar"
+        style="@style/AppTheme.ActionBar.Bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <Button
+            android:id="@+id/buttonBack"
+            style="@style/AppTheme.ActionBar.ButtonIcon.Back"/>
+        <TextView
+            android:id="@+id/textViewActionBar"
+            style="@style/AppTheme.ActionBar.TitleText"
+            android:text="Sign in"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutActionBar" />
+
 </android.support.constraint.ConstraintLayout>

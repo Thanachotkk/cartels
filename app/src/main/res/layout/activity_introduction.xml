@@ -40,9 +40,11 @@
         <TextView
             android:text="Continue with"
             style="@style/AppTheme.Form.Title.Text.ThemeColor" />
+
         <LinearLayout
             style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects"
-            android:layout_marginTop="@dimen/dp_M">
+            android:layout_marginTop="@dimen/dp_M"
+            android:layout_marginBottom="0dp">
             <Button
                 android:id="@+id/buttonSignIn"
                 android:text="sign in"

@@ -1,8 +1,6 @@
-package com.internship.nilecon.cartels.SignUp
+package com.internship.nilecon.cartels.SignIn
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
-import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.fragment_step3.*
+import kotlinx.android.synthetic.main.fragment_forgot_password.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,13 +19,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [Step3Fragment.OnFragmentInteractionListener] interface
+ * [ForgotPasswordFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [Step3Fragment.newInstance] factory method to
+ * Use the [ForgotPasswordFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class Step3Fragment : Fragment() {
+class ForgotPasswordFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -45,16 +42,14 @@ class Step3Fragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step3, container, false)
+        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupButtonNext()
-        setupButtonGoogle()
-        setupButtonFacebook()
-        setupImageViewProfile()
+        setupButtonNewOtp()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -99,31 +94,19 @@ class Step3Fragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Step3Fragment.
+         * @return A new instance of fragment ForgotPasswordFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                Step3Fragment().apply {
+                ForgotPasswordFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode,  resultCode, data)
-        if(resultCode == Activity.RESULT_OK){
-            when (requestCode){
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                    val result = CropImage.getActivityResult(data)
-                    imageViewProfile!!.setImageURI(result.uri)
-                }
-            }
-        }
     }
-
 
     private fun setupButtonNext(){
         buttonNext.setOnClickListener {
@@ -132,42 +115,15 @@ class Step3Fragment : Fragment() {
                     R.anim.exit_to_left,
                     R.anim.enter_from_left,
                     R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
+                    .replace(R.id.fragmentSignIn,ResetPasswordFragment())
                     .addToBackStack(this.javaClass.name)
                     .commit()
         }
     }
 
-    private fun setupButtonGoogle(){
-        buttonGoogle.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
+    private fun setupButtonNewOtp(){
+        buttonNewOtp.setOnClickListener {
+
         }
     }
-
-    private fun setupButtonFacebook(){
-        buttonFacebook.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
-        }
-    }
-
-    private fun setupImageViewProfile(){
-        imageViewProfile.setOnClickListener {
-            CropImage.activity().setAspectRatio(1,1).start(this.context!!,this)
-        }
-    }
-
 }

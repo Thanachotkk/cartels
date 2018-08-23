@@ -48,7 +48,9 @@ class Step2Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupButtonNext()
+        setupButtonNewOtp()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -116,6 +118,12 @@ class Step2Fragment : Fragment() {
                     .replace(R.id.fragmentSignUp,Step3Fragment())
                     .addToBackStack(this.javaClass.name)
                     .commit()
+        }
+    }
+
+    private fun setupButtonNewOtp(){
+        buttonNewOtp.setOnClickListener {
+
         }
     }
 }
