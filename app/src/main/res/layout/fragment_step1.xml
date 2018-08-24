@@ -16,7 +16,7 @@
 
         <TextView
             style="@style/AppTheme.Form.Title.Text.ThemeColor"
-            android:text="Enter your mobile" />
+            android:text="Enter your mobile number" />
 
         <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
 

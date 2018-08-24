@@ -1,18 +1,23 @@
 package com.internship.nilecon.cartels.SignUp
 
+import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.internship.nilecon.cartels.API.Api
 import com.internship.nilecon.cartels.API.AuthenticationsInterface
 import com.internship.nilecon.cartels.API.UserForSentOtpSmsForSignUpDTO
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_step1.*
 import okhttp3.MediaType
 import org.json.JSONObject
@@ -57,7 +62,9 @@ class Step1Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupButtonNext()
+        setupEditTextMobileNumber()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -122,25 +129,48 @@ class Step1Fragment : Fragment() {
                     }
                 }
     }
-    private fun setupButtonNext(){
 
+    private fun setupButtonNext(){
         buttonNext.setOnClickListener {
-            callApiSentOptSmsForSignUp()
+
+            activity!!.hideKeyboard(this!!.view!!)
+            if(editTextMobileNumber.text.length in  0..9)  editTextMobileNumber.error = "You must specify mobile number 10 characters"
+            else callApiSentOptSmsForSignUp()
+
         }
     }
 
+    private fun setupEditTextMobileNumber(){
+
+        editTextMobileNumber.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.length in 0..9) editTextMobileNumber.error = "You must specify mobile number 10 characters"
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+    }
+
     private fun callApiSentOptSmsForSignUp(){
+
+        activity!!.frameLayoutLoading.visibility = View.VISIBLE //
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(editTextMobileNumber.text.toString()))  //ตั้งค่า Api request
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{  //ส่งคำร้องขอ Api request ไปที่ Server
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
-                TODO("not implemented")
+
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ
-
+                activity!!.frameLayoutLoading.visibility = View.GONE
                 when(response.code()){ //ตรวจ status code
 
                     200 -> { //เมื่อ status code : 200 (Ok)
@@ -161,12 +191,11 @@ class Step1Fragment : Fragment() {
 
                             MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
                                 var jObjError = JSONObject(response.errorBody()!!.string())
-
                                 print(jObjError.toString()) // error ที่เกิดขึ้น
                             }
 
                             MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
-
+                                editTextMobileNumber.error = response.errorBody()!!.charStream().readText()
                                 print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
                             }
                         }
@@ -174,5 +203,10 @@ class Step1Fragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

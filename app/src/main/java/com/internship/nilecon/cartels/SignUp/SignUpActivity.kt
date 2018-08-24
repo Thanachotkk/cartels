@@ -8,12 +8,13 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.annotations.Nullable
 
 object API{
-    data class User(@Nullable var MobileNumber:String
-                    ,@Nullable var Name:String
-                    ,@Nullable var GoogleId:String
-                    ,@Nullable var FacebookId : String
-                    ,@Nullable var Photo : Any
-                    ,@Nullable var Password : String)
+    data class User(var MobileNumber:String?
+                    ,var Name:String?
+                    ,var GoogleId:String?
+                    ,var FacebookId : String?
+                    ,var Photo : Any?
+                    ,var Password : String?)
+    var user = User(null,null,null,null ,null,null)
 }
 
 class SignUpActivity : AppCompatActivity()
