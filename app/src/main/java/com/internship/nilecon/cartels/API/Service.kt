@@ -7,6 +7,9 @@ import retrofit2.http.POST
 interface AuthenticationsInterface{
 
     @POST("api/Auth/SentOtpSmsForSignUp")
-    fun sentOtpSmsForSignUp(@Body userForSentOtpSmsForSignUp: UserForSentOtpSmsForSignUpDTO) : Call<Void>
+    fun sentOtpSmsForSignUp(@Body userForSentOtpSmsForSignUpDTO: UserForSentOtpSmsForSignUpDTO) : Call<Void>
+
+    @POST("api/Auth/VerifyOtp")
+    fun verifyOtp(@Body userForVerifyOtpDTO: UserForVerifyOtpDTO) : Call<Void>
 
 }

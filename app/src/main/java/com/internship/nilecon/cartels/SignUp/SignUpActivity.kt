@@ -3,18 +3,12 @@ package com.internship.nilecon.cartels.SignUp
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.internship.nilecon.cartels.API.UserForSignUpDTO
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import org.jetbrains.annotations.Nullable
 
-object API{
-    data class User(var MobileNumber:String?
-                    ,var Name:String?
-                    ,var GoogleId:String?
-                    ,var FacebookId : String?
-                    ,var Photo : Any?
-                    ,var Password : String?)
-    var user = User(null,null,null,null ,null,null)
+object SIGN_UP{
+    var User = UserForSignUpDTO(null,null,null,null ,null,null)
 }
 
 class SignUpActivity : AppCompatActivity()

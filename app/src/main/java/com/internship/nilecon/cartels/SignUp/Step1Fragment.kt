@@ -2,8 +2,6 @@ package com.internship.nilecon.cartels.SignUp
 
 import android.app.Activity
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,7 +9,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.internship.nilecon.cartels.API.Api
 import com.internship.nilecon.cartels.API.AuthenticationsInterface
 import com.internship.nilecon.cartels.API.UserForSentOtpSmsForSignUpDTO
@@ -133,9 +130,11 @@ class Step1Fragment : Fragment() {
     private fun setupButtonNext(){
         buttonNext.setOnClickListener {
 
-            activity!!.hideKeyboard(this!!.view!!)
-            if(editTextMobileNumber.text.length in  0..9)  editTextMobileNumber.error = "You must specify mobile number 10 characters"
-            else callApiSentOptSmsForSignUp()
+            activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
+
+            if(editTextMobileNumber.text.length in  0..9) //ถ้า editTextMobileNumber ไม่ครบ 10 ตัว
+                editTextMobileNumber.error = "You must specify mobile number 10 characters" // แจ้ง error ที่ editTextMobileNumber
+            else callApiSentOptSmsForSignUp() //ทำ function ส่งคำร้องขอ Api request ไปที่ Server
 
         }
     }
@@ -159,7 +158,8 @@ class Step1Fragment : Fragment() {
 
     private fun callApiSentOptSmsForSignUp(){
 
-        activity!!.frameLayoutLoading.visibility = View.VISIBLE //
+        activity!!.frameLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(editTextMobileNumber.text.toString()))  //ตั้งค่า Api request
 
@@ -167,13 +167,19 @@ class Step1Fragment : Fragment() {
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
 
+                activity!!.frameLayoutLoading.visibility = View.GONE //ปิด Loading
+
             }
 
-            override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ
-                activity!!.frameLayoutLoading.visibility = View.GONE
+            override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
+
+                activity!!.frameLayoutLoading.visibility = View.GONE //ปิด Loading
+
                 when(response.code()){ //ตรวจ status code
 
-                    200 -> { //เมื่อ status code : 200 (Ok)
+                    200 -> { //เมื่อ status code : 200 (Ok).
+
+                        SIGN_UP.User.MobileNumber = editTextMobileNumber.text.toString() //เก็บเบอร์ที่กรอกเข้า Object SIGN_UP.User
 
                         activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
                                 R.anim.enter_from_right,
