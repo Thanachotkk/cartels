@@ -5,6 +5,16 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import org.jetbrains.annotations.Nullable
+
+object API{
+    data class User(@Nullable var MobileNumber:String
+                    ,@Nullable var Name:String
+                    ,@Nullable var GoogleId:String
+                    ,@Nullable var FacebookId : String
+                    ,@Nullable var Photo : Any
+                    ,@Nullable var Password : String)
+}
 
 class SignUpActivity : AppCompatActivity()
         ,Step1Fragment.OnFragmentInteractionListener

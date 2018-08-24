@@ -4,13 +4,21 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.internship.nilecon.cartels.API.Api
+import com.internship.nilecon.cartels.API.AuthenticationsInterface
+import com.internship.nilecon.cartels.API.UserForSentOtpSmsForSignUpDTO
 
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.fragment_step1.*
+import okhttp3.MediaType
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +39,7 @@ class Step1Fragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var mApi : Any? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +71,14 @@ class Step1Fragment : Fragment() {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
+        super.onDestroyView()
+
+        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+            (mApi as Call<Void>).cancel() //ยกเลิก Api request
         }
     }
 
@@ -108,14 +125,54 @@ class Step1Fragment : Fragment() {
     private fun setupButtonNext(){
 
         buttonNext.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step2Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
+            callApiSentOptSmsForSignUp()
         }
+    }
+
+    private fun callApiSentOptSmsForSignUp(){
+        mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
+                .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(editTextMobileNumber.text.toString()))  //ตั้งค่า Api request
+
+        (mApi as Call<Void>).enqueue(object : Callback<Void>{  //ส่งคำร้องขอ Api request ไปที่ Server
+
+            override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
+                TODO("not implemented")
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ
+
+                when(response.code()){ //ตรวจ status code
+
+                    200 -> { //เมื่อ status code : 200 (Ok)
+
+                        activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+                                R.anim.enter_from_right,
+                                R.anim.exit_to_left,
+                                R.anim.enter_from_left,
+                                R.anim.exit_to_right)
+                                .replace(R.id.fragmentSignUp,Step2Fragment())
+                                .addToBackStack(this.javaClass.name)
+                                .commit() // ไป Step2Fragment
+                    }
+
+                    400 -> {  //เมื่อ status code : 400 (Bad request)
+
+                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 }
