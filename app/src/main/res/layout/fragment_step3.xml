@@ -30,8 +30,10 @@
             <EditText
                 android:id="@+id/editTextName"
                 android:inputType="textPersonName"
+                android:maxLength="30"
                 style="@style/AppTheme.Form.Input.EditText.Insert"
                 android:hint="Jon Deolook"/>
+
             <TextView
                 style="@style/AppTheme.Form.Input.TextView.Insert"
                 android:text="Name"/>

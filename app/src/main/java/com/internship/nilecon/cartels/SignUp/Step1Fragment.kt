@@ -83,6 +83,7 @@ class Step1Fragment : Fragment() {
 
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
+            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -158,7 +159,7 @@ class Step1Fragment : Fragment() {
 
     private fun callApiSentOptSmsForSignUp(){
 
-        activity!!.frameLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(editTextMobileNumber.text.toString()))  //ตั้งค่า Api request
@@ -167,13 +168,13 @@ class Step1Fragment : Fragment() {
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
 
-                activity!!.frameLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
 
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
 
-                activity!!.frameLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
 
                 when(response.code()){ //ตรวจ status code
 

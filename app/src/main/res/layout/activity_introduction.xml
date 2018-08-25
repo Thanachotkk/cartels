@@ -33,31 +33,38 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutAuthentication"
+        style="@style/AppTheme.Form.Layout"
+        android:background="@color/colorTheme3_opacity20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/AppTheme.Form.Layout">
+        app:layout_constraintStart_toStartOf="parent">
+
         <TextView
-            android:text="Continue with"
-            style="@style/AppTheme.Form.Title.Text.ThemeColor" />
+            style="@style/AppTheme.Form.Title.Text.ThemeColor"
+            android:text="Continue with" />
 
         <LinearLayout
             style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects"
-            android:layout_marginTop="@dimen/dp_M"
-            android:layout_marginBottom="0dp">
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="@dimen/dp_M">
+
             <Button
                 android:id="@+id/buttonSignIn"
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
                 android:text="sign in"
-                android:textAllCaps="true"
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"/>
+                android:textAllCaps="true" />
+
             <LinearLayout
                 android:layout_width="@dimen/dp_XXS"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/buttonSignUp"
+                style="@style/AppTheme.Form.Input.Button.OutlineColorWhite.SingleObject"
                 android:text="sign up"
-                android:textAllCaps="true"
-                style="@style/AppTheme.Form.Input.Button.OutlineColorWhite.SingleObject"/>
+                android:textAllCaps="true" />
         </LinearLayout>
     </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

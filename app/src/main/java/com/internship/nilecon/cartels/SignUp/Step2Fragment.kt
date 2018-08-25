@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_step2.*
 import okhttp3.MediaType
 import org.json.JSONObject
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -90,6 +89,7 @@ class Step2Fragment : Fragment() {
 
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
+            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -135,7 +135,7 @@ class Step2Fragment : Fragment() {
     }
     private fun callApiSentOptSmsForSignUp(){
 
-        activity!!.frameLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(SIGN_UP.User.MobileNumber.toString()))  //ตั้งค่า Api request
@@ -144,19 +144,19 @@ class Step2Fragment : Fragment() {
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
 
-                activity!!.frameLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
 
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
-                activity!!.frameLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
             }
         })
     }
 
     private fun callApiVerify() {
 
-        activity!!.frameLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
                 .verifyOtp(UserForVerifyOtpDTO(
@@ -169,7 +169,7 @@ class Step2Fragment : Fragment() {
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                activity!!.frameLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
 
                 when(response.code()){ //ตรวจ status code
 

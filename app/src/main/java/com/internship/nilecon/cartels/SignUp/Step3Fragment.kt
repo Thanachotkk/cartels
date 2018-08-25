@@ -9,10 +9,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 
 import com.internship.nilecon.cartels.R
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_step3.*
+import retrofit2.Call
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +35,7 @@ class Step3Fragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var mApi : Any? = null
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +72,15 @@ class Step3Fragment : Fragment() {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
+        super.onDestroyView()
+
+        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+            (mApi as Call<Void>).cancel() //ยกเลิก Api request
+            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -118,6 +131,7 @@ class Step3Fragment : Fragment() {
             when (requestCode){
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val result = CropImage.getActivityResult(data)
+                    SIGN_UP.User.Photo = result.bitmap
                     imageViewProfile!!.setImageURI(result.uri)
                 }
             }
@@ -127,14 +141,19 @@ class Step3Fragment : Fragment() {
 
     private fun setupButtonNext(){
         buttonNext.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+
+            activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
+
+            if(editTextName.text.isEmpty()) //ถ้า editTextName ไม่มีการกรอกค่า
+                editTextName.error = "You must specify name or connect with google or facebook" // แจ้ง error ที่ editTextName
+            else activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
                     R.anim.enter_from_right,
                     R.anim.exit_to_left,
                     R.anim.enter_from_left,
                     R.anim.exit_to_right)
                     .replace(R.id.fragmentSignUp,Step4Fragment())
                     .addToBackStack(this.javaClass.name)
-                    .commit()
+                    .commit() //ไป Step4Fragment
         }
     }
 
@@ -169,5 +188,12 @@ class Step3Fragment : Fragment() {
             CropImage.activity().setAspectRatio(1,1).start(this.context!!,this)
         }
     }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+
 
 }
