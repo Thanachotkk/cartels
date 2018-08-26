@@ -131,7 +131,7 @@ class Step3Fragment : Fragment() {
             when (requestCode){
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val result = CropImage.getActivityResult(data)
-                    SIGN_UP.User.Photo = result.bitmap
+                    SIGN_UP.UserForAddOrReplacePhotoDTO.Photo = result.bitmap
                     imageViewProfile!!.setImageURI(result.uri)
                 }
             }

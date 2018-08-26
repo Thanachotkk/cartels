@@ -3,12 +3,14 @@ package com.internship.nilecon.cartels.SignUp
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.internship.nilecon.cartels.API.UserForAddOrReplacePhotoDTO
 import com.internship.nilecon.cartels.API.UserForSignUpDTO
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 object SIGN_UP{
-    var User = UserForSignUpDTO(null,null,null,null ,null,null)
+    var UserForSignUpDTO = com.internship.nilecon.cartels.API.UserForSignUpDTO(null,null,null,null ,null)
+    var UserForAddOrReplacePhotoDTO = com.internship.nilecon.cartels.API.UserForAddOrReplacePhotoDTO(null)
 }
 
 class SignUpActivity : AppCompatActivity()

@@ -12,4 +12,13 @@ interface AuthenticationsInterface{
     @POST("api/Auth/VerifyOtp")
     fun verifyOtp(@Body userForVerifyOtpDTO: UserForVerifyOtpDTO) : Call<Void>
 
+    @POST("api/Auth/SignUp")
+    fun signUp(@Body userForSignUpDTO: UserForSignUpDTO) : Call<Token>
+
+    @POST("api/Auth/SignInForMobileNumber")
+    fun signInForMobileNumber(@Body userForSignInForMobileNumberDTO : UserForSignInForMobileNumberDTO) : Call<Token>
+
+    @POST("api/Auth/SignInForSocial")
+    fun signInForSocial(@Body userForSignInForSocialDTO : UserForSignInForMobileNumberDTO) : Call<Token>
+
 }

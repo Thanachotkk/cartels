@@ -47,14 +47,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:id="@+id/textViewLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/progressBar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/sp_M"
-            android:text="Now loading"
-            android:textSize="@dimen/sp_M"/>
+            android:layout_marginTop="@dimen/dp_XL"
+            android:text="Now loading"/>
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

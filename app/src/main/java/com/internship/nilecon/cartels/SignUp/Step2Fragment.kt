@@ -138,7 +138,7 @@ class Step2Fragment : Fragment() {
         activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
-                .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(SIGN_UP.User.MobileNumber.toString()))  //ตั้งค่า Api request
+                .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(SIGN_UP.UserForSignUpDTO.MobileNumber.toString()))  //ตั้งค่า Api request
 
         (mApi as Call<Void>).enqueue(object : Callback<Void> {  //ส่งคำร้องขอ Api request ไปที่ Server
 
@@ -160,7 +160,7 @@ class Step2Fragment : Fragment() {
 
         mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
                 .verifyOtp(UserForVerifyOtpDTO(
-                        SIGN_UP.User.MobileNumber.toString()
+                        SIGN_UP.UserForSignUpDTO.MobileNumber.toString()
                         ,editTextOtp.text.toString()
                         ,"SignUp"))
 
@@ -220,7 +220,7 @@ class Step2Fragment : Fragment() {
     }
 
     private fun setupTextViewMobileNumber(){
-        textViewMobileNumber.text = SIGN_UP.User.MobileNumber
+        textViewMobileNumber.text = SIGN_UP.UserForSignUpDTO.MobileNumber
     }
 
     private fun setupButtonNext(){
@@ -234,8 +234,6 @@ class Step2Fragment : Fragment() {
 
         }
     }
-
-
 
 
     private fun setupButtonNewOtp(){

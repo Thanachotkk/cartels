@@ -180,7 +180,7 @@ class Step1Fragment : Fragment() {
 
                     200 -> { //เมื่อ status code : 200 (Ok).
 
-                        SIGN_UP.User.MobileNumber = editTextMobileNumber.text.toString() //เก็บเบอร์ที่กรอกเข้า Object SIGN_UP.User
+                        SIGN_UP.UserForSignUpDTO.MobileNumber = editTextMobileNumber.text.toString() //เก็บเบอร์ที่กรอกเข้า Object SIGN_UP.UserForSignUpDTO
 
                         activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
                                 R.anim.enter_from_right,
