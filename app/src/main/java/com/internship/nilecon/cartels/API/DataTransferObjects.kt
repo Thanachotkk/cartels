@@ -19,6 +19,8 @@ data class UserForAddOrReplacePhotoDTO(var Photo : Bitmap?)
 
 data class Token(var token : String?)
 
+data class TokenForUser(var UserId : String?,var MobileNumber: String?,var Name: String?)
+
 data class UserForSignInForMobileNumberDTO(
     var MobileNumber: String?,
     var Password: String?

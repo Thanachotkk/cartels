@@ -146,14 +146,16 @@ class Step3Fragment : Fragment() {
 
             if(editTextName.text.isEmpty()) //ถ้า editTextName ไม่มีการกรอกค่า
                 editTextName.error = "You must specify name or connect with google or facebook" // แจ้ง error ที่ editTextName
-            else activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+            else {
+                SIGN_UP.UserForSignUpDTO.Name = editTextName.text.toString()
+                activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
                     R.anim.enter_from_right,
                     R.anim.exit_to_left,
                     R.anim.enter_from_left,
                     R.anim.exit_to_right)
                     .replace(R.id.fragmentSignUp,Step4Fragment())
                     .addToBackStack(this.javaClass.name)
-                    .commit() //ไป Step4Fragment
+                    .commit()} //ไป Step4Fragment
         }
     }
 

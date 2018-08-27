@@ -9,71 +9,78 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        style="@style/AppTheme.Form.Layout"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            style="@style/AppTheme.Form.Title.Text.ThemeColor"
-            android:text="How may we address you" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/imageViewProfile"
-            style="@style/AppTheme.Form.Input.ImageView.Profile"
-            app:riv_corner_radius="5dip" />
-
-        <RelativeLayout
-            style="@style/AppTheme.Form.Input.RelativeLayout">
-            <EditText
-                android:id="@+id/editTextName"
-                android:inputType="textPersonName"
-                android:maxLength="30"
-                style="@style/AppTheme.Form.Input.EditText.Insert"
-                android:hint="Jon Deolook"/>
+        <LinearLayout style="@style/AppTheme.Form.Layout">
 
             <TextView
-                style="@style/AppTheme.Form.Input.TextView.Insert"
-                android:text="Name"/>
-        </RelativeLayout>
+                style="@style/AppTheme.Form.Title.Text.ThemeColor"
+                android:text="How may we address you" />
 
-        <Button
-            android:id="@+id/buttonNext"
-            style="@style/AppTheme.Form.Input.Button.FillColorBlue"
-            android:text="Next" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageViewProfile"
+                style="@style/AppTheme.Form.Input.ImageView.Profile"
+                app:riv_corner_radius="5dip" />
 
-        <TextView
-            style="@style/AppTheme.Form.Title.Text.ThemeColor"
-            android:text="OR" />
+            <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
 
-        <RelativeLayout
-            android:id="@+id/buttonGoogle"
-            style="@style/AppTheme.Form.Input.RelativeLayout.Button.Google">
-            <LinearLayout
-                style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
-                <ImageView
-                    style="@style/AppTheme.Form.Input.ImageView.Button.Google"/>
+                <EditText
+                    android:id="@+id/editTextName"
+                    style="@style/AppTheme.Form.Input.EditText.Insert"
+                    android:hint="Jon Deolook"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
                 <TextView
-                    style="@style/AppTheme.Form.Input.TextView.Button.Google"
-                    android:text="connect with google"/>
-            </LinearLayout>
-        </RelativeLayout>
+                    style="@style/AppTheme.Form.Input.TextView.Insert"
+                    android:text="Name" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/buttonFacebook"
-            style="@style/AppTheme.Form.Input.RelativeLayout.Button.Facebook">
-            <LinearLayout
-                style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
-                <ImageView
-                    style="@style/AppTheme.Form.Input.ImageView.Button.Facebook"/>
-                <TextView
-                    style="@style/AppTheme.Form.Input.TextView.Button.Facebook"
-                    android:text="connect with facebook"/>
-            </LinearLayout>
-        </RelativeLayout>
+            <Button
+                android:id="@+id/buttonNext"
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue"
+                android:text="Next" />
 
-    </LinearLayout>
+            <TextView
+                style="@style/AppTheme.Form.Title.Text.ThemeColor"
+                android:text="OR" />
+
+            <RelativeLayout
+                android:id="@+id/buttonGoogle"
+                style="@style/AppTheme.Form.Input.RelativeLayout.Button.Google">
+
+                <LinearLayout style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
+
+                    <ImageView style="@style/AppTheme.Form.Input.ImageView.Button.Google" />
+
+                    <TextView
+                        style="@style/AppTheme.Form.Input.TextView.Button.Google"
+                        android:text="connect with google" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/buttonFacebook"
+                android:layout_marginBottom="0dp"
+                style="@style/AppTheme.Form.Input.RelativeLayout.Button.Facebook">
+
+                <LinearLayout style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
+
+                    <ImageView style="@style/AppTheme.Form.Input.ImageView.Button.Facebook" />
+
+                    <TextView
+                        style="@style/AppTheme.Form.Input.TextView.Button.Facebook"
+                        android:text="connect with facebook" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

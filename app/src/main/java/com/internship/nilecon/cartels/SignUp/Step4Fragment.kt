@@ -11,11 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import com.auth0.android.jwt.JWT
+import com.internship.nilecon.cartels.API.*
 
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_step4.*
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -124,6 +128,38 @@ class Step4Fragment : Fragment() {
                 }
     }
 
+    private fun callApiSignUp() {
+
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+
+        mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
+                .signUp(UserForSignUpDTO(SIGN_UP.UserForSignUpDTO.MobileNumber
+                        ,SIGN_UP.UserForSignUpDTO.Name
+                        ,SIGN_UP.UserForSignUpDTO.GoogleId
+                        ,SIGN_UP.UserForSignUpDTO.FacebookId
+                        ,SIGN_UP.UserForSignUpDTO.Password))
+
+        (mApi as Call<Token>).enqueue(object : Callback<Token>{
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+
+                activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+                var token = response.body()!!.token //แปลง Token ที่ได้มาให้เป็น String
+
+                var editor = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                        ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                        .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
+                editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+            }
+        })
+
+    }
+
     private fun  setupEditTextPassword(){
         editTextPassword.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
@@ -161,6 +197,9 @@ class Step4Fragment : Fragment() {
                 editTextPassword.text.toString() != editTextConfirmPassword.text.toString() -> editTextConfirmPassword.error = "Password and confirm password dose not match"
                 else -> {
                     SIGN_UP.UserForSignUpDTO.Password = editTextConfirmPassword.text.toString()
+                    callApiSignUp()
+
+
                 }
             }
         }
