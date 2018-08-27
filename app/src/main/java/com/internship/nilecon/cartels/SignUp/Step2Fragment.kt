@@ -143,9 +143,7 @@ class Step2Fragment : Fragment() {
         (mApi as Call<Void>).enqueue(object : Callback<Void> {  //ส่งคำร้องขอ Api request ไปที่ Server
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
-
                 activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
-
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.

@@ -146,6 +146,8 @@ class Step4Fragment : Fragment() {
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
 
+                SIGN_UP.Clear_UserForSignUpDTO() // ลบ ค่าใน object กลางด้วย เพื่อความปลอดภับ
+
                 activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
                 var token = response.body()!!.token //แปลง Token ที่ได้มาให้เป็น String
 
@@ -163,7 +165,7 @@ class Step4Fragment : Fragment() {
     private fun  setupEditTextPassword(){
         editTextPassword.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
-                if (s!!.length !in 4..14) editTextPassword.error = "You must specify password between 4 - 12 characters"
+                if (s!!.length !in 4..12) editTextPassword.error = "You must specify password between 4 - 12 characters"
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -193,13 +195,11 @@ class Step4Fragment : Fragment() {
             activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
 
             when {
-                editTextPassword.text.length !in 4..14 -> editTextPassword.error = "You must specify password between 4 - 12 characters"
+                editTextPassword.text.length !in 4..12 -> editTextPassword.error = "You must specify password between 4 - 12 characters"
                 editTextPassword.text.toString() != editTextConfirmPassword.text.toString() -> editTextConfirmPassword.error = "Password and confirm password dose not match"
                 else -> {
                     SIGN_UP.UserForSignUpDTO.Password = editTextConfirmPassword.text.toString()
                     callApiSignUp()
-
-
                 }
             }
         }

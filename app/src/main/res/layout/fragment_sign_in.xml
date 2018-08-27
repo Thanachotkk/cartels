@@ -44,7 +44,7 @@
                     style="@style/AppTheme.Form.Input.EditText.Insert"
                     android:hint="**************"
                     android:inputType="textPassword"
-                    android:maxLength="14" />
+                    android:maxLength="12" />
 
                 <TextView
                     style="@style/AppTheme.Form.Input.TextView.Insert"

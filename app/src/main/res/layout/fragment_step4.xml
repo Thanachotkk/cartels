@@ -24,7 +24,7 @@
                 android:id="@+id/editTextPassword"
                 style="@style/AppTheme.Form.Input.EditText.Insert"
                 android:inputType="textPassword"
-                android:maxLength="14"
+                android:maxLength="12"
                 android:hint="**************"/>
             <TextView
                 style="@style/AppTheme.Form.Input.TextView.Insert"
@@ -37,7 +37,7 @@
                 android:id="@+id/editTextConfirmPassword"
                 style="@style/AppTheme.Form.Input.EditText.Insert"
                 android:inputType="textPassword"
-                android:maxLength="14"
+                android:maxLength="12"
                 android:hint="**************"/>
             <TextView
                 style="@style/AppTheme.Form.Input.TextView.Insert"

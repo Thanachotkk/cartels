@@ -1,16 +1,30 @@
 package com.internship.nilecon.cartels.SignIn
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import com.internship.nilecon.cartels.API.Api
+import com.internship.nilecon.cartels.API.AuthenticationsInterface
+import com.internship.nilecon.cartels.API.Token
+import com.internship.nilecon.cartels.API.UserForSignInForMobileNumberDTO
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
+import okhttp3.MediaType
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +44,7 @@ class SignInFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var mApi : Any? = null
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +68,8 @@ class SignInFragment : Fragment() {
         setupButtonGoogle()
         setupButtonFacebook()
         setupButtonContinue()
+        setupEditTextMobileNumber()
+        setupEditTextPassword()
     }
     // TODO: Rename method, update argument and hook method into UI event
     fun onFragmentInteraction(uri: Uri) {
@@ -65,6 +82,15 @@ class SignInFragment : Fragment() {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
+        super.onDestroyView()
+
+        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+            (mApi as Call<Void>).cancel() //ยกเลิก Api request
+            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -108,6 +134,87 @@ class SignInFragment : Fragment() {
                     }
                 }
     }
+
+    private fun callApiSignInForMobileNumber(){
+
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE
+
+        mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
+                .signInForMobileNumber(UserForSignInForMobileNumberDTO(
+                        editTextMobileNumber.text.toString()
+                        ,editTextPassword.text.toString()))
+
+        (mApi as Call<Token>).enqueue(object : Callback<Token>{
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE
+
+                when(response.code()){
+                    200 -> {
+
+                        var token = response.body()!!.token //แปลง Token ที่ได้มาให้เป็น String
+
+                        var editor = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                                ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                                .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
+                        editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                        editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+                    }
+
+                    400 -> {  //เมื่อ status code : 400 (Bad request)
+                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
+                    }
+
+                    401 -> {  //เมื่อ status code : 401 (Unauthorized)
+                        editTextPassword.text.clear()
+                        editTextPassword.error = "The Mobile number or password is incorrect"
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setupEditTextMobileNumber(){
+        editTextMobileNumber.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.length in 0..9) editTextMobileNumber.error = "You must specify mobile number 10 characters"
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+    }
+
+    private fun setupEditTextPassword(){
+        editTextPassword.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.length !in 4..12) editTextPassword.error = "You must specify password between 4 - 12 characters"
+            }
+
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+    }
+
     private fun setupForgotPassword(){
         textViewForgotPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         textViewForgotPassword.setOnClickListener {
@@ -136,8 +243,18 @@ class SignInFragment : Fragment() {
 
     private fun setupButtonContinue(){
         buttonContinue.setOnClickListener {
-
+            when {
+                editTextMobileNumber.text.length in  0..9 //ถ้า editTextMobileNumber ไม่ครบ 10 ตัว
+                -> editTextMobileNumber.error = "You must specify mobile number 10 characters" // แจ้ง error ที่ editTextMobileNumber
+                editTextPassword.text.length !in 4..12 -> editTextPassword.error = "You must specify password between 4 - 12 characters"
+                else -> callApiSignInForMobileNumber()
+            }
         }
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }

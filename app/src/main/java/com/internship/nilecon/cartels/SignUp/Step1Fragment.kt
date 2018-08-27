@@ -84,6 +84,7 @@ class Step1Fragment : Fragment() {
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
             activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+            SIGN_UP.Clear_UserForSignUpDTO()
         }
     }
 
