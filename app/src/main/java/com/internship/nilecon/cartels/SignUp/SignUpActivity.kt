@@ -11,14 +11,6 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 object SIGN_UP{
     var UserForSignUpDTO = com.internship.nilecon.cartels.API.UserForSignUpDTO(null,null,null,null ,null)
     var UserForAddOrReplacePhotoDTO = com.internship.nilecon.cartels.API.UserForAddOrReplacePhotoDTO(null)
-
-    fun Clear_UserForSignUpDTO(){
-        UserForSignUpDTO.Name = null
-        UserForSignUpDTO.FacebookId = null
-        UserForSignUpDTO.GoogleId = null
-        UserForSignUpDTO.MobileNumber = null
-        UserForSignUpDTO.Password = null
-    }
 }
 
 class SignUpActivity : AppCompatActivity()
@@ -37,6 +29,10 @@ class SignUpActivity : AppCompatActivity()
 
         setupButtonBack()
         setupFragmentSignUp()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun setupButtonBack(){

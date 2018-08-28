@@ -1,15 +1,27 @@
 package com.internship.nilecon.cartels.SignIn
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import com.internship.nilecon.cartels.API.*
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
+import okhttp3.MediaType
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +41,7 @@ class ForgotPasswordFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var mApi : Any? = null
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +63,7 @@ class ForgotPasswordFragment : Fragment() {
 
         setupButtonNext()
         setupButtonNewOtp()
+        setupEditTextOtp()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -63,6 +77,15 @@ class ForgotPasswordFragment : Fragment() {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
+        super.onDestroyView()
+
+        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+            (mApi as Call<Void>).cancel() //ยกเลิก Api request
+            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -108,22 +131,115 @@ class ForgotPasswordFragment : Fragment() {
 
     }
 
+    private fun callApiForgotPassword(){
+
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+
+        mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
+                .forgotPasswor(UserForForgotPasswordDTO(SIGN_IN.UserForVerifyOtpDTO.MobileNumber))  //ตั้งค่า Api request
+
+        (mApi as Call<Void>).enqueue(object : Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE
+                print(t.message)
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE
+            }
+        })
+    }
+
+    private fun callApiVerifyOpt(){
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE
+
+        mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
+                .verifyOtpForForgotPassword(UserForVerifyOtpDTO(SIGN_IN.UserForVerifyOtpDTO.MobileNumber
+                ,SIGN_IN.UserForVerifyOtpDTO.Otp,SIGN_IN.UserForVerifyOtpDTO.VerifyFor))
+
+        (mApi as Call<Token>).enqueue(object : Callback<Token>{
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+                print(t.message)
+                activity!!.relativeLayoutLoading.visibility = View.GONE
+            }
+
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE
+
+                when(response.code()){
+                    200->{
+                        var token = response.body()!!.token //แปลง Token ที่ได้มาให้เป็น String
+
+                        var editor = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                                ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                                .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
+                        editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                        editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+                        var intent = Intent(activity!!,ResetPasswordActivity::class.java)
+                        startActivity(intent)
+                        activity!!.finishAffinity()
+
+                    }
+
+                    400->{
+                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                                editTextOtp.error = response.errorBody()!!.charStream().readText()
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setupEditTextOtp(){
+        editTextOtp.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.length in 0..5) editTextOtp.error = "You must specify otp 6 characters"
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+    }
+
     private fun setupButtonNext(){
         buttonNext.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignIn,ResetPasswordFragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
+
+
+            activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
+
+            if(editTextOtp.text.length in  0..5) //ถ้า editTextOtp ไม่ครบ 6 ตัว
+                editTextOtp.error = "You must specify otp 6 characters" // แจ้ง error ที่ editTextOtp
+            else  //ทำ function ส่งคำร้องขอ Api request ไปที่ Server
+            {
+                SIGN_IN.UserForVerifyOtpDTO.Otp = editTextOtp.text.toString()
+                callApiVerifyOpt()
+            }
         }
     }
 
     private fun setupButtonNewOtp(){
         buttonNewOtp.setOnClickListener {
-
+            editTextOtp.text.clear()
+            callApiForgotPassword()
         }
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

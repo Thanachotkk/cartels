@@ -133,6 +133,7 @@ class Step2Fragment : Fragment() {
                     }
                 }
     }
+
     private fun callApiSentOptSmsForSignUp(){
 
         activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
@@ -144,10 +145,29 @@ class Step2Fragment : Fragment() {
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
                 activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
                 activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                when(response.code()){
+                    200->{
+
+                    }
+                    400->{
+                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
+                    }
+                }
             }
         })
     }
@@ -157,13 +177,15 @@ class Step2Fragment : Fragment() {
         activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
-                .verifyOtp(UserForVerifyOtpDTO(
+                .verifyOtpForSignUp(UserForVerifyOtpDTO(
                         SIGN_UP.UserForSignUpDTO.MobileNumber.toString()
                         ,editTextOtp.text.toString()
                         ,"SignUp"))
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -232,7 +254,6 @@ class Step2Fragment : Fragment() {
 
         }
     }
-
 
     private fun setupButtonNewOtp(){
         buttonNewOtp.setOnClickListener {

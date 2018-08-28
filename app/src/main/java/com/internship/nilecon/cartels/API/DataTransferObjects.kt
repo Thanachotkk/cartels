@@ -26,6 +26,8 @@ data class UserForSignInForMobileNumberDTO(
     var Password: String?
 )
 
+data class UserForForgotPasswordDTO(var MobileNumber: String?)
+
 data class UserForIsUserExistsBySocialDTO(
         var SocialId: String?,
         var SocialType: String?
@@ -35,3 +37,5 @@ data class UserForSignInSocialDTO(
         var SocialId: String?,
         var SocialType: String?
 )
+
+data class UserForResetPasswordDTO(var MobileNumber:String?, var Password : String?)

@@ -2,6 +2,7 @@ package com.internship.nilecon.cartels.SignIn
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
@@ -12,10 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import com.internship.nilecon.cartels.API.Api
-import com.internship.nilecon.cartels.API.AuthenticationsInterface
-import com.internship.nilecon.cartels.API.Token
-import com.internship.nilecon.cartels.API.UserForSignInForMobileNumberDTO
+import com.internship.nilecon.cartels.API.*
+import com.internship.nilecon.cartels.Main.MainActivity
 
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -146,6 +145,8 @@ class SignInFragment : Fragment() {
 
         (mApi as Call<Token>).enqueue(object : Callback<Token>{
             override fun onFailure(call: Call<Token>, t: Throwable) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                print(t.message)
             }
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
@@ -161,6 +162,10 @@ class SignInFragment : Fragment() {
                                 .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
                         editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
                         editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+                        var intent = Intent(activity!!, MainActivity::class.java)
+                        startActivity(intent)
+                        activity!!.finishAffinity()
 
                     }
 
@@ -180,6 +185,55 @@ class SignInFragment : Fragment() {
                     401 -> {  //เมื่อ status code : 401 (Unauthorized)
                         editTextPassword.text.clear()
                         editTextPassword.error = "The Mobile number or password is incorrect"
+                    }
+                }
+            }
+        })
+    }
+
+    private fun callApiForgotPassword(){
+        activity!!.relativeLayoutLoading.visibility = View.VISIBLE
+
+        mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
+                .forgotPasswor(UserForForgotPasswordDTO(editTextMobileNumber.text.toString()))
+
+        (mApi as Call<Void>).enqueue(object : Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                print(t.message)
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                activity!!.relativeLayoutLoading.visibility = View.GONE
+
+                when(response.code()){
+                    200 -> {
+                        SIGN_IN.UserForVerifyOtpDTO.MobileNumber = editTextMobileNumber.text.toString()
+                        SIGN_IN.UserForVerifyOtpDTO.VerifyFor = "ForgotPassword"
+
+                        activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left,
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right)
+                        .replace(R.id.fragmentSignIn, ForgotPasswordFragment())
+                        .addToBackStack(this.javaClass.name)
+                        .commit()
+                    }
+                    400 -> {
+                        editTextMobileNumber.error = "Mobile Number not found"
+
+                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
                     }
                 }
             }
@@ -206,7 +260,6 @@ class SignInFragment : Fragment() {
                 if (s!!.length !in 4..12) editTextPassword.error = "You must specify password between 4 - 12 characters"
             }
 
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -216,16 +269,17 @@ class SignInFragment : Fragment() {
     }
 
     private fun setupForgotPassword(){
+
         textViewForgotPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+
         textViewForgotPassword.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignIn, ForgotPasswordFragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
+            activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
+            if(editTextMobileNumber.text.length in  0..9){
+                editTextMobileNumber.error = "You must specify mobile number 10 characters"
+            }else{
+                callApiForgotPassword()
+            }
+
         }
     }
 
@@ -243,6 +297,9 @@ class SignInFragment : Fragment() {
 
     private fun setupButtonContinue(){
         buttonContinue.setOnClickListener {
+
+            activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
+
             when {
                 editTextMobileNumber.text.length in  0..9 //ถ้า editTextMobileNumber ไม่ครบ 10 ตัว
                 -> editTextMobileNumber.error = "You must specify mobile number 10 characters" // แจ้ง error ที่ editTextMobileNumber

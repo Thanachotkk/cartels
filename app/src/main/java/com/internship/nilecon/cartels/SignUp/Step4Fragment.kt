@@ -2,6 +2,7 @@ package com.internship.nilecon.cartels.SignUp
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,10 +14,13 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.auth0.android.jwt.JWT
 import com.internship.nilecon.cartels.API.*
+import com.internship.nilecon.cartels.Main.MainActivity
 
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_step4.*
+import okhttp3.MediaType
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -141,28 +145,50 @@ class Step4Fragment : Fragment() {
 
         (mApi as Call<Token>).enqueue(object : Callback<Token>{
             override fun onFailure(call: Call<Token>, t: Throwable) {
-
+                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                print(t.message)
             }
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
 
-                SIGN_UP.Clear_UserForSignUpDTO() // ลบ ค่าใน object กลางด้วย เพื่อความปลอดภับ
-
                 activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
-                var token = response.body()!!.token //แปลง Token ที่ได้มาให้เป็น String
 
-                var editor = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
-                        ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
-                        .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
-                editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
-                editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
+                when(response.code()){
+                    200->{
 
+                        var token = response.body()!!.token //แปลง Token ที่ได้มาให้เป็น String
+
+                        var editor = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                                ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                                .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
+                        editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                        editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+                        var intent = Intent(activity!!,MainActivity::class.java)
+                        startActivity(intent)
+                        activity!!.finishAffinity()
+
+                    }
+                    400->{
+                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
+                    }
+                }
             }
         })
 
     }
 
-    private fun  setupEditTextPassword(){
+    private fun setupEditTextPassword(){
         editTextPassword.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 if (s!!.length !in 4..12) editTextPassword.error = "You must specify password between 4 - 12 characters"
@@ -176,7 +202,7 @@ class Step4Fragment : Fragment() {
         })
     }
 
-    private fun  setupEditTextConfirmPassword(){
+    private fun setupEditTextConfirmPassword(){
         editTextConfirmPassword.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 if (editTextConfirmPassword.text.toString() != editTextPassword.text.toString()) editTextConfirmPassword.error = "Password and confirm password dose not match"

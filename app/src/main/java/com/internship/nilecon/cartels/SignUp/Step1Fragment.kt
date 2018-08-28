@@ -84,7 +84,6 @@ class Step1Fragment : Fragment() {
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
             activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
-            SIGN_UP.Clear_UserForSignUpDTO()
         }
     }
 
@@ -168,9 +167,8 @@ class Step1Fragment : Fragment() {
         (mApi as Call<Void>).enqueue(object : Callback<Void>{  //ส่งคำร้องขอ Api request ไปที่ Server
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
-
                 activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
-
+                print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
