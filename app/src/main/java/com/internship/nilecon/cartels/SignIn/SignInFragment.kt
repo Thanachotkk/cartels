@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.internship.nilecon.cartels.API.*
-import com.internship.nilecon.cartels.Main.MainActivity
+import com.internship.nilecon.cartels.Main.MapsActivity
 
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -163,7 +163,7 @@ class SignInFragment : Fragment() {
                         editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
                         editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
 
-                        var intent = Intent(activity!!, MainActivity::class.java)
+                        var intent = Intent(activity!!, MapsActivity::class.java)
                         startActivity(intent)
                         activity!!.finishAffinity()
 

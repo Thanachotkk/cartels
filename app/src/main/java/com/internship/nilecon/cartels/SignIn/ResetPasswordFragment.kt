@@ -19,10 +19,9 @@ import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_reset_password.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
 import retrofit2.Call
-import android.content.SharedPreferences
 import com.auth0.android.jwt.JWT
 import com.internship.nilecon.cartels.API.UserForResetPasswordDTO
-import com.internship.nilecon.cartels.Main.MainActivity
+import com.internship.nilecon.cartels.Main.MapsActivity
 import okhttp3.MediaType
 import org.json.JSONObject
 import retrofit2.Callback
@@ -160,7 +159,7 @@ class ResetPasswordFragment : Fragment() {
 
                 when(response.code()){
                     204->{
-                        var intent = Intent(activity!!, MainActivity::class.java)
+                        var intent = Intent(activity!!, MapsActivity::class.java)
                         startActivity(intent)
                         activity!!.finishAffinity()
                     }

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.internship.nilecon.cartels.Main.MainActivity
+import com.internship.nilecon.cartels.Main.MapsActivity
 import com.internship.nilecon.cartels.R
 
 class ResetPasswordActivity : AppCompatActivity() ,ResetPasswordFragment.OnFragmentInteractionListener {
@@ -27,7 +27,7 @@ class ResetPasswordActivity : AppCompatActivity() ,ResetPasswordFragment.OnFragm
     }
 
     override fun onBackPressed() {
-        var intent = Intent(this, MainActivity::class.java)
+        var intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
         this.finishAffinity()
     }
