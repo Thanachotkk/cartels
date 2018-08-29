@@ -170,11 +170,11 @@ class ForgotPasswordFragment : Fragment() {
                     200->{
                         var token = response.body()!!.token //แปลง Token ที่ได้มาให้เป็น String
 
-                        var editor = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                        var perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
                                 ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
                                 .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
-                        editor.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
-                        editor.commit() /*ยืนยันการบันทึก SharedPreferences*/
+                        perfs.putString("Token",token) /*เก็บ token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                        perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
 
                         var intent = Intent(activity!!,ResetPasswordActivity::class.java)
                         startActivity(intent)

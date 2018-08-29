@@ -1,11 +1,13 @@
 package com.internship.nilecon.cartels.SplashScreen
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.internship.nilecon.cartels.Introduction.Introduction
 import com.internship.nilecon.cartels.Introduction.IntroductionActivity
+import com.internship.nilecon.cartels.Main.MapsActivity
 import com.internship.nilecon.cartels.R
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -22,9 +24,19 @@ class SplashScreenActivity : AppCompatActivity() {
         handler = Handler()
 
         runnable = Runnable {
-            val intent = Intent(this, IntroductionActivity::class.java)
-            startActivity(intent)
-            finish()
+            val prefs = getSharedPreferences(getString(R.string.app_name),Context.MODE_PRIVATE)
+            var token  = prefs.getString("Token",null)
+
+            when{
+                token.isNullOrEmpty() -> {
+                    startActivity(Intent(this, IntroductionActivity::class.java))
+                    finish()
+                }
+                token.isNotEmpty() ->{
+                    startActivity(Intent(this, MapsActivity::class.java))
+                    finish()
+                }
+            }
         }
     }
 
@@ -43,3 +55,4 @@ class SplashScreenActivity : AppCompatActivity() {
         time = delay_time - (System.currentTimeMillis() - time)
     }
 }
+
