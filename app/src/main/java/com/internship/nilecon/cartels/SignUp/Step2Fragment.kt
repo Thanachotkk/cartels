@@ -89,7 +89,7 @@ class Step2Fragment : Fragment() {
 
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
-            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+            activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -136,7 +136,7 @@ class Step2Fragment : Fragment() {
 
     private fun callApiSentOptSmsForSignUp(){
 
-        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .sentOtpSmsForSignUp(UserForSentOtpSmsForSignUpDTO(SIGN_UP.UserForSignUpDTO.MobileNumber.toString()))  //ตั้งค่า Api request
@@ -144,12 +144,12 @@ class Step2Fragment : Fragment() {
         (mApi as Call<Void>).enqueue(object : Callback<Void> {  //ส่งคำร้องขอ Api request ไปที่ Server
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
-                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
-                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 when(response.code()){
                     200->{
 
@@ -174,7 +174,7 @@ class Step2Fragment : Fragment() {
 
     private fun callApiVerify() {
 
-        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
                 .verifyOtpForSignUp(UserForVerifyOtpDTO(
@@ -184,12 +184,12 @@ class Step2Fragment : Fragment() {
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
 
                 when(response.code()){ //ตรวจ status code
 

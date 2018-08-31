@@ -6,65 +6,85 @@
     android:layout_height="match_parent"
     tools:context=".Introduction.IntroductionActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutviewPager"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutSliderDots"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutSliderDots"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayoutAuthentication"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
+
+    <View
         android:id="@+id/linearLayoutAuthentication"
-        style="@style/AppTheme.Form.Layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/colorTheme3_opacity20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutSliderDots">
 
-        <TextView
-            style="@style/AppTheme.Form.Title.Text.ThemeColor"
-            android:text="Continue with" />
+    </View>
 
-        <LinearLayout
-            style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="@dimen/dp_M">
 
-            <Button
-                android:id="@+id/buttonSignIn"
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
-                android:text="sign in"
-                android:textAllCaps="true" />
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Continue with"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="@color/colorTheme3"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <LinearLayout
-                android:layout_width="@dimen/dp_XXS"
-                android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/buttonSignUp"
+        style="@style/AppTheme.Button.OutlineColorWhite"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:text="sign up"
+        android:textAppearance="@android:style/TextAppearance.Material.Button"
+        android:textColor="@color/colorTheme3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonSignIn" />
 
-            <Button
-                android:id="@+id/buttonSignUp"
-                style="@style/AppTheme.Form.Input.Button.OutlineColorWhite.SingleObject"
-                android:text="sign up"
-                android:textAllCaps="true" />
-        </LinearLayout>
-    </LinearLayout>
+    <Button
+        android:id="@+id/buttonSignIn"
+        style="@style/AppTheme.Button.FillColorBlue"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:text="sign in"
+        android:textAppearance="@android:style/TextAppearance.Material.Button"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSignUp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

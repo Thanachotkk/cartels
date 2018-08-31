@@ -1,243 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:sothree="http://schemas.android.com/tools"
     android:id="@+id/sliding_layout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    sothree:context=".Main.MapsActivity">
 
     <fragment
         android:id="@+id/Map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        sothree:context=".MapsActivity"
-        android:layout_alignParentLeft="true" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/relLayout1"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/ic_arrow_back_blue_24dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_width="@dimen/input_height"
+        android:layout_height="@dimen/input_height"
+        android:layout_margin="@dimen/dp_M"
+        android:background="@drawable/bg_button_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bg_button_google"
-        android:elevation="10dp"
+        style="@style/AppTheme.Form.Input.RelativeLayout.Button"
+        android:elevation="4dp"
+        android:layout_margin="@dimen/dp_M"
+        android:padding="@dimen/dp_XXS"
+        android:background="@drawable/bg_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        >
-
-        <ImageView
-            android:id="@+id/ic_magnify"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
+        <ImageButton
+            android:id="@+id/ic_menu"
+            android:layout_width="@dimen/dp_M"
+            android:layout_height="@dimen/dp_M"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_search"
-            android:layout_alignParentRight="true" />
+            android:background="@drawable/ic_menu_black_24dp"
+            />
 
         <AutoCompleteTextView
             android:id="@+id/input_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/ic_menu"
             android:layout_toLeftOf="@id/ic_magnify"
             android:background="@null"
             android:hint="find"
             android:imeOptions="actionSearch"
             android:singleLine="true"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:layout_marginRight="@dimen/dp_XXS"
+            android:layout_marginLeft="@dimen/dp_XXS"
+            android:textSize="@dimen/sp_M" />
+
+        <ImageButton
+            android:id="@+id/ic_magnify"
+            android:layout_width="@dimen/dp_M"
+            android:layout_height="@dimen/dp_M"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_search_black_24dp"
+            />
 
     </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/spinner"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/input_height"
+        android:layout_height="@dimen/input_height"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/relLayout1"
-        android:layout_marginLeft="310dp"
-        android:layout_marginTop="97dp"
-        android:background="@drawable/ic_circleborder">
+        android:layout_marginTop="@dimen/dp_XXS"
+        android:background="@drawable/ic_bg_spinner_vehicle_type"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/relLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/relLayout1">
 
         <Spinner
             android:id="@+id/forspinner"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/ic_circleborder">
-
-
-        </Spinner>
+            android:background="@drawable/ic_bg_spinner_vehicle_type"/>
 
     </RelativeLayout>
 
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/ic_gps"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:orientation="vertical">
+        android:layout_gravity="right"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_button_location"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/ic_qr"
+        app:layout_constraintEnd_toEndOf="@+id/layout_detail" />
 
-        <ImageView
-            android:id="@+id/ic_gps"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_mylocation" />
-
-
-        <Button
-            android:id="@+id/ic_qr"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/ic_qrcode"
-            android:scaleType="centerCrop"
-            android:layout_alignParentRight="true" />
-
+    <ImageButton
+        android:id="@+id/ic_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_button_qr_code"
+        android:scaleType="centerCrop"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_detail"
+        app:layout_constraintEnd_toEndOf="@+id/layout_detail" />
 
         <!-- SLIDING LAYOUT -->
 
-        <LinearLayout
-            android:id="@+id/layout_detail"
+    <LinearLayout
+        android:id="@+id/layout_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+       android:layout_marginBottom="@dimen/dp_M"
+        android:layout_marginLeft="@dimen/dp_M"
+        android:layout_marginRight="@dimen/dp_M"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/detail_inside"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="@dimen/dp_XXS"
+            android:elevation="4dp">
 
-            <RelativeLayout
-                android:id="@+id/detail_inside"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/bg_button_google">
+            <ImageView
+                android:id="@+id/Img_detail"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/dp_XS"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:foregroundGravity="center"
+                android:src="@drawable/im_cartels_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/Img_detail"
-                    android:layout_width="135dp"
-                    android:layout_height="90dp"
-                    android:foregroundGravity="center"
-                    android:src="@drawable/im_cartels_logo" />
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:text="ที่จอดรถ ..."
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/button"
+                app:layout_constraintStart_toEndOf="@+id/Img_detail"
+                app:layout_constraintTop_toTopOf="@+id/Img_detail" />
 
-                <TextView
-                    android:id="@+id/txt_title"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="150dp"
-                    android:layout_marginTop="5dp"
-                    android:text="ที่จอดรถ ..."
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="150dp"
-                    android:layout_marginTop="30dp"
-                    android:text="Address : 991ddddad"
-                    android:textSize="10dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Address : 991ddddad"
+                android:textSize="@dimen/sp_M"
+                app:layout_constraintEnd_toStartOf="@+id/button"
+                app:layout_constraintStart_toEndOf="@+id/Img_detail"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
 
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="150dp"
-                    android:layout_marginTop="45dp"
-                    android:text="Open and Close : asdasdasd"
-                    android:textSize="10dp"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Support : asdasdasdas"
+                android:textSize="@dimen/sp_M"
+                android:maxLines="1"
+                app:layout_constraintBottom_toBottomOf="@+id/Img_detail"
+                app:layout_constraintEnd_toStartOf="@+id/button"
+                app:layout_constraintStart_toEndOf="@+id/Img_detail" />
 
-                    />
+            <ImageButton
+                android:id="@+id/button"
+                android:layout_width="@dimen/dp_L"
+                android:layout_height="@dimen/dp_L"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/ic_navigate_next_black_24dp"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="150dp"
-                    android:layout_marginTop="60dp"
-                    android:text="Support : asdasdasdas"
-                    android:textSize="10dp"
+        </android.support.constraint.ConstraintLayout>
 
-                    />
+        <LinearLayout
+            android:layout_marginBottom="0dp"
+            style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.TripleObjects">
+            <Button
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
+                android:text="Call"
+               />
 
-                <Button
-                    android:layout_width="30dp"
-                    android:layout_height="45dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight= "8dp"
-                    android:text="go"
-                    android:textSize="10dp"
-                    android:layout_alignParentRight="true" />
-
-            </RelativeLayout>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                >
+                android:layout_width="@dimen/dp_XXS"
+                android:layout_height="wrap_content"
+                />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+            <Button
+                android:id="@+id/derections_txt"
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
+                android:text="Directions"
+                />
 
-                    android:text="Call"
-                    android:background="@drawable/bg_button_google"
-                    />
+            <LinearLayout
+                android:layout_width="@dimen/dp_XXS"
+                android:layout_height="wrap_content" />
 
-                <Button
-                    android:id="@+id/derections_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="44dp"
-                    android:text="Directions"
-                    android:background="@drawable/bg_button_google"
-                    />
+            <Button
+                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
+                android:text="VPS"
+                />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="44dp"
-                    android:text="VPS"
-                    android:background="@drawable/bg_button_google"
-                    />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
 
 
 

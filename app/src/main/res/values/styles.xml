@@ -39,27 +39,27 @@
 
     <style name="AppTheme.ActionBar.ButtonIcon.Back">
         <item name="android:background">@drawable/ic_arrow_back_white_24dp</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_alignParentLeft">true</item>
     </style>
 
     <!--Button styles. -->
     <style name="AppTheme.Button">
-        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_M</item>
     </style>
 
     <style name="AppTheme.Button.FillColorBlue">
         <item name="android:background">@drawable/bg_button_fill_color_blue</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="AppTheme.Button.FillColorWhite" >
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:elevation">4dp</item>
     </style>
 
     <style name="AppTheme.Button.OutlineColorWhite">
         <item name="android:background">@drawable/bg_button_outline_color_white</item>
-        <item name="android:textColor">@color/colorTheme3</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:elevation">4dp</item>
     </style>
 
 
@@ -141,6 +141,10 @@
         <item name="android:weightSum">2</item>
     </style>
 
+    <style name="AppTheme.Form.Input.LinearLayout.Horizontal.TripleObjects">
+        <item name="android:weightSum">3</item>
+    </style>
+
     <style name="AppTheme.Form.Input.LinearLayout.vertical">
         <item name="android:orientation">vertical</item>
     </style>
@@ -215,6 +219,15 @@
     </style>
 
     <style name="AppTheme.Form.Input.Button.FillColorBlue.SingleObject" parent="AppTheme.Button.FillColorBlue">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.Button.FillColorWhite" parent="AppTheme.Button.FillColorWhite">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/dp_M</item>
+    </style>
+
+    <style name="AppTheme.Form.Input.Button.FillColorWhite.SingleObject" parent="AppTheme.Button.FillColorWhite">
         <item name="android:layout_weight">1</item>
     </style>
 

@@ -86,7 +86,7 @@ class Step4Fragment : Fragment() {
 
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
-            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+            activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -133,7 +133,7 @@ class Step4Fragment : Fragment() {
 
     private fun callApiSignUp() {
 
-        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .signUp(UserForSignUpDTO(SIGN_UP.UserForSignUpDTO.MobileNumber
@@ -144,13 +144,13 @@ class Step4Fragment : Fragment() {
 
         (mApi as Call<Token>).enqueue(object : Callback<Token>{
             override fun onFailure(call: Call<Token>, t: Throwable) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE //ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
 
-                activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
 
                 when(response.code()){
                     200->{

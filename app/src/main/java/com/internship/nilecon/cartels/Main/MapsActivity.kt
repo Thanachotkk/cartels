@@ -105,6 +105,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "onMapReady: map is ready")
         mMap = googleMap
+        mMap.uiSettings.isMapToolbarEnabled = false
+        mMap.uiSettings.isZoomControlsEnabled = false
         //เปลี่ยน bg Map
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
@@ -184,7 +186,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
             Log.e(TAG, "geoLocate: IOException: " + e.message)
 
         }
-        if (list.size > 0) {
+        if (list.isNotEmpty()) {
             val address = list.get(0)
 
             Log.d(TAG, "geolocate found a location" + address.toString())
@@ -206,22 +208,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
             if (mLocationPermissionsGranted!!) {
 
                 val location = mFusedLocationProviderClient!!.lastLocation
-                location.addOnCompleteListener(object : OnCompleteListener<Location> {
-                    override fun onComplete(task: Task<Location>) {
+                location.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "onComplete: found location!")
+                        val currentLocation = task.result as Location
 
-                        if (task.isSuccessful) {
-                            Log.d(TAG, "onComplete: found location!")
-                            val currentLocation = task.result as Location
+                        moveCamera(LatLng(currentLocation.latitude, currentLocation.longitude),
+                                DEFAULT_ZOOM, "My Location")
 
-                            moveCamera(LatLng(currentLocation.latitude, currentLocation.longitude),
-                                    DEFAULT_ZOOM, "My Location")
-
-                        } else {
-                            Log.d(TAG, "onComplete: current location is null")
-                            Toast.makeText(this@MapsActivity, "unable to get current location", Toast.LENGTH_SHORT).show()
-                        }
+                    } else {
+                        Log.d(TAG, "onComplete: current location is null")
+                        Toast.makeText(this@MapsActivity, "unable to get current location", Toast.LENGTH_SHORT).show()
                     }
-                })
+                }
             }
 
         } catch (e: SecurityException) {
@@ -366,12 +365,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
     private fun showaddress() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(sliding_layout1)
+        TransitionManager.beginDelayedTransition(sliding_layout1)
 
-        }
-
-        layout_detail.setVisibility(View.VISIBLE)
+        layout_detail.visibility = View.VISIBLE
         btn_back.visibility = View.VISIBLE
         relLayout1.visibility = View.GONE
         spinner.visibility = View.GONE
@@ -382,9 +378,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
     private fun hideaddress() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(sliding_layout1)
-        }
+        TransitionManager.beginDelayedTransition(sliding_layout1)
 
         layout_detail.setVisibility(View.GONE)
         btn_back.visibility = View.GONE

@@ -80,7 +80,7 @@ class Step3Fragment : Fragment() {
 
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
-            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+            activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 

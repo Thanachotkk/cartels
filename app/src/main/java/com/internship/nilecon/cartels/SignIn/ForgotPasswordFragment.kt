@@ -85,7 +85,7 @@ class ForgotPasswordFragment : Fragment() {
 
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
-            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+            activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -133,25 +133,25 @@ class ForgotPasswordFragment : Fragment() {
 
     private fun callApiForgotPassword(){
 
-        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .forgotPasswor(UserForForgotPasswordDTO(SIGN_IN.UserForVerifyOtpDTO.MobileNumber))  //ตั้งค่า Api request
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
             }
         })
     }
 
     private fun callApiVerifyOpt(){
-        activity!!.relativeLayoutLoading.visibility = View.VISIBLE
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE
 
         mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
                 .verifyOtpForForgotPassword(UserForVerifyOtpDTO(SIGN_IN.UserForVerifyOtpDTO.MobileNumber
@@ -160,11 +160,11 @@ class ForgotPasswordFragment : Fragment() {
         (mApi as Call<Token>).enqueue(object : Callback<Token>{
             override fun onFailure(call: Call<Token>, t: Throwable) {
                 print(t.message)
-                activity!!.relativeLayoutLoading.visibility = View.GONE
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
             }
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
 
                 when(response.code()){
                     200->{

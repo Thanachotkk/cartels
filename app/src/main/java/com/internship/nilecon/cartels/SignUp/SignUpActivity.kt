@@ -3,6 +3,7 @@ package com.internship.nilecon.cartels.SignUp
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.TransitionManager
 import com.internship.nilecon.cartels.API.UserForAddOrReplacePhotoDTO
 import com.internship.nilecon.cartels.API.UserForSignUpDTO
 import com.internship.nilecon.cartels.R
@@ -34,6 +35,8 @@ class SignUpActivity : AppCompatActivity()
     override fun onDestroy() {
         super.onDestroy()
     }
+
+
 
     private fun setupButtonBack(){
         buttonBack.setOnClickListener {

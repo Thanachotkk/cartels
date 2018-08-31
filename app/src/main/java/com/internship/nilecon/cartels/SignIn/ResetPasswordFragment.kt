@@ -89,7 +89,7 @@ class ResetPasswordFragment : Fragment() {
         super.onDestroyView()
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
-            activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+            activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
     }
 
@@ -136,7 +136,7 @@ class ResetPasswordFragment : Fragment() {
 
     private fun callApiResetPassword(){
 
-        activity!!.relativeLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         var perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
                 ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
@@ -150,12 +150,12 @@ class ResetPasswordFragment : Fragment() {
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                activity!!.relativeLayoutLoading.visibility = View.GONE // ปิด Loading
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
 
                 when(response.code()){
                     204->{
