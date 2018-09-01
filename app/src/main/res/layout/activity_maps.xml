@@ -2,13 +2,13 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:sothree="http://schemas.android.com/tools"
-    android:id="@+id/sliding_layout1"
+    android:id="@+id/layoutActivityMaps"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     sothree:context=".Main.MapsActivity">
 
     <fragment
-        android:id="@+id/Map"
+        android:id="@+id/fragmentMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
 
 
     <ImageButton
-        android:id="@+id/btn_back"
+        android:id="@+id/buttonBack"
         android:visibility="gone"
         android:layout_width="@dimen/input_height"
         android:layout_height="@dimen/input_height"
@@ -129,11 +129,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-       android:layout_marginBottom="@dimen/dp_M"
+        android:layout_marginBottom="@dimen/dp_M"
         android:layout_marginLeft="@dimen/dp_M"
         android:layout_marginRight="@dimen/dp_M"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -142,8 +142,8 @@
             android:id="@+id/detail_inside"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_input"
             android:layout_marginBottom="@dimen/dp_XXS"
+            android:background="@drawable/bg_input"
             android:elevation="4dp">
 
             <ImageView
@@ -167,14 +167,10 @@
                 android:id="@+id/txt_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:text="ที่จอดรถ ..."
+                android:text=""
                 android:textSize="15dp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/button"
                 app:layout_constraintStart_toEndOf="@+id/Img_detail"
                 app:layout_constraintTop_toTopOf="@+id/Img_detail" />
 
@@ -182,14 +178,17 @@
                 android:id="@+id/textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Address : 991ddddad"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:selectAllOnFocus="false"
+                android:singleLine="true"
+                android:text="Address :"
+                android:textIsSelectable="false"
                 android:textSize="@dimen/sp_M"
-                app:layout_constraintEnd_toStartOf="@+id/button"
                 app:layout_constraintStart_toEndOf="@+id/Img_detail"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
@@ -198,15 +197,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:maxLines="1"
                 android:text="Support : asdasdasdas"
                 android:textSize="@dimen/sp_M"
-                android:maxLines="1"
                 app:layout_constraintBottom_toBottomOf="@+id/Img_detail"
-                app:layout_constraintEnd_toStartOf="@+id/button"
                 app:layout_constraintStart_toEndOf="@+id/Img_detail" />
 
             <ImageButton
@@ -223,23 +218,21 @@
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
-            android:layout_marginBottom="0dp"
-            style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.TripleObjects">
+            style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.TripleObjects"
+            android:layout_marginBottom="0dp">
+
             <Button
                 style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
-                android:text="Call"
-               />
+                android:text="Call" />
 
             <LinearLayout
                 android:layout_width="@dimen/dp_XXS"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/derections_txt"
                 style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
-                android:text="Directions"
-                />
+                android:text="Directions" />
 
             <LinearLayout
                 android:layout_width="@dimen/dp_XXS"
@@ -247,8 +240,7 @@
 
             <Button
                 style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
-                android:text="VPS"
-                />
+                android:text="VPS" />
 
         </LinearLayout>
     </LinearLayout>
