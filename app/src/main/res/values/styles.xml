@@ -62,6 +62,19 @@
         <item name="android:elevation">4dp</item>
     </style>
 
+    <style name="AppTheme.Button.Google">
+        <item name="android:background">@drawable/bg_button_google</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="AppTheme.Button.Facebook">
+        <item name="android:background">@drawable/bg_button_facebook</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+
+
+
 
 
     <!--Form styles. -->

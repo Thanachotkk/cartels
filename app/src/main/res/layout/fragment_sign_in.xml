@@ -7,95 +7,200 @@
     tools:context=".SignIn.SignInFragment"
     android:background="@android:color/white">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Enter your mobile number"
+        android:textColor="@color/colorTheme3"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/linearLayoutSignInWithMobileNumber"
-            style="@style/AppTheme.Form.Layout">
+    <EditText
+        android:id="@+id/editTextMobileNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="0812345678"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
-            <TextView
-                style="@style/AppTheme.Form.Title.Text.ThemeColor"
-                android:text="Enter your mobile number and password" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Mobile number"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextMobileNumber"
+        app:layout_constraintStart_toStartOf="@+id/editTextMobileNumber"
+        app:layout_constraintTop_toTopOf="@+id/editTextMobileNumber" />
 
-            <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="**************"
+        android:inputType="textPassword"
+        android:maxLength="12"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber" />
 
-                <EditText
-                    android:id="@+id/editTextMobileNumber"
-                    style="@style/AppTheme.Form.Input.EditText.Insert"
-                    android:hint="0812345678"
-                    android:inputType="number"
-                    android:maxLength="10" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Password"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+        app:layout_constraintStart_toStartOf="@+id/editTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
-                <TextView
-                    style="@style/AppTheme.Form.Input.TextView.Insert"
-                    android:text="MobileNumber" />
-            </RelativeLayout>
+    <TextView
+        android:id="@+id/textViewForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="16dp"
+        android:text="Forgot password"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
-            <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
+    <Button
+        android:id="@+id/buttonContinue"
+        style="@style/AppTheme.Button.FillColorBlue"
+        android:layout_width="0dp"
+        android:layout_marginTop="24dp"
+        android:text="Continue"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMobileNumber"
+        app:layout_constraintStart_toStartOf="@+id/editTextMobileNumber"
+        app:layout_constraintTop_toBottomOf="@+id/textViewForgotPassword" />
 
-                <EditText
-                    android:id="@+id/editTextPassword"
-                    style="@style/AppTheme.Form.Input.EditText.Insert"
-                    android:hint="**************"
-                    android:inputType="textPassword"
-                    android:maxLength="12" />
+    <TextView
+        android:id="@+id/textViewOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="OR"
+        android:textColor="@color/colorTheme3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonContinue"
+        app:layout_constraintStart_toStartOf="@+id/buttonContinue"
+        app:layout_constraintTop_toBottomOf="@+id/buttonContinue" />
 
-                <TextView
-                    style="@style/AppTheme.Form.Input.TextView.Insert"
-                    android:text="Password" />
-            </RelativeLayout>
+    <Button
+        android:id="@+id/buttonGoogle"
+        style="@style/AppTheme.Button.Google"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/buttonFacebook"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOr" />
 
-            <TextView
-                android:id="@+id/textViewForgotPassword"
-                style="@style/AppTheme.Form.Title.Text"
-                android:layout_gravity="right"
-                android:text="Forgot password" />
+    <TextView
+        android:id="@+id/textViewGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:elevation="5dp"
+        android:text="Google"
+        android:textSize="@dimen/dp_S"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewGoogle"
+        app:layout_constraintEnd_toEndOf="@+id/buttonGoogle"
+        app:layout_constraintStart_toEndOf="@+id/imageViewGoogle"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewGoogle" />
 
-            <Button
-                android:id="@+id/buttonContinue"
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue"
-                android:text="Continue" />
+    <ImageView
+        android:id="@+id/imageViewGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonGoogle"
+        app:layout_constraintEnd_toStartOf="@+id/textViewGoogle"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/buttonGoogle"
+        app:layout_constraintTop_toTopOf="@+id/buttonGoogle"
+        app:srcCompat="@drawable/ic_google" />
 
-            <TextView
-                style="@style/AppTheme.Form.Title.Text.ThemeColor"
-                android:text="OR" />
+    <Button
+        android:id="@+id/buttonFacebook"
+        style="@style/AppTheme.Button.Facebook"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonGoogle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOr" />
 
-            <RelativeLayout
-                android:id="@+id/buttonGoogle"
-                style="@style/AppTheme.Form.Input.RelativeLayout.Button.Google">
+    <ImageView
+        android:id="@+id/imageViewFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@+id/buttonFacebook"
+        app:layout_constraintEnd_toStartOf="@+id/textViewFacebook"
+        app:layout_constraintStart_toStartOf="@+id/buttonFacebook"
+        app:layout_constraintTop_toBottomOf="@+id/buttonFacebook"
+        app:srcCompat="@drawable/ic_facebook" />
 
-                <LinearLayout style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
+    <TextView
+        android:id="@+id/textViewFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-                    <ImageView style="@style/AppTheme.Form.Input.ImageView.Button.Google" />
-
-                    <TextView
-                        style="@style/AppTheme.Form.Input.TextView.Button.Google"
-                        android:text="signIn with google" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/buttonFacebook"
-                style="@style/AppTheme.Form.Input.RelativeLayout.Button.Facebook"
-                android:layout_marginBottom="0dp">
-
-                <LinearLayout style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
-
-                    <ImageView style="@style/AppTheme.Form.Input.ImageView.Button.Facebook" />
-
-                    <TextView
-                        style="@style/AppTheme.Form.Input.TextView.Button.Facebook"
-                        android:text="sign with facebook" />
-                </LinearLayout>
-            </RelativeLayout>
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_marginStart="8dp"
+        android:elevation="5dp"
+        android:text="Facebook"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewFacebook"
+        app:layout_constraintEnd_toEndOf="@+id/buttonFacebook"
+        app:layout_constraintStart_toEndOf="@+id/imageViewFacebook"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFacebook" />
 
 </android.support.constraint.ConstraintLayout>

@@ -64,6 +64,7 @@ class ForgotPasswordFragment : Fragment() {
         setupButtonNext()
         setupButtonNewOtp()
         setupEditTextOtp()
+        setupTextViewMobileNumber()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -199,6 +200,10 @@ class ForgotPasswordFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setupTextViewMobileNumber(){
+        textViewMobileNumber.text = SIGN_IN.UserForVerifyOtpDTO.MobileNumber
     }
 
     private fun setupEditTextOtp(){

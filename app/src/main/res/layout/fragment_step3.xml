@@ -1,86 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SignUp.Step3Fragment"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context=".SignUp.Step3Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <ScrollView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="500dp">
 
-        <LinearLayout style="@style/AppTheme.Form.Layout">
 
-            <TextView
-                style="@style/AppTheme.Form.Title.Text.ThemeColor"
-                android:text="How may we address you" />
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="How may we address you"
+            android:textColor="@color/colorTheme3"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imageViewProfile"
-                style="@style/AppTheme.Form.Input.ImageView.Profile"
-                app:riv_corner_radius="5dip" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageViewProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_account_box_black_100dp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
+            app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+            app:riv_corner_radius="5dip" />
 
-            <RelativeLayout style="@style/AppTheme.Form.Input.RelativeLayout">
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:hint="Jon Deolook"
+            android:includeFontPadding="true"
+            android:inputType="textPersonName"
+            android:maxLength="30"
+            android:textAlignment="textEnd"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
 
-                <EditText
-                    android:id="@+id/editTextName"
-                    style="@style/AppTheme.Form.Input.EditText.Insert"
-                    android:hint="Jon Deolook"
-                    android:inputType="textPersonName"
-                    android:maxLength="30" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Name"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextName"
+            app:layout_constraintStart_toStartOf="@+id/editTextName"
+            app:layout_constraintTop_toTopOf="@+id/editTextName" />
 
-                <TextView
-                    style="@style/AppTheme.Form.Input.TextView.Insert"
-                    android:text="Name" />
-            </RelativeLayout>
+        <Button
+            android:id="@+id/buttonNext"
+            style="@style/AppTheme.Button.FillColorBlue"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="24dp"
+            android:text="Next"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/editTextName"
+            app:layout_constraintStart_toStartOf="@+id/editTextName"
+            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
-            <Button
-                android:id="@+id/buttonNext"
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue"
-                android:text="Next" />
+        <TextView
+            android:id="@+id/textViewOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="OR"
+            android:textColor="@color/colorTheme3"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/buttonNext"
+            app:layout_constraintStart_toStartOf="@+id/buttonNext"
+            app:layout_constraintTop_toBottomOf="@+id/buttonNext" />
 
-            <TextView
-                style="@style/AppTheme.Form.Title.Text.ThemeColor"
-                android:text="OR" />
+        <Button
+            android:id="@+id/buttonGoogle"
+            style="@style/AppTheme.Button.Google"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFacebook"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOr" />
 
-            <RelativeLayout
-                android:id="@+id/buttonGoogle"
-                style="@style/AppTheme.Form.Input.RelativeLayout.Button.Google">
+        <TextView
+            android:id="@+id/textViewGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:elevation="5dp"
+            android:text="Google"
+            android:textSize="@dimen/dp_S"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewGoogle"
+            app:layout_constraintEnd_toEndOf="@+id/buttonGoogle"
+            app:layout_constraintStart_toEndOf="@+id/imageViewGoogle"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewGoogle" />
 
-                <LinearLayout style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
+        <ImageView
+            android:id="@+id/imageViewGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonGoogle"
+            app:layout_constraintEnd_toStartOf="@+id/textViewGoogle"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/buttonGoogle"
+            app:layout_constraintTop_toTopOf="@+id/buttonGoogle"
+            app:srcCompat="@drawable/ic_google" />
 
-                    <ImageView style="@style/AppTheme.Form.Input.ImageView.Button.Google" />
+        <Button
+            android:id="@+id/buttonFacebook"
+            style="@style/AppTheme.Button.Facebook"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonGoogle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOr" />
 
-                    <TextView
-                        style="@style/AppTheme.Form.Input.TextView.Button.Google"
-                        android:text="connect with google" />
-                </LinearLayout>
-            </RelativeLayout>
+        <ImageView
+            android:id="@+id/imageViewFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@+id/buttonFacebook"
+            app:layout_constraintEnd_toStartOf="@+id/textViewFacebook"
+            app:layout_constraintStart_toStartOf="@+id/buttonFacebook"
+            app:layout_constraintTop_toBottomOf="@+id/buttonFacebook"
+            app:srcCompat="@drawable/ic_facebook" />
 
-            <RelativeLayout
-                android:id="@+id/buttonFacebook"
-                android:layout_marginBottom="0dp"
-                style="@style/AppTheme.Form.Input.RelativeLayout.Button.Facebook">
+        <TextView
+            android:id="@+id/textViewFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-                <LinearLayout style="@style/AppTheme.Form.Input.LinearLayout.Horizontal">
+            android:layout_marginStart="8dp"
+            android:elevation="5dp"
+            android:text="Facebook"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_L"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewFacebook"
+            app:layout_constraintEnd_toEndOf="@+id/buttonFacebook"
+            app:layout_constraintStart_toEndOf="@+id/imageViewFacebook"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFacebook" />
+    </android.support.constraint.ConstraintLayout>
 
-                    <ImageView style="@style/AppTheme.Form.Input.ImageView.Button.Facebook" />
-
-                    <TextView
-                        style="@style/AppTheme.Form.Input.TextView.Button.Facebook"
-                        android:text="connect with facebook" />
-                </LinearLayout>
-            </RelativeLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</ScrollView>

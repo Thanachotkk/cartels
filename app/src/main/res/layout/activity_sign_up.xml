@@ -7,7 +7,7 @@
     tools:context=".SignUp.SignUpActivity">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/relativeLayoutActionBar"
+        android:id="@+id/constraintLayoutActionBar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorTheme3"
@@ -30,8 +30,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Step 1 / 4"
-            android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Title"
             android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_XL"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,17 +46,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutActionBar" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutActionBar" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayoutLayoutLoading"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@android:color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutActionBar">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutActionBar">
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -70,10 +72,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:text="Now loading"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textColor="@color/colorTheme3"
             app:layout_constraintEnd_toStartOf="@+id/progressBar"
             app:layout_constraintStart_toEndOf="@+id/progressBar"
