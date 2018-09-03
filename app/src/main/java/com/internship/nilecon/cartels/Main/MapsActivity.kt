@@ -2,24 +2,18 @@ package com.internship.nilecon.cartels.Main
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.transition.TransitionManager
-import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.places.Places
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -28,8 +22,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_maps.*
-import java.io.IOException
-import java.util.ArrayList
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
         , GoogleMap.OnMarkerClickListener{
@@ -41,7 +33,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
     private lateinit var mMap: GoogleMap
     private var mLocationPermissionsGranted: Boolean? = false
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-    private var mGoogleApiClient: GoogleApiClient? = null
     private val DEFAULT_ZOOM = 16f
     private val places = mapOf(
             "PERTH" to LatLng(13.7748604, 100.5745226),
@@ -58,10 +49,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         setContentView(R.layout.activity_maps)
 
         setupButtonBack()
+        setupButtonMylocation()
         setupLocationPermission()
 
     }
-
 
     override fun onMapReady(googleMap: GoogleMap) {
 
@@ -69,6 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         mMap.uiSettings.isMapToolbarEnabled = false
         mMap.uiSettings.isZoomControlsEnabled = false
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        mMap.setPadding(48, 0, 0, 24)
 
         if (mLocationPermissionsGranted!!) {
 
@@ -77,13 +69,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
                 return
             }
+
             mMap.isMyLocationEnabled = true
             mMap.uiSettings.isMyLocationButtonEnabled = false
-
-            init()
 
         }
         with(mMap) {
@@ -93,65 +83,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         addMarkersToMapCar()
     }
 
-    private fun init() {
-
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build()
-
-        input_search.setOnEditorActionListener { textview, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH
-                    || actionId == EditorInfo.IME_ACTION_DONE
-                    || event.action == KeyEvent.ACTION_DOWN
-                    || event.action == KeyEvent.KEYCODE_ENTER) {
-
-                //execute our method for searching
-                geoLocate()
-            }
-
-            return@setOnEditorActionListener false
-
-        }
-
-        ic_gps.setOnClickListener {
-
-            print("onClick: clicked gps icon")
-            getDeviceLocation()
-        }
-
-        hidesoftKeyboard()
-
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun geoLocate() {
+    override fun onMarkerClick(marker: Marker?): Boolean {
+        showParkingDetail()
+        return false
+    }
 
-        print(" Geolocate : geolocating")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        print("onRequestPermission : call")
+        mLocationPermissionsGranted = false
 
-        val searchString = input_search.text.toString()
-        val geocoder = Geocoder(this)
-        var list: List<Address> = ArrayList()
-
-        try {
-            list = geocoder.getFromLocationName(searchString, 1)
-
-        } catch (e: IOException) {
-
-            print("geoLocate: IOException: " + e.message)
-
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty()) {
+                    for (i in grantResults.indices) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionsGranted = false
+                            print("onRequestPermissionsResult: permission failed")
+                            return
+                        }
+                    }
+                    print("onRequestPermissionsResult: permission granted")
+                    mLocationPermissionsGranted = true
+                    initMap()
+                }
+            }
         }
-        if (list.isNotEmpty()) {
-            val address = list.get(0)
-
-            print("geolocate found a location" + address.toString())
-
-            moveCamera(LatLng(address.latitude, address.longitude), DEFAULT_ZOOM,
-                    address.getAddressLine(0))
-
-        }
-
-
     }
 
     private fun getDeviceLocation() {
@@ -181,7 +141,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         } catch (e: SecurityException) {
             print("getDeviceLocation: SecurityException: " + e.message)
         }
-
     }
 
     private fun moveCamera(latLng: LatLng, zoom: Float, title: String) {
@@ -196,18 +155,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         }
     }
 
-
     private fun initMap() {
 
         print("initMap : intialzing map")
         val mapFragment = supportFragmentManager.findFragmentById(R.id.fragmentMap) as SupportMapFragment
 
         mapFragment.getMapAsync(this@MapsActivity)
-    }
-
-    private fun hidesoftKeyboard() {
-
-        this.window.setSoftInputMode(WindowManager.LayoutParams.FLAG_LOCAL_FOCUS_MODE)
     }
 
     private fun setupLocationPermission() {
@@ -232,28 +185,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
             ActivityCompat.requestPermissions(this,
                     permissions,
                     LOCATION_PERMISSION_REQUEST_CODE)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        print("onRequestPermission : call")
-        mLocationPermissionsGranted = false
-
-        when (requestCode) {
-            LOCATION_PERMISSION_REQUEST_CODE -> {
-                if (grantResults.isNotEmpty()) {
-                    for (i in grantResults.indices) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionsGranted = false
-                            print("onRequestPermissionsResult: permission failed")
-                            return
-                        }
-                    }
-                    print("onRequestPermissionsResult: permission granted")
-                    mLocationPermissionsGranted = true
-                    initMap()
-                }
-            }
         }
     }
 
@@ -292,39 +223,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         }
     }
 
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onMarkerClick(marker: Marker?): Boolean {
-        showParkingDetail()
-        return false
-    }
-
     private fun setupButtonBack(){
         buttonBack.setOnClickListener {
             hideParkingDetail()
         }
     }
 
-    private fun showParkingDetail() {
-        TransitionManager.beginDelayedTransition(layoutActivityMaps)
-        layout_detail.visibility = View.VISIBLE
-        buttonBack.visibility = View.VISIBLE
-        relLayout1.visibility = View.GONE
-        spinner.visibility = View.GONE
-        mMap.setPadding(0, 0, 0, layout_detail.height)
+    private fun setupButtonMylocation(){
+        buttonMyLocation.setOnClickListener {
+            getDeviceLocation()
+        }
     }
 
+    private fun showParkingDetail() {
+        TransitionManager.beginDelayedTransition(layoutActivityMaps)
+        constraintLayoutDetail.visibility = View.VISIBLE
+        buttonCall.visibility = View.VISIBLE
+        buttonDirections.visibility = View.VISIBLE
+        buttonBack.visibility = View.VISIBLE
+        spinnerFilterVehicle.visibility = View.GONE
+        mMap.setPadding(48, 0, 0, constraintLayoutDetail.height + buttonCall.height + 112)
+    }
 
     private fun hideParkingDetail() {
         TransitionManager.beginDelayedTransition(layoutActivityMaps)
-        layout_detail.setVisibility(View.GONE)
+        constraintLayoutDetail.visibility = View.GONE
         buttonBack.visibility = View.GONE
-        relLayout1.visibility = View.VISIBLE
-        spinner.visibility = View.VISIBLE
-        mMap.setPadding(0, 0, 0, 0)
+        buttonCall.visibility = View.GONE
+        buttonDirections.visibility = View.GONE
+        spinnerFilterVehicle.visibility = View.VISIBLE
+        mMap.setPadding(48, 0, 0, 24)
 
     }
 }

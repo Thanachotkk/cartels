@@ -14,236 +14,184 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <ImageButton
         android:id="@+id/buttonBack"
-        android:visibility="gone"
         android:layout_width="@dimen/input_height"
         android:layout_height="@dimen/input_height"
         android:layout_margin="@dimen/dp_M"
         android:background="@drawable/bg_button_back"
+        android:visibility="gone"
+        android:elevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/relLayout1"
-        style="@style/AppTheme.Form.Input.RelativeLayout.Button"
+
+    <Spinner
+        android:id="@+id/spinnerFilterVehicle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:elevation="4dp"
-        android:layout_margin="@dimen/dp_M"
-        android:padding="@dimen/dp_XXS"
-        android:background="@drawable/bg_input"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/ic_menu"
-            android:layout_width="@dimen/dp_M"
-            android:layout_height="@dimen/dp_M"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_menu_black_24dp"
-            />
-
-        <AutoCompleteTextView
-            android:id="@+id/input_search"
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/ic_menu"
-            android:layout_toLeftOf="@id/ic_magnify"
-            android:background="@null"
-            android:hint="find"
-            android:imeOptions="actionSearch"
-            android:singleLine="true"
-            android:textColor="#000000"
-            android:layout_marginRight="@dimen/dp_XXS"
-            android:layout_marginLeft="@dimen/dp_XXS"
-            android:textSize="@dimen/sp_M" />
-
-        <ImageButton
-            android:id="@+id/ic_magnify"
-            android:layout_width="@dimen/dp_M"
-            android:layout_height="@dimen/dp_M"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_search_black_24dp"
-            />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/spinner"
-        android:layout_width="@dimen/input_height"
-        android:layout_height="@dimen/input_height"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/relLayout1"
-        android:layout_marginTop="@dimen/dp_XXS"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/ic_bg_spinner_vehicle_type"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/relLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/relLayout1">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/forspinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/ic_bg_spinner_vehicle_type"/>
 
-    </RelativeLayout>
 
 
     <ImageButton
-        android:id="@+id/ic_gps"
+        android:id="@+id/buttonMyLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_button_location"
         android:elevation="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/ic_qr"
-        app:layout_constraintEnd_toEndOf="@+id/layout_detail" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonQrCode"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
-        android:id="@+id/ic_qr"
+        android:id="@+id/buttonQrCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/bg_button_qr_code"
-        android:scaleType="centerCrop"
         android:elevation="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_detail"
-        app:layout_constraintEnd_toEndOf="@+id/layout_detail" />
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDetail"
+        app:layout_constraintEnd_toEndOf="@+id/buttonMyLocation" />
 
-        <!-- SLIDING LAYOUT -->
-
-    <LinearLayout
-        android:id="@+id/layout_detail"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_M"
-        android:layout_marginLeft="@dimen/dp_M"
-        android:layout_marginRight="@dimen/dp_M"
-        android:orientation="vertical"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/bg_input"
+        android:elevation="4dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/detail_inside"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageViewParking"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/dp_XS"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:foregroundGravity="center"
+            android:src="@drawable/im_cartels_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_XXS"
-            android:background="@drawable/bg_input"
-            android:elevation="4dp">
+            android:layout_marginStart="8dp"
+            android:text="ที่จอดรถ :"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+            app:layout_constraintTop_toTopOf="@+id/imageViewParking" />
 
-            <ImageView
-                android:id="@+id/Img_detail"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="@dimen/dp_XS"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:foregroundGravity="center"
-                android:src="@drawable/im_cartels_logo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text=""
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/Img_detail"
-                app:layout_constraintTop_toTopOf="@+id/Img_detail" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:ellipsize="marquee"
-                android:fadingEdge="horizontal"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:selectAllOnFocus="false"
-                android:singleLine="true"
-                android:text="Address :"
-                android:textIsSelectable="false"
-                android:textSize="@dimen/sp_M"
-                app:layout_constraintStart_toEndOf="@+id/Img_detail"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:selectAllOnFocus="false"
+            android:singleLine="true"
+            android:text="Address : "
+            android:textIsSelectable="false"
+            android:textSize="@dimen/sp_M"
+            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:maxLines="1"
-                android:text="Support : asdasdasdas"
-                android:textSize="@dimen/sp_M"
-                app:layout_constraintBottom_toBottomOf="@+id/Img_detail"
-                app:layout_constraintStart_toEndOf="@+id/Img_detail" />
+        <TextView
+            android:id="@+id/textViewSupport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:maxLines="1"
+            android:text="Support :"
+            android:textSize="@dimen/sp_M"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewParking"
+            app:layout_constraintStart_toEndOf="@+id/imageViewParking" />
 
-            <ImageButton
-                android:id="@+id/button"
-                android:layout_width="@dimen/dp_L"
-                android:layout_height="@dimen/dp_L"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/ic_navigate_next_black_24dp"
-                android:textSize="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/buttonMoreDetail"
+            android:layout_width="@dimen/dp_L"
+            android:layout_height="@dimen/dp_L"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/ic_navigate_next_black_24dp"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
-        <LinearLayout
-            style="@style/AppTheme.Form.Input.LinearLayout.Horizontal.TripleObjects"
-            android:layout_marginBottom="0dp">
+    <Button
+        android:id="@+id/buttonCall"
+        style="@style/AppTheme.Button.FillColorBlue"
+        android:layout_width="0dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:text="Call"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDirections"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
-                android:text="Call" />
+    <Button
+        android:id="@+id/buttonDirections"
+        style="@style/AppTheme.Button.FillColorBlue"
+        android:layout_width="0dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:text="Directions"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonCall" />
 
-            <LinearLayout
-                android:layout_width="@dimen/dp_XXS"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/derections_txt"
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
-                android:text="Directions" />
-
-            <LinearLayout
-                android:layout_width="@dimen/dp_XXS"
-                android:layout_height="wrap_content" />
-
-            <Button
-                style="@style/AppTheme.Form.Input.Button.FillColorBlue.SingleObject"
-                android:text="VPS" />
-
-        </LinearLayout>
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
 
 
