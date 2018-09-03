@@ -1,6 +1,8 @@
 package com.internship.nilecon.cartels.Main
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.support.v7.app.AppCompatActivity
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.internship.nilecon.cartels.R
+import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
@@ -112,6 +115,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        var perfs = this.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                .edit()  // ประกาศใช้ SharedPreferences เพื่อลบ Token
+        perfs.clear()
+        perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+        val intent = Intent(this,SplashScreenActivity::class.java)
+        startActivity(intent)
+
+        finishAffinity()
     }
 
     private fun getDeviceLocation() {
