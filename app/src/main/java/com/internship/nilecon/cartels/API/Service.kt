@@ -30,9 +30,18 @@ interface AuthenticationsInterface{
     fun signInForSocial(@Body userForSignInForSocialDTO : UserForSignInForMobileNumberDTO) : Call<Token>
 
     @PATCH("api/Auth/ResetPassword")
-    fun resetPassword (@Header("Authorization") token : String,@Body userForResetPasswordDTO: UserForResetPasswordDTO) : Call<Void>
+    fun resetPassword (@Header("Authorization") token : String,
+                       @Body userForResetPasswordDTO: UserForResetPasswordDTO) : Call<Void>
 }
 
 interface UsersInterface{
+
+}
+
+interface ParkingsInterface{
+
+    @POST("api/Parkings/GetParkingPointByLatLng")
+    fun getParkingPointByLatLng(@Header("Authorization") token : String,
+                                @Body parkingForGetParkingPointByLatLngDTO : ParkingForGetParkingPointByLatLngDTO) : Call<List<ParkingPoint>>
 
 }

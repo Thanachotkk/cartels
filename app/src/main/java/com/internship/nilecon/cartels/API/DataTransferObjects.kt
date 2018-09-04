@@ -3,6 +3,8 @@ package com.internship.nilecon.cartels.API
 import android.graphics.Bitmap
 import java.io.File
 
+
+//data class for Request
 data class UserForSentOtpSmsForSignUpDTO (var MobileNumber : String?)
 
 data class UserForVerifyOtpDTO(var MobileNumber : String?
@@ -36,6 +38,20 @@ data class UserForSignInSocialDTO(
 
 data class UserForResetPasswordDTO(var MobileNumber:String?, var Password : String?)
 
+data class ParkingForGetParkingPointByLatLngDTO(
+    var Latitude: Double,
+    var Longtitude: Double,
+    var Radius: Int,
+    var VehicleType: String
+)
 
-
+//data class for response
 data class Token(var Token : String?)
+
+data class ParkingPoint(
+    var ParkingId: Int,
+    var Title: String,
+    var Latitude: Double,
+    var Longitude: Double,
+    var Type: String
+)
