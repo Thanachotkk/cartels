@@ -256,6 +256,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         constraintLayoutDetail.visibility = View.VISIBLE
         buttonCall.visibility = View.VISIBLE
         buttonDirections.visibility = View.VISIBLE
+        constraintLayoutActionBar.visibility = View.GONE
         buttonBack.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.GONE
         mMap.setPadding(48, 0, 0, constraintLayoutDetail.height + buttonCall.height + 112)
@@ -267,6 +268,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         buttonBack.visibility = View.GONE
         buttonCall.visibility = View.GONE
         buttonDirections.visibility = View.GONE
+        constraintLayoutActionBar.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.VISIBLE
         mMap.setPadding(48, 0, 0, 24)
 
