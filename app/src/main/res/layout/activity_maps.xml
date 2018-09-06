@@ -33,6 +33,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextViewSearch"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:background="@null"
+            android:dropDownVerticalOffset="12dp"
+            android:dropDownAnchor="@+id/constraintLayoutActionBar"
+            android:dropDownHeight="wrap_content"
+            android:hint="I want to park nearby"
+            android:popupBackground="@drawable/bg_input"
+            android:singleLine="true"
+            android:textAlignment="textEnd"
+            android:textSize="@dimen/sp_L"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
+            app:layout_constraintStart_toEndOf="@+id/buttonMenu"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/buttonMenu"
             android:layout_width="wrap_content"
@@ -46,50 +66,17 @@
 
 
         <ImageButton
-            android:id="@+id/cancel"
+            android:id="@+id/buttonCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cancel__24dp"
-            android:visibility="gone"
-            />
-
-        <ImageButton
-            android:id="@+id/buttonSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_search_black_24dp" />
+            app:srcCompat="@drawable/ic_cancel__24dp" />
 
-
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextViewSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:completionHint="powerd by Cartal"
-            android:dropDownHeight="wrap_content"
-            android:dropDownWidth="match_parent"
-            android:hint="I want to park nearby"
-            android:singleLine="true"
-            android:textAlignment="textEnd"
-            android:textSize="@dimen/sp_L"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonSearch"
-            app:layout_constraintStart_toEndOf="@+id/buttonMenu"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
