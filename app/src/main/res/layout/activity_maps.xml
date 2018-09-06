@@ -44,6 +44,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_menu_black_24dp" />
 
+
+        <ImageButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cancel__24dp"
+            android:visibility="gone"
+            />
+
         <ImageButton
             android:id="@+id/buttonSearch"
             android:layout_width="wrap_content"
@@ -57,6 +71,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_search_black_24dp" />
 
+
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextViewSearch"
             android:layout_width="0dp"
@@ -64,6 +79,9 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="@null"
+            android:completionHint="powerd by Cartal"
+            android:dropDownHeight="wrap_content"
+            android:dropDownWidth="match_parent"
             android:hint="I want to park nearby"
             android:singleLine="true"
             android:textAlignment="textEnd"

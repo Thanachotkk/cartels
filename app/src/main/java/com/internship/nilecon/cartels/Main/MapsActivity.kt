@@ -5,29 +5,50 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
+import com.google.android.gms.location.places.GeoDataClient
+import com.google.android.gms.location.places.PlaceBufferResponse
+import com.google.android.gms.location.places.Places
+import com.google.android.gms.maps.*
 
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.internship.nilecon.cartels.R
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
-        , GoogleMap.OnMarkerClickListener{
+        , GoogleMap.OnMarkerClickListener {
+
+
+    //search
+
+    lateinit var mGeoDataClient: GeoDataClient
+    lateinit var placesAdapter: PlacesAdapter
+    lateinit var latLng: LatLng
+    lateinit var mLocationRequest: LocationRequest
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    lateinit var mLocationCallback: LocationCallback
+    lateinit var mSettingsClient: SettingsClient
+    lateinit var mLocationSettingsRequest: LocationSettingsRequest
+    var isAutoCompleteLocation = false
+    val BOUNDS_Lng = LatLngBounds(LatLng(5.371270, 97.859916), LatLng(19.680066, 104.957083))
+    private var home_location: Location? = null
 
 
     private val FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
@@ -45,15 +66,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
     )
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        MapsInitializer.initialize(this)
+        mGeoDataClient = Places.getGeoDataClient(this, null)
 
+        LocationRequest()
         setupButtonBack()
         setupButtonMylocation()
         setupLocationPermission()
+        CallDirections()
+        CallnNumber()
+
 
     }
 
@@ -124,7 +149,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         perfs.clear()
         perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
 
-        val intent = Intent(this,SplashScreenActivity::class.java)
+        val intent = Intent(this, SplashScreenActivity::class.java)
         startActivity(intent)
 
         finishAffinity()
@@ -160,7 +185,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
     }
 
     private fun moveCamera(latLng: LatLng, zoom: Float, title: String) {
-        print( "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude)
+        print("moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
 
         if (title != "My Location") {
@@ -239,13 +264,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         }
     }
 
-    private fun setupButtonBack(){
+    private fun setupButtonBack() {
         buttonBack.setOnClickListener {
             hideParkingDetail()
         }
     }
 
-    private fun setupButtonMylocation(){
+    private fun setupButtonMylocation() {
         buttonMyLocation.setOnClickListener {
             getDeviceLocation()
         }
@@ -271,6 +296,128 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         constraintLayoutActionBar.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.VISIBLE
         mMap.setPadding(48, 0, 0, 24)
+
+    }
+
+    fun hideKeyboard() {
+        try {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    //search
+    private fun CallnNumber() {
+        buttonCall.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:0123456789")
+            startActivity(intent)
+        }
+    }
+
+    private fun CallDirections() {
+        buttonDirections.setOnClickListener {
+
+            val url = "https://www.google.com/maps/dir/Current+Location/760+West+Genesee+Street+Syracuse+NY+13204&mode=driving"
+            val gmmIntentUri = Uri.parse(url)
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+
+        }
+
+    }
+
+    private fun LocationRequest() {
+
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                val loc = locationResult!!.lastLocation
+                if (!isAutoCompleteLocation) {
+                    home_location = loc
+                    latLng = LatLng(home_location!!.latitude, home_location!!.longitude)
+                    assignToMap()
+                }
+            }
+        }
+
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+                .setInterval((10 * 1000).toLong())        // 10 seconds, in milliseconds
+                .setFastestInterval((6 * 1000).toLong()) // 1 second, in milliseconds
+
+
+        mSettingsClient = LocationServices.getSettingsClient(this)
+        val builder = LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest)
+        mLocationSettingsRequest = builder.build()
+
+        placesAdapter = PlacesAdapter(this, android.R.layout.simple_expandable_list_item_2, mGeoDataClient, null, BOUNDS_Lng)
+        autoCompleteTextViewSearch.setAdapter(placesAdapter)
+        autoCompleteTextViewSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                buttonMenu.visibility = View.VISIBLE
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (count > 0) {
+                    cancel.visibility = View.VISIBLE
+
+                } else {
+                    cancel.visibility = View.GONE
+                }
+            }
+        })
+        autoCompleteTextViewSearch.setOnItemClickListener { parent, view, position, id ->
+            //getLatLong(placesAdapter.getPlace(position))
+            hideKeyboard()
+            val item = placesAdapter.getItem(position)
+            val placeId = item!!.placeId
+            val primaryText = item.getPrimaryText(null)
+
+            Log.i("Autocomplete", "Autocomplete item selected: $primaryText")
+
+            val placeResult = mGeoDataClient.getPlaceById(placeId)
+            placeResult.addOnCompleteListener(object : OnCompleteListener<PlaceBufferResponse> {
+                override fun onComplete(task: Task<PlaceBufferResponse>) {
+                    val places = task.result
+                    val place = places.get(0)
+
+                    isAutoCompleteLocation = true
+                    latLng = place.latLng
+
+                    assignToMap()
+
+                    places.release()
+                }
+            })
+        }
+
+        cancel.setOnClickListener {
+            autoCompleteTextViewSearch.setText("")
+        }
+    }
+
+    private fun assignToMap() {
+
+        mMap.clear()
+        val options = MarkerOptions()
+                .position(latLng)
+                .title("My Location")
+        mMap.apply {
+            addMarker(options)
+            moveCamera(CameraUpdateFactory.newLatLng(latLng))
+            animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+
+        }
+        Toast.makeText(applicationContext, "Clicked: " + latLng.toString(),
+                Toast.LENGTH_SHORT).show()
 
     }
 }
