@@ -1,10 +1,10 @@
 package com.internship.nilecon.cartels.Main
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.TransitionManager
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -23,10 +22,13 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.location.places.GeoDataClient
+import com.google.android.gms.location.places.PlaceBufferResponse
 import com.google.android.gms.location.places.Places
 import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.internship.nilecon.cartels.R
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
@@ -34,9 +36,28 @@ import kotlinx.android.synthetic.main.activity_maps.*
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
         , GoogleMap.OnMarkerClickListener {
 
+
+    //search
+
+    lateinit var mGeoDataClient: GeoDataClient
+    lateinit var placesAdapter: PlacesAdapter
+    lateinit var latLng: LatLng
+    lateinit var mLocationRequest: LocationRequest
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    lateinit var mLocationCallback: LocationCallback
+    lateinit var mSettingsClient: SettingsClient
+    lateinit var mLocationSettingsRequest: LocationSettingsRequest
+    var isAutoCompleteLocation = false
+    val BOUNDS_Lng = LatLngBounds(LatLng(5.371270, 97.859916), LatLng(19.680066, 104.957083))
+
+    private var home_location: Location? = null
+    private val FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
+    private val COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION
     private val LOCATION_PERMISSION_REQUEST_CODE = 777
     private lateinit var mMap: GoogleMap
     private var mLocationPermissionsGranted: Boolean? = false
+    private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
+    private val DEFAULT_ZOOM = 16f
     private val places = mapOf(
             "PERTH" to LatLng(13.7748604, 100.5745226),
             "SYDNEY" to LatLng(13.7741698, 100.5754419),
@@ -49,24 +70,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
         MapsInitializer.initialize(this)
+        mGeoDataClient = Places.getGeoDataClient(this, null)
 
-
-        setupSearch()
+        LocationRequest()
         setupButtonBack()
         setupButtonMylocation()
         setupLocationPermission()
-        setupButtonDirections()
-        setupButtonCall()
+        CallDirections()
+        CallnNumber()
 
 
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-
+        val TAG = "Main"
         mMap = googleMap
         mMap.uiSettings.isMapToolbarEnabled = false
         mMap.uiSettings.isZoomControlsEnabled = false
-        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        try {
+            val success : Boolean = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this , R.raw.map))
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (e : Resources.NotFoundException){
+               Log.e(TAG, "Can't find style. Error: ", e)
+        }
+
+
         mMap.setPadding(48, 0, 0, 24)
 
         if (mLocationPermissionsGranted!!) {
@@ -136,8 +167,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
     private fun getDeviceLocation() {
         print("getDeviceLocation: getting the devices current location")
-        var mFusedLocationProviderClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        val DEFAULT_ZOOM = 16f
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         try {
             if (mLocationPermissionsGranted!!) {
@@ -184,17 +215,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
     }
 
     private fun setupLocationPermission() {
-        val permission = Manifest.permission.ACCESS_COARSE_LOCATION
-        val location = Manifest.permission.ACCESS_FINE_LOCATION
-
         print("setupLocationPermission: getting location permissions")
 
         val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
         if (ContextCompat.checkSelfPermission(this.applicationContext,
-                        location) == PackageManager.PERMISSION_GRANTED) {
+                        FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this.applicationContext,
-                            permission) == PackageManager.PERMISSION_GRANTED) {
+                            COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionsGranted = true
                 initMap()
 
@@ -252,25 +280,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         }
     }
 
-    private fun setupButtonDirections() {
-        buttonDirections.setOnClickListener {
-            val url = "https://www.google.com/maps/dir/Current+Location/760+West+Genesee+Street+Syracuse+NY+13204&mode=driving"
-            val gmmIntentUri = Uri.parse(url)
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            startActivity(mapIntent)
-        }
-
-    }
-
-    private fun setupButtonCall() {
-        buttonCall.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:0123456789")
-            startActivity(intent)
-        }
-    }
-
     private fun setupButtonMylocation() {
         buttonMyLocation.setOnClickListener {
             getDeviceLocation()
@@ -300,27 +309,63 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
     }
 
-    private fun hideKeyboard() {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+    fun hideKeyboard() {
+        try {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    private fun setupSearch() {
-        lateinit var searchAdapter: SearchAdapter
+    //search
+    private fun CallnNumber() {
+        buttonCall.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:0123456789")
+            startActivity(intent)
+        }
+    }
 
-        val asiaZone = LatLngBounds(LatLng(5.371270, 97.859916), LatLng(19.680066, 104.957083))
-        lateinit var latLng: LatLng
-        var mGeoDataClient: GeoDataClient = Places.getGeoDataClient(this, null)
-        var mLocationRequest: LocationRequest = LocationRequest.create()
+    private fun CallDirections() {
+        buttonDirections.setOnClickListener {
+
+            val url = "https://www.google.com/maps/dir/Current+Location/760+West+Genesee+Street+Syracuse+NY+13204&mode=driving"
+            val gmmIntentUri = Uri.parse(url)
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+
+        }
+
+    }
+
+    private fun LocationRequest() {
+
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                val loc = locationResult!!.lastLocation
+                if (!isAutoCompleteLocation) {
+                    home_location = loc
+                    latLng = LatLng(home_location!!.latitude, home_location!!.longitude)
+                    assignToMap()
+                }
+            }
+        }
+
+        mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
                 .setInterval((10 * 1000).toLong())        // 10 seconds, in milliseconds
-                .setFastestInterval((6 * 1000).toLong()) // 6 second, in milliseconds
+                .setFastestInterval((6 * 1000).toLong()) // 1 second, in milliseconds
 
-        val builder = LocationSettingsRequest.Builder()
+
+        mSettingsClient = LocationServices.getSettingsClient(this)
+        val builder = LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest)
+        mLocationSettingsRequest = builder.build()
 
-        searchAdapter = SearchAdapter(this, R.layout.expandable_list_item, mGeoDataClient, null, asiaZone)
-        autoCompleteTextViewSearch.setAdapter(searchAdapter)
+        placesAdapter = PlacesAdapter(this, android.R.layout.simple_expandable_list_item_2, mGeoDataClient, null, BOUNDS_Lng)
+        autoCompleteTextViewSearch.setAdapter(placesAdapter)
         autoCompleteTextViewSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
@@ -332,42 +377,58 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (count > 0) {
-                    buttonCancel.visibility = View.VISIBLE
+                    cancel.visibility = View.VISIBLE
 
                 } else {
-                    buttonCancel.visibility = View.GONE
+                    cancel.visibility = View.GONE
                 }
             }
         })
         autoCompleteTextViewSearch.setOnItemClickListener { parent, view, position, id ->
+            //getLatLong(placesAdapter.getPlace(position))
             hideKeyboard()
-            val item = searchAdapter.getItem(position)
+            val item = placesAdapter.getItem(position)
             val placeId = item!!.placeId
             val primaryText = item.getPrimaryText(null)
 
             Log.i("Autocomplete", "Autocomplete item selected: $primaryText")
 
             val placeResult = mGeoDataClient.getPlaceById(placeId)
+            placeResult.addOnCompleteListener(object : OnCompleteListener<PlaceBufferResponse> {
+                override fun onComplete(task: Task<PlaceBufferResponse>) {
+                    val places = task.result
+                    val place = places.get(0)
 
-            placeResult.addOnCompleteListener { task ->
-                val places = task.result
-                val place = places.get(0)
-                latLng = place.latLng
-                assignToMap(latLng)
-            }
+                    isAutoCompleteLocation = true
+                    latLng = place.latLng
+
+                    assignToMap()
+
+                    places.release()
+                }
+            })
         }
 
-        buttonCancel.setOnClickListener {
+        cancel.setOnClickListener {
             autoCompleteTextViewSearch.setText("")
         }
     }
 
-    private fun assignToMap(latLng: LatLng) {
+    private fun assignToMap() {
+
+        mMap.clear()
+        val options = MarkerOptions()
+                .position(latLng)
+                .title("My Location")
         mMap.apply {
+            addMarker(options)
             moveCamera(CameraUpdateFactory.newLatLng(latLng))
             animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+
         }
-        //api GetParkingPointByLatLng
+        Toast.makeText(applicationContext, "Clicked: " + latLng.toString(),
+                Toast.LENGTH_SHORT).show()
+
     }
 }
 
