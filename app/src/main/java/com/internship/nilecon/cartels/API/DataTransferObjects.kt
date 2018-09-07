@@ -36,22 +36,22 @@ data class UserForSignInSocialDTO(
         var SocialType: String?
 )
 
-data class UserForResetPasswordDTO(var MobileNumber:String?, var Password : String?)
-
 data class ParkingForGetParkingPointByLatLngDTO(
-    var Latitude: Double,
-    var Longtitude: Double,
-    var Radius: Int,
-    var VehicleType: String
+    var Latitude: Double?,
+    var Longtitude: Double?,
+    var Radius: Int?,
+    var VehicleType: String?
 )
+
+data class UserForResetPasswordDTO(var MobileNumber:String?, var Password : String?)
 
 //data class for response
 data class Token(var Token : String?)
 
 data class ParkingPoint(
-    var ParkingId: Int,
-    var Title: String,
-    var Latitude: Double,
-    var Longitude: Double,
-    var Type: String
+    var ParkingId: Int?,
+    var Title: String?,
+    var Latitude: Double?,
+    var Longitude: Double?,
+    var Type: String?
 )

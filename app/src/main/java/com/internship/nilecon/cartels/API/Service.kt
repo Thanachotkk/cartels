@@ -39,9 +39,7 @@ interface UsersInterface{
 }
 
 interface ParkingsInterface{
-
     @POST("api/Parkings/GetParkingPointByLatLng")
-    fun getParkingPointByLatLng(@Header("Authorization") token : String,
-                                @Body parkingForGetParkingPointByLatLngDTO : ParkingForGetParkingPointByLatLngDTO) : Call<List<ParkingPoint>>
-
+    fun getParkingPointByLatLng(@Header("Authorization") token: String
+                                ,@Body parkingForGetParkingPointByLatLngDTO:ParkingForGetParkingPointByLatLngDTO) : Call<List<ParkingPoint>>
 }

@@ -27,9 +27,16 @@ import com.google.android.gms.location.places.Places
 import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.*
+import com.internship.nilecon.cartels.API.Api
+import com.internship.nilecon.cartels.API.ParkingForGetParkingPointByLatLngDTO
+import com.internship.nilecon.cartels.API.ParkingPoint
+import com.internship.nilecon.cartels.API.ParkingsInterface
 import com.internship.nilecon.cartels.R
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
         , GoogleMap.OnMarkerClickListener{
@@ -37,7 +44,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
     private val LOCATION_PERMISSION_REQUEST_CODE = 777
     private lateinit var mMap: GoogleMap
     private var mLocationPermissionsGranted: Boolean? = false
-
+    private var mApi : Any? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +57,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         setupLocationPermission()
         setupButtonDirections()
         setupButtonCall()
-
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -80,7 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
             this!!.setOnMarkerClickListener(this@MapsActivity)
         }
-        addMarkersToMapCar()
+        //addMarkersToMapCar()
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
@@ -125,6 +130,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         startActivity(intent)
 
         finishAffinity()
+    }
+
+    private fun callApiGetParkingPointByLatLng(parkingForGetParkingPointByLatLngDTO: ParkingForGetParkingPointByLatLngDTO){
+
+        val prefs = getSharedPreferences(getString(R.string.app_name),Context.MODE_PRIVATE)
+        var token  = prefs.getString("Token",null)
+
+        mApi = Api().Declaration(this,ParkingsInterface::class.java)
+                .getParkingPointByLatLng("Bearer $token",parkingForGetParkingPointByLatLngDTO)
+
+        (mApi as Call<List<ParkingPoint>>).enqueue(object : Callback<List<ParkingPoint>>{
+            override fun onFailure(call: Call<List<ParkingPoint>>?, t: Throwable?) {
+                print(t!!.message)
+            }
+
+            override fun onResponse(call: Call<List<ParkingPoint>>?, response: Response<List<ParkingPoint>>?) {
+                when(response!!.code()){
+                    200 -> {
+                        addMarkersToMapCar(response.body()!!)
+                    }
+                    404 ->{
+                        Toast.makeText(this@MapsActivity,"Not found",Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        })
     }
 
     private fun getDeviceLocation() {
@@ -204,7 +235,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         }
     }
 
-    private fun addMarkersToMapCar() {
+    private fun addMarkersToMapCar(parkingPointList : List<ParkingPoint> ) {
+        for(i in 0 until parkingPointList.size){
+            when(parkingPointList[i].Type){
+                "Other" -> {
+                    mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
+                            .position(LatLng(parkingPointList[i].Latitude!!, parkingPointList[i].Longitude!!))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_pubilc))
+                    )
+                }
+                "Home" -> {
+                    mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
+                            .position(LatLng(parkingPointList[i].Latitude!!, parkingPointList[i].Longitude!!))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_home))
+                    )
+                }
+                "Building" ->{
+                    mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
+                            .position(LatLng(parkingPointList[i].Latitude!!, parkingPointList[i].Longitude!!))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_building))
+                    )
+                }
+            }
+        }
+    }
 
         /*val placeDetailsMap = mutableMapOf(
                 // Uses a coloured icon
@@ -239,7 +293,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         /*mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
                 .position(position)
                 .icon(icon)*/
-    }
+
 
     private fun setupButtonBack() {
         buttonBack.setOnClickListener {
@@ -362,7 +416,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
             moveCamera(CameraUpdateFactory.newLatLng(latLng))
             animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
         }
-        //api GetParkingPointByLatLng
+        callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(latLng.latitude,latLng.longitude,1,"All"))
     }
 
 }
