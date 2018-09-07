@@ -32,24 +32,17 @@ import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
-        , GoogleMap.OnMarkerClickListener {
+        , GoogleMap.OnMarkerClickListener{
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 777
     private lateinit var mMap: GoogleMap
     private var mLocationPermissionsGranted: Boolean? = false
-    private val places = mapOf(
-            "PERTH" to LatLng(13.7748604, 100.5745226),
-            "SYDNEY" to LatLng(13.7741698, 100.5754419),
-            "rat2" to LatLng(13.7803506, 100.5748004),
-            "BRISBANE" to LatLng(13.7705131, 100.5722809)
-    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
         MapsInitializer.initialize(this)
-
 
         setupSearch()
         setupButtonBack()
@@ -213,22 +206,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
     private fun addMarkersToMapCar() {
 
-        val placeDetailsMap = mutableMapOf(
+        /*val placeDetailsMap = mutableMapOf(
                 // Uses a coloured icon
                 "PERTH" to PlaceDetails(
-                        position = places.getValue("PERTH"),
+                        position = LatLng(13.7748604, 100.5745226),
                         title = "Perth",
                         snippet = "รายละเอียด"
                 ),
 
 
                 "SYDNEY" to PlaceDetails(
-                        position = places.getValue("SYDNEY"),
+                        position = LatLng(13.7741698, 100.5754419),
                         title = "Central rama9",
                         snippet = "รายละเอียด"
                 ),
                 "rat2" to PlaceDetails(
-                        position = places.getValue("rat2"),
+                        position =LatLng(13.7803506, 100.5748004),
                         title = "rat2",
                         snippet = "รายละเอียด"
                 )
@@ -238,12 +231,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
             with(placeDetailsMap.getValue(it)) {
                 mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
                         .position(position)
-                        .title(title)
-                        .snippet(snippet)
                         .icon(icon)
                 )
             }
-        }
+        }*/
+
+        /*mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
+                .position(position)
+                .icon(icon)*/
     }
 
     private fun setupButtonBack() {
@@ -369,6 +364,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         }
         //api GetParkingPointByLatLng
     }
+
 }
 
 class PlaceDetails(
