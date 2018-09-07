@@ -40,7 +40,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
             android:background="@null"
-            android:dropDownVerticalOffset="12dp"
+            android:dropDownVerticalOffset="5dp"
             android:dropDownAnchor="@+id/constraintLayoutActionBar"
             android:dropDownHeight="wrap_content"
             android:hint="I want to park nearby"
