@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.TransitionManager
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -39,7 +38,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
-        , GoogleMap.OnMarkerClickListener{
+        , GoogleMap.OnMarkerClickListener {
+
+
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 777
     private lateinit var mMap: GoogleMap
@@ -65,7 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         mMap.uiSettings.isMapToolbarEnabled = false
         mMap.uiSettings.isZoomControlsEnabled = false
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        mMap.setPadding(48, 0, 0, 24)
+        mMap.setPadding(48, 0, 48, 0)
 
         if (mLocationPermissionsGranted!!) {
 
@@ -85,7 +86,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
 
             this!!.setOnMarkerClickListener(this@MapsActivity)
         }
-        //addMarkersToMapCar()
+
+        onCameraChangeListener()
+
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
@@ -132,6 +135,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         finishAffinity()
     }
 
+    private fun onCameraChangeListener(){
+        mMap.setOnCameraChangeListener {
+            mMap.clear()
+            cancleApi()
+            callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(
+                    it.target.latitude,
+                    it.target.longitude,
+                    1,
+                    "All"))
+            mMap.addCircle(CircleOptions()
+                    .center(LatLng(it.target.latitude, it.target.longitude))
+                    .radius(1000.0)
+                    .strokeColor(resources.getColor(R.color.colorTheme3))
+                    .fillColor(resources.getColor(R.color.colorTheme3_opacity20)))
+        }
+    }
+
     private fun callApiGetParkingPointByLatLng(parkingForGetParkingPointByLatLngDTO: ParkingForGetParkingPointByLatLngDTO){
 
         val prefs = getSharedPreferences(getString(R.string.app_name),Context.MODE_PRIVATE)
@@ -156,12 +176,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
                 }
             }
         })
+
+
     }
 
     private fun getDeviceLocation() {
         print("getDeviceLocation: getting the devices current location")
         var mFusedLocationProviderClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        val DEFAULT_ZOOM = 16f
+        val DEFAULT_ZOOM = 14.5f
 
         try {
             if (mLocationPermissionsGranted!!) {
@@ -242,58 +264,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
                     mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
                             .position(LatLng(parkingPointList[i].Latitude!!, parkingPointList[i].Longitude!!))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_pubilc))
+
                     )
                 }
                 "Home" -> {
                     mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
                             .position(LatLng(parkingPointList[i].Latitude!!, parkingPointList[i].Longitude!!))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_home))
+
                     )
                 }
                 "Building" ->{
                     mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
                             .position(LatLng(parkingPointList[i].Latitude!!, parkingPointList[i].Longitude!!))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_building))
+
                     )
                 }
             }
         }
     }
-
-        /*val placeDetailsMap = mutableMapOf(
-                // Uses a coloured icon
-                "PERTH" to PlaceDetails(
-                        position = LatLng(13.7748604, 100.5745226),
-                        title = "Perth",
-                        snippet = "รายละเอียด"
-                ),
-
-
-                "SYDNEY" to PlaceDetails(
-                        position = LatLng(13.7741698, 100.5754419),
-                        title = "Central rama9",
-                        snippet = "รายละเอียด"
-                ),
-                "rat2" to PlaceDetails(
-                        position =LatLng(13.7803506, 100.5748004),
-                        title = "rat2",
-                        snippet = "รายละเอียด"
-                )
-
-        )
-        placeDetailsMap.keys.map {
-            with(placeDetailsMap.getValue(it)) {
-                mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
-                        .position(position)
-                        .icon(icon)
-                )
-            }
-        }*/
-
-        /*mMap!!.addMarker(com.google.android.gms.maps.model.MarkerOptions()
-                .position(position)
-                .icon(icon)*/
-
 
     private fun setupButtonBack() {
         buttonBack.setOnClickListener {
@@ -334,7 +324,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         constraintLayoutActionBar.visibility = View.GONE
         buttonBack.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.GONE
-        mMap.setPadding(48, 0, 0, constraintLayoutDetail.height + buttonCall.height + 112)
+        mMap.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
     }
 
     private fun hideParkingDetail() {
@@ -345,13 +335,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
         buttonDirections.visibility = View.GONE
         constraintLayoutActionBar.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.VISIBLE
-        mMap.setPadding(48, 0, 0, 24)
+        mMap.setPadding(48, 0, 48, 24)
 
     }
 
     private fun hideKeyboard() {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+    }
+
+    private fun cancleApi(){
+        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+            (mApi as Call<List<ParkingPoint>>).cancel() //ยกเลิก Api request
+        }
     }
 
     private fun setupSearch() {
@@ -414,18 +410,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.On
     private fun assignToMap(latLng: LatLng) {
         mMap.apply {
             moveCamera(CameraUpdateFactory.newLatLng(latLng))
-            animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+            animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.5f))
         }
-        callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(latLng.latitude,latLng.longitude,1,"All"))
     }
 
 }
-
-class PlaceDetails(
-        val position: LatLng,
-        val title: String = "Marker",
-        val snippet: String? = null,
-        val icon: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker())
 
 
 

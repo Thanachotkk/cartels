@@ -259,6 +259,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonCall" />
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="333dp"
+        android:layout_height="19dp"
+        sothree:layout_editor_absoluteX="8dp"
+        sothree:layout_editor_absoluteY="177dp">
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>
 
 
