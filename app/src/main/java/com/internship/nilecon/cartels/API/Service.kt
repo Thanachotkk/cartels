@@ -7,6 +7,7 @@ import retrofit2.http.*
 import java.io.File
 
 interface AuthenticationsInterface{
+
 //    @Multipart
 //    @POST("api/Users/AddOrReplacePhoto")
 //    fun upload(@PartMap params :Map<String, RequestBody> ) : Call<PhotoUrl>
