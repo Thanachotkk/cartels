@@ -134,7 +134,6 @@ class Step2Fragment : Fragment() {
                 }
     }
 
-
     private fun callApiSentOptSmsForSignUp(){
 
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
