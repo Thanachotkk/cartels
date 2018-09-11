@@ -154,6 +154,7 @@ class MapsActivity : AppCompatActivity()
     }
 
     private fun callApiGetParkingPointByLatLng(parkingForGetParkingPointByLatLngDTO: ParkingForGetParkingPointByLatLngDTO) {
+
         val prefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
         var token = prefs.getString("Token", null)
 
@@ -171,7 +172,7 @@ class MapsActivity : AppCompatActivity()
                         addMarkersToMapCar(response.body()!!)
                     }
                     404 -> {
-
+                        Toast.makeText(this@MapsActivity, "Not found", Toast.LENGTH_LONG).show()
                     }
                 }
             }
