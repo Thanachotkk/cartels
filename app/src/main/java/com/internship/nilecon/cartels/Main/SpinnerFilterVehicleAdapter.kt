@@ -8,11 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.view.LayoutInflater
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.view_spinner_items_vehicle_type.view.*
 
 
-class SpinnerFilterVehicleAdapter(context: Context,inflter: LayoutInflater) : BaseAdapter() {
+class SpinnerFilterVehicleAdapter(context: Context) : BaseAdapter() {
     private var context: Context = context
-    private var inflter: LayoutInflater = inflter
     private lateinit var spinnerFilterVehicleList  : List<SpinnerFilterVehicle>
 
     fun setSpinnerFilterVehicleList(spinnerFilterVehicleList : List<SpinnerFilterVehicle>){
@@ -20,9 +20,15 @@ class SpinnerFilterVehicleAdapter(context: Context,inflter: LayoutInflater) : Ba
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var view = inflter.inflate(R.layout.view_spinner_items_vehicle_type,null)
-        
-        return view
+        var view = LayoutInflater.from(context).inflate(R.layout.view_spinner_items_vehicle_type,null)
+        var viewHolder = SpinnerItemsVehicleTypeViewHolder(view)
+
+        viewHolder.imageViewVehicleType.setImageResource(this.spinnerFilterVehicleList[position].imageViewVehicleType)
+        viewHolder.textViewVehicleType.text = this.spinnerFilterVehicleList[position].textViewVehicleType
+
+        view?.tag = viewHolder
+
+        return  view
     }
 
     override fun getItem(position: Int): Any {
@@ -36,4 +42,9 @@ class SpinnerFilterVehicleAdapter(context: Context,inflter: LayoutInflater) : Ba
     override fun getCount(): Int {
         return  spinnerFilterVehicleList.size
     }
+}
+
+class SpinnerItemsVehicleTypeViewHolder (itemView: View){
+    var textViewVehicleType: TextView = itemView.textViewVehicleType
+    var imageViewVehicleType : ImageView = itemView.imageViewVehicleType
 }

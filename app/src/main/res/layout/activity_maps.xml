@@ -29,6 +29,8 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_input"
         android:elevation="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,12 +39,12 @@
             android:id="@+id/autoCompleteTextViewSearch"
             android:layout_width="0dp"
             android:layout_height="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="@null"
-            android:dropDownVerticalOffset="5dp"
             android:dropDownAnchor="@+id/constraintLayoutActionBar"
             android:dropDownHeight="wrap_content"
+            android:dropDownVerticalOffset="5dp"
             android:hint="I want to park nearby"
             android:popupBackground="@drawable/bg_input"
             android:singleLine="true"
@@ -57,7 +59,6 @@
             android:id="@+id/buttonMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +70,6 @@
             android:id="@+id/buttonCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -98,9 +98,11 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/ic_bg_spinner_vehicle_type"
+        android:drawSelectorOnTop="true"
         android:elevation="4dp"
+        android:popupBackground="@drawable/bg_input"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayoutActionBar"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutActionBar" />
 
@@ -133,16 +135,14 @@
         android:id="@+id/constraintLayoutDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/bg_input"
         android:elevation="4dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/buttonCall"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutBooking"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/imageViewParking"
@@ -160,11 +160,18 @@
             android:id="@+id/textViewTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="ที่จอดรถ :"
+            android:textColor="@android:color/black"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            app:layout_constraintEnd_toStartOf="@+id/textViewDistance"
             app:layout_constraintStart_toEndOf="@+id/imageViewParking"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -174,15 +181,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
             android:text="Address : "
-            android:textIsSelectable="false"
+            android:textColor="@android:color/black"
             android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageViewParking"
             app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
@@ -191,13 +193,16 @@
             android:id="@+id/textViewSupport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:maxLines="1"
-            android:text="Support :"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="Support : "
+            android:textColor="@android:color/black"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageViewParking"
             app:layout_constraintTop_toBottomOf="@+id/textViewOpenAndClose" />
 
@@ -218,54 +223,118 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Open and Close :"
+            android:text="Open and Close : "
+            android:textColor="@android:color/black"
             android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageViewParking"
             app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
 
+        <TextView
+            android:id="@+id/textViewAddressValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
+            app:layout_constraintStart_toEndOf="@+id/textViewAddress"
+            app:layout_constraintTop_toTopOf="@+id/textViewAddress" />
+
+        <TextView
+            android:id="@+id/textViewOpenAndCloseValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
+            app:layout_constraintStart_toEndOf="@+id/textViewOpenAndClose"
+            app:layout_constraintTop_toTopOf="@+id/textViewOpenAndClose" />
+
+        <TextView
+            android:id="@+id/textViewSupportValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
+            app:layout_constraintStart_toEndOf="@+id/textViewSupport"
+            app:layout_constraintTop_toTopOf="@+id/textViewSupport" />
+
+        <Button
+            android:id="@+id/buttonCall"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_button_call"
+            android:text="Call"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDirections"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSupportValue" />
+
+        <Button
+            android:id="@+id/buttonDirections"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_button_directions"
+            android:text="Directions"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonCall" />
+
+        <TextView
+            android:id="@+id/textViewDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:text="1.55 km"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
-    <Button
-        android:id="@+id/buttonCall"
-        style="@style/AppTheme.Button.FillColorBlue"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutBooking"
         android:layout_width="0dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="24dp"
-        android:text="Call"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_L"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDirections"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/buttonDirections"
-        style="@style/AppTheme.Button.FillColorBlue"
-        android:layout_width="0dp"
+        android:layout_height="15dp"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginStart="8dp"
-        android:text="Directions"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_L"
-        android:textStyle="bold"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/bg_input"
+        android:elevation="4dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonCall" />
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="333dp"
-        android:layout_height="19dp"
-        sothree:layout_editor_absoluteX="8dp"
-        sothree:layout_editor_absoluteY="177dp">
+        app:layout_constraintStart_toStartOf="parent">
 
     </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>
 
