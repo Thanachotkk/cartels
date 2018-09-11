@@ -11,6 +11,7 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import com.internship.nilecon.cartels.API.Api
 import com.internship.nilecon.cartels.API.AuthenticationsInterface
+import com.internship.nilecon.cartels.API.ObjectAPi
 import com.internship.nilecon.cartels.API.UserForSentOtpSmsForSignUpDTO
 
 import com.internship.nilecon.cartels.R
@@ -80,7 +81,6 @@ class Step1Fragment : Fragment() {
 
     override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
         super.onDestroyView()
-
         if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
             activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
@@ -167,8 +167,9 @@ class Step1Fragment : Fragment() {
         (mApi as Call<Void>).enqueue(object : Callback<Void>{  //ส่งคำร้องขอ Api request ไปที่ Server
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
+
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
-                print(t.message)
+
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
@@ -179,7 +180,7 @@ class Step1Fragment : Fragment() {
 
                     200 -> { //เมื่อ status code : 200 (Ok).
 
-                        SIGN_UP.UserForSignUpDTO.MobileNumber = editTextMobileNumber.text.toString() //เก็บเบอร์ที่กรอกเข้า Object SIGN_UP.UserForSignUpDTO
+                       ObjectAPi.GetPhoneAPI = editTextMobileNumber.text.toString() //เก็บเบอร์ที่กรอกเข้า Object SIGN_UP.UserForSignUpDTO
 
                         activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
                                 R.anim.enter_from_right,

@@ -10,7 +10,6 @@ import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 object SIGN_UP{
-    var UserForSignUpDTO = com.internship.nilecon.cartels.API.UserForSignUpDTO(null,null,null,null ,null)
     var UserForAddOrReplacePhotoDTO = com.internship.nilecon.cartels.API.UserForAddOrReplacePhotoDTO(null)
 }
 
@@ -40,6 +39,7 @@ class SignUpActivity : AppCompatActivity()
 
     private fun setupButtonBack(){
         buttonBack.setOnClickListener {
+
             onBackPressed()
         }
     }
