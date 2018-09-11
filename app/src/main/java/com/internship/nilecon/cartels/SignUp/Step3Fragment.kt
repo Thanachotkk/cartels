@@ -296,12 +296,6 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
                 .commit()
     }
 
-    private fun showDialog(msg: String) {
-        val builder = AlertDialog.Builder(activity!!)
-        builder.setMessage(msg)
-        builder.show()
-    }
-
     override fun onPause() {
         super.onPause()
         googleApiClient!!.stopAutoManage(activity!!)

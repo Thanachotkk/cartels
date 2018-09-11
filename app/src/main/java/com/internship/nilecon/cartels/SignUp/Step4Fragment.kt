@@ -94,7 +94,7 @@ class Step4Fragment : Fragment() {
 
     override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
         super.onDestroyView()
-
+        LoginManager.getInstance().logOut()
         if (mApi != null) { // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
             activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
