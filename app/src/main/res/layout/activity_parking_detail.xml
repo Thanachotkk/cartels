@@ -4,6 +4,171 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ParkingDetail.ParkingDetailActivity">
+    tools:context=".ParkingDetail.ParkingDetailActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsImage">
+
+        <ImageView
+            android:id="@+id/imageViewParking"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/darker_gray"
+            android:foregroundGravity="center"
+            android:src="@drawable/im_cartels_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="ที่จอดรถ :"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+            app:layout_constraintTop_toTopOf="@+id/imageViewParking" />
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:selectAllOnFocus="false"
+            android:singleLine="true"
+            android:text="Address : "
+            android:textIsSelectable="false"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+
+        <TextView
+            android:id="@+id/textViewSupport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:maxLines="1"
+            android:text="Support :"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOpenAndClose" />
+
+        <TextView
+            android:id="@+id/textViewOpenAndClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Open and Close :"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutActionBar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorTheme3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="@dimen/dp_L"
+            android:layout_height="@dimen/dp_L"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/ic_arrow_back_white_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parking Details"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_XL"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/DetailsImage"
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutActionBar"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDetail">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/TabRates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rates" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/TabAmenities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amenities" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/TanNearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nearby" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/TabNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="192dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -2,20 +2,48 @@ package com.internship.nilecon.cartels.SignUp
 
 import android.app.Activity
 import android.content.Context
+import android.content.CursorLoader
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-
+import android.widget.Toast
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.util.WorkSourceUtil.TAG
+import com.google.android.gms.tasks.Task
+import com.internship.nilecon.cartels.API.*
 import com.internship.nilecon.cartels.R
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_step3.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.BufferedOutputStream
+import java.io.File
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,12 +59,21 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class Step3Fragment : Fragment() {
+class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        Toast.makeText(context, "Fail Connection", Toast.LENGTH_SHORT).show()
+    }
+
+    var bitmapresult: Bitmap? = null
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var mApi : Any? = null
+    private var mApi: Any? = null
     private var listener: OnFragmentInteractionListener? = null
+    lateinit var GoogleID: String
+    val callbackFB = CallbackManager.Factory.create()
+    private var googleApiClient: GoogleApiClient? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,8 +114,7 @@ class Step3Fragment : Fragment() {
 
     override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
         super.onDestroyView()
-
-        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+        if (mApi != null) { // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
             activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
@@ -106,6 +142,7 @@ class Step3Fragment : Fragment() {
     }
 
     companion object {
+        var RC_SIGN_IN = 9001
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -126,68 +163,102 @@ class Step3Fragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode,  resultCode, data)
-        if(resultCode == Activity.RESULT_OK){
-            when (requestCode){
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackFB.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val googleresult = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            handleSignInResult(googleresult)
+        }
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val result = CropImage.getActivityResult(data)
-                    SIGN_UP.UserForAddOrReplacePhotoDTO.Photo = result.bitmap
                     imageViewProfile!!.setImageURI(result.uri)
+
                 }
             }
         }
     }
 
 
-    private fun setupButtonNext(){
+    private fun setupButtonNext() {
         buttonNext.setOnClickListener {
 
             activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
 
-            if(editTextName.text.isEmpty()) //ถ้า editTextName ไม่มีการกรอกค่า
+            if (editTextName.text.isEmpty()) //ถ้า editTextName ไม่มีการกรอกค่า
                 editTextName.error = "You must specify name or connect with google or facebook" // แจ้ง error ที่ editTextName
             else {
-                SIGN_UP.UserForSignUpDTO.Name = editTextName.text.toString()
+                ObjectAPi.SocialType = "Nosocial"
+                ObjectAPi.Name = editTextName.text.toString()
                 activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()} //ไป Step4Fragment
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left,
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right)
+                        .replace(R.id.fragmentSignUp, Step4Fragment())
+                        .addToBackStack(this.javaClass.name)
+                        .commit()
+            } //ไป Step4Fragment
         }
     }
 
-    private fun setupButtonGoogle(){
+    private fun setupButtonGoogle() {
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+
+        googleApiClient = GoogleApiClient.Builder(context!!).enableAutoManage(activity!!, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                .build()
         buttonGoogle.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
+            val intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+            startActivityForResult(intent, RC_SIGN_IN)
         }
+
     }
 
-    private fun setupButtonFacebook(){
+    private fun setupButtonFacebook() {
         buttonFacebook.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right)
-                    .replace(R.id.fragmentSignUp,Step4Fragment())
-                    .addToBackStack(this.javaClass.name)
-                    .commit()
+            buttonfacemain.performClick()
         }
+        buttonfacemain.setReadPermissions(Arrays.asList("user_photos", "email", "public_profile"))
+        buttonfacemain.fragment = this
+        buttonfacemain.registerCallback(callbackFB, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult?) {
+                val accessToken = result!!.accessToken
+                val parameters = Bundle()
+                parameters.putString("fields", "id,name,link,email,picture")
+                val request = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, _ ->
+                    ObjectAPi.Name = Profile.getCurrentProfile().name
+                    val IDfacebook = Profile.getCurrentProfile().id
+                    Log.i("ID", IDfacebook)
+                    ObjectAPi.SocialType = "Facebook"
+                    ObjectAPi.FacebookID = IDfacebook
+                    Log.i("Name", "$IDfacebook")
+                    Toast.makeText(activity!!, "$IDfacebook", Toast.LENGTH_SHORT).show()
+                    ApiCheck(UserForIsUserExistsBySocialDTO(IDfacebook.toString(), "Facebook"))
+                }
+                request.parameters = parameters
+                request.executeAsync()
+
+            }
+
+            override fun onCancel() {
+                Toast.makeText(activity!!, "Cancel Login with Facebook", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(error: FacebookException?) {
+                Toast.makeText(activity!!, "Error : $error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
     }
 
-    private fun setupImageViewProfile(){
+    private fun setupImageViewProfile() {
         imageViewProfile.setOnClickListener {
-            CropImage.activity().setAspectRatio(1,1).start(this.context!!,this)
+            CropImage.activity().setAspectRatio(1, 1).start(this.context!!, this)
         }
     }
 
@@ -196,6 +267,51 @@ class Step3Fragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    private fun ApiCheck(dataClassSocial: UserForIsUserExistsBySocialDTO) {
+        mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
+                .SignUpWithSocial(dataClassSocial)
+        (mApi as Call<Void>).enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>?, t: Throwable?) {
+                Toast.makeText(activity!!, "Fail", Toast.LENGTH_SHORT).show()
+            }
 
+            override fun onResponse(call: Call<Void>?, response: Response<Void>?) {
+                if (response!!.code() == 200) {
+                    NextStep()
+                } else {
+                    Log.i("Response", response.toString())
+                }
+            }
+        })
+    }
 
+    private fun NextStep() {
+        activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+                R.anim.enter_from_right,
+                R.anim.exit_to_left,
+                R.anim.enter_from_left,
+                R.anim.exit_to_right)
+                .replace(R.id.fragmentSignUp, Step4Fragment())
+                .addToBackStack(this.javaClass.name)
+                .commit()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        googleApiClient!!.stopAutoManage(activity!!)
+        googleApiClient!!.disconnect()
+    }
+
+    private fun handleSignInResult(result: GoogleSignInResult?) {
+        if (result!!.isSuccess) {
+            val IDGoogle = result.signInAccount!!.id
+            val acct = GoogleSignIn.getLastSignedInAccount(activity)
+            ObjectAPi.Name = result.signInAccount!!.displayName
+            ObjectAPi.GoogleID = IDGoogle!!
+            ObjectAPi.SocialType = "Google"
+            NextStep()
+        } else {
+            Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
