@@ -152,7 +152,6 @@ class Step2Fragment : Fragment() {
                 }
             }
         })
-
     }
     override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
         super.onDestroyView()
