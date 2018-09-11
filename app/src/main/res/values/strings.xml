@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Cartels</string>
-
+    <!--SocialLogin-->
+    <string name="facebook_app_id">2084315451897724</string>
+    <string name="fb_login_protocol_scheme">fb2084315451897724</string>
+    <string name="server_client_id">AIzaSyBeV7SByWn6MxdCPd2EoeEkNKpGp3G3tos</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main2">Main2Activity</string>
