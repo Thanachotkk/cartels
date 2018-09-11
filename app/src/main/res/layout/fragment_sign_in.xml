@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SignIn.SignInFragment"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context=".SignIn.SignInFragment">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -181,12 +181,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="5dp"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@+id/buttonFacebook"
         app:layout_constraintEnd_toStartOf="@+id/textViewFacebook"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@+id/buttonFacebook"
         app:layout_constraintTop_toBottomOf="@+id/buttonFacebook"
         app:srcCompat="@drawable/ic_facebook" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facemainlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textViewFacebook"

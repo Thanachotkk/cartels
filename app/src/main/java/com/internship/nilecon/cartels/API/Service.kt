@@ -1,12 +1,15 @@
 package com.internship.nilecon.cartels.API
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.PATCH
-import retrofit2.http.POST
+import retrofit2.http.*
+import java.io.File
 
 interface AuthenticationsInterface{
+//    @Multipart
+//    @POST("api/Users/AddOrReplacePhoto")
+//    fun upload(@PartMap params :Map<String, RequestBody> ) : Call<PhotoUrl>
 
     @POST("api/Auth/SentOtpSmsForSignUp")
     fun sentOtpSmsForSignUp(@Body userForSentOtpSmsForSignUpDTO: UserForSentOtpSmsForSignUpDTO) : Call<Void>
@@ -16,6 +19,9 @@ interface AuthenticationsInterface{
 
     @POST("api/Auth/VerifyOtp")
     fun verifyOtpForForgotPassword(@Body userForVerifyOtpDTO: UserForVerifyOtpDTO) : Call<Token>
+
+    @POST(" /api/Auth/IsUserExistsBySocial")
+    fun SignUpWithSocial (@Body SignUpSocial : UserForIsUserExistsBySocialDTO ): Call<Void>
 
     @POST("api/Auth/SignUp")
     fun signUp(@Body userForSignUpDTO: UserForSignUpDTO) : Call<Token>
@@ -27,7 +33,7 @@ interface AuthenticationsInterface{
     fun forgotPasswor(@Body userForForgotPasswordDTO: UserForForgotPasswordDTO) : Call<Void>
 
     @POST("api/Auth/SignInForSocial")
-    fun signInForSocial(@Body userForSignInForSocialDTO : UserForSignInForMobileNumberDTO) : Call<Token>
+    fun signInForSocial(@Body userForSignInForSocialDTO : UserForSignInSocialDTO) : Call<Token>
 
     @PATCH("api/Auth/ResetPassword")
     fun resetPassword (@Header("Authorization") token : String,

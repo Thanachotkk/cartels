@@ -39,7 +39,7 @@ class SignInActivity : AppCompatActivity()
                 .commit()
 
         supportFragmentManager.addOnBackStackChangedListener {
-            var fragment = supportFragmentManager.findFragmentById(R.id.fragmentSignIn).javaClass.simpleName
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragmentSignIn).javaClass.simpleName
             when (fragment) {
                 SignInFragment().javaClass.simpleName -> textViewActionBar.text = "Sign in"
                 ForgotPasswordFragment().javaClass.simpleName -> textViewActionBar.text = "Forgot password"
