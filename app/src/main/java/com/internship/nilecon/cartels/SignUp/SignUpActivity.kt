@@ -31,7 +31,6 @@ class SignUpActivity : AppCompatActivity()
         setupButtonBack()
         setupFragmentSignUp()
     }
-
     override fun onDestroy() {
         super.onDestroy()
     }
