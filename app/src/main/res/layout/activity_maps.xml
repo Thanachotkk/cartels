@@ -1,342 +1,353 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:sothree="http://schemas.android.com/tools"
-    android:id="@+id/layoutActivityMaps"
+    android:id="@+id/drawer_nav"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     sothree:context=".Main.MapsActivity">
 
-    <fragment
-        android:id="@+id/fragmentMap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:sothree="http://schemas.android.com/tools"
+        android:id="@+id/layoutActivityMaps"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        sothree:context=".Main.MapsActivity">
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutActionBar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/bg_input"
-        android:elevation="4dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextViewSearch"
+        <fragment
+            android:id="@+id/fragmentMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/constraintLayoutActionBar"
             android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:dropDownAnchor="@+id/constraintLayoutActionBar"
-            android:dropDownHeight="wrap_content"
-            android:dropDownVerticalOffset="5dp"
-            android:hint="I want to park nearby"
+            android:layout_height="50dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_input"
+            android:elevation="4dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewSearch"
+                android:layout_width="200dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="15dp"
+                android:background="@null"
+                android:dropDownAnchor="@+id/constraintLayoutActionBar"
+                android:dropDownHeight="wrap_content"
+                android:dropDownVerticalOffset="5dp"
+                android:hint="I want to park nearby"
+                android:popupBackground="@drawable/bg_input"
+                android:singleLine="true"
+                android:textAlignment="textEnd"
+                android:textSize="@dimen/sp_L"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
+                app:layout_constraintStart_toEndOf="@+id/buttonMenu"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageButton
+                android:id="@+id/buttonCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_cancel__24dp" />
+
+
+        </android.support.v7.widget.Toolbar>
+
+        <ImageButton
+            android:id="@+id/buttonBack"
+            android:layout_width="@dimen/input_height"
+            android:layout_height="@dimen/input_height"
+            android:layout_margin="@dimen/dp_M"
+            android:background="@drawable/bg_button_back"
+            android:visibility="gone"
+            android:elevation="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Spinner
+            android:id="@+id/spinnerFilterVehicle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ic_bg_spinner_vehicle_type"
+            android:drawSelectorOnTop="true"
+            android:elevation="4dp"
             android:popupBackground="@drawable/bg_input"
-            android:singleLine="true"
-            android:textAlignment="textEnd"
-            android:textSize="@dimen/sp_L"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
-            app:layout_constraintStart_toEndOf="@+id/buttonMenu"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/buttonMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_menu_black_24dp" />
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayoutActionBar"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutActionBar" />
 
 
         <ImageButton
-            android:id="@+id/buttonCancel"
+            android:id="@+id/buttonMyLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:visibility="visible"
+            android:layout_gravity="right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_button_location"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonQrCode"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttonQrCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_button_qr_code"
+            android:elevation="4dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDetail"
+            app:layout_constraintEnd_toEndOf="@+id/buttonMyLocation" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayoutDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/bg_input"
+            android:elevation="4dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayoutBooking"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewParking"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/darker_gray"
+                android:foregroundGravity="center"
+                android:src="@drawable/im_cartels_logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="ที่จอดรถ :"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDistance"
+                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Address : "
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+
+            <TextView
+                android:id="@+id/textViewSupport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Support : "
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintTop_toBottomOf="@+id/textViewOpenAndClose" />
+
+            <ImageButton
+                android:id="@+id/buttonMoreDetail"
+                android:layout_width="@dimen/dp_L"
+                android:layout_height="@dimen/dp_L"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_navigate_next_black_24dp"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewOpenAndClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Open and Close : "
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
+
+            <TextView
+                android:id="@+id/textViewAddressValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="TextView"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
+                app:layout_constraintStart_toEndOf="@+id/textViewAddress"
+                app:layout_constraintTop_toTopOf="@+id/textViewAddress" />
+
+            <TextView
+                android:id="@+id/textViewOpenAndCloseValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="TextView"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
+                app:layout_constraintStart_toEndOf="@+id/textViewOpenAndClose"
+                app:layout_constraintTop_toTopOf="@+id/textViewOpenAndClose" />
+
+            <TextView
+                android:id="@+id/textViewSupportValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="TextView"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
+                app:layout_constraintStart_toEndOf="@+id/textViewSupport"
+                app:layout_constraintTop_toTopOf="@+id/textViewSupport" />
+
+            <Button
+                android:id="@+id/buttonCall"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_button_call"
+                android:text="Call"
+                android:textAllCaps="true"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonDirections"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSupportValue" />
+
+            <Button
+                android:id="@+id/buttonDirections"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:background="@drawable/bg_button_directions"
+                android:text="Directions"
+                android:textAllCaps="true"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonCall" />
+
+            <TextView
+                android:id="@+id/textViewDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text="1.55 km"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayoutBooking"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/bg_input"
+            android:elevation="4dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cancel__24dp" />
+            app:layout_constraintStart_toStartOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
 
 
     </android.support.constraint.ConstraintLayout>
 
-    <ImageButton
-        android:id="@+id/buttonBack"
-        android:layout_width="@dimen/input_height"
-        android:layout_height="@dimen/input_height"
-        android:layout_margin="@dimen/dp_M"
-        android:background="@drawable/bg_button_back"
-        android:visibility="gone"
-        android:elevation="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Spinner
-        android:id="@+id/spinnerFilterVehicle"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ic_bg_spinner_vehicle_type"
-        android:drawSelectorOnTop="true"
-        android:elevation="4dp"
-        android:popupBackground="@drawable/bg_input"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayoutActionBar"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutActionBar" />
-
-
-    <ImageButton
-        android:id="@+id/buttonMyLocation"
+    <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_button_location"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonQrCode"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:id="@+id/nav_view"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawermenu"
 
-    <ImageButton
-        android:id="@+id/buttonQrCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_button_qr_code"
-        android:elevation="4dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDetail"
-        app:layout_constraintEnd_toEndOf="@+id/buttonMyLocation" />
+        >
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/bg_input"
-        android:elevation="4dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutBooking"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:id="@+id/imageViewParking"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/darker_gray"
-            android:foregroundGravity="center"
-            android:src="@drawable/im_cartels_logo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="ที่จอดรถ :"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDistance"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Address : "
-            android:textColor="@android:color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
-
-
-        <TextView
-            android:id="@+id/textViewSupport"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="Support : "
-            android:textColor="@android:color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toBottomOf="@+id/textViewOpenAndClose" />
-
-        <ImageButton
-            android:id="@+id/buttonMoreDetail"
-            android:layout_width="@dimen/dp_L"
-            android:layout_height="@dimen/dp_L"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/ic_navigate_next_black_24dp"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewOpenAndClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Open and Close : "
-            android:textColor="@android:color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
-
-        <TextView
-            android:id="@+id/textViewAddressValue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
-            app:layout_constraintStart_toEndOf="@+id/textViewAddress"
-            app:layout_constraintTop_toTopOf="@+id/textViewAddress" />
-
-        <TextView
-            android:id="@+id/textViewOpenAndCloseValue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
-            app:layout_constraintStart_toEndOf="@+id/textViewOpenAndClose"
-            app:layout_constraintTop_toTopOf="@+id/textViewOpenAndClose" />
-
-        <TextView
-            android:id="@+id/textViewSupportValue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/buttonMoreDetail"
-            app:layout_constraintStart_toEndOf="@+id/textViewSupport"
-            app:layout_constraintTop_toTopOf="@+id/textViewSupport" />
-
-        <Button
-            android:id="@+id/buttonCall"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_button_call"
-            android:text="Call"
-            android:textAllCaps="true"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonDirections"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSupportValue" />
-
-        <Button
-            android:id="@+id/buttonDirections"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:background="@drawable/bg_button_directions"
-            android:text="Directions"
-            android:textAllCaps="true"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonCall" />
-
-        <TextView
-            android:id="@+id/textViewDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:text="1.55 km"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutBooking"
-        android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/bg_input"
-        android:elevation="4dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </android.support.constraint.ConstraintLayout>
-
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>
 
 
 

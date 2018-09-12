@@ -9,13 +9,17 @@ import android.location.Location
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBarDrawerToggle
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.Explode
 import android.transition.TransitionManager
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -39,10 +43,10 @@ import retrofit2.Response
 class MapsActivity : AppCompatActivity()
         , OnMapReadyCallback
         , GoogleApiClient.OnConnectionFailedListener
-        , GoogleMap.OnMarkerClickListener {
+        , GoogleMap.OnMarkerClickListener
+        , NavigationView.OnNavigationItemSelectedListener{
 
-
-    private val LOCATION_PERMISSION_REQUEST_CODE = 777
+private val LOCATION_PERMISSION_REQUEST_CODE = 777
     private var mMap: GoogleMap? = null
     private var myLocation: Location? = null
     private var mLocationPermissionsGranted: Boolean? = false
@@ -59,6 +63,7 @@ class MapsActivity : AppCompatActivity()
         setupLocationPermission()
         setupButtonDirections()
         setupSpinnerFilterVehicle()
+        setupNav()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -137,6 +142,42 @@ class MapsActivity : AppCompatActivity()
         startActivity(intent)
 
         finishAffinity()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // Handle navigation view item clicks here.
+
+        when (item.itemId) {
+            R.id.nav_Payment -> {
+                Toast.makeText(this, "paymentCard", Toast.LENGTH_LONG).show()
+            }
+            R.id.nav_vehicle-> {
+
+            }
+            R.id.nav_parking -> {
+
+            }
+            R.id.nav_history -> {
+
+            }
+            R.id.nav_logout -> {
+
+                var perfs = this.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                        , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                        .edit()  // ประกาศใช้ SharedPreferences เพื่อลบ Token
+                perfs.clear()
+                perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+                val intent = Intent(this, SplashScreenActivity::class.java)
+                startActivity(intent)
+
+                finishAffinity()
+
+            }
+        }
+
+        drawer_nav.closeDrawer(GravityCompat.START)
+        return true
     }
 
     private fun onCameraChangeListener() {
@@ -373,6 +414,18 @@ class MapsActivity : AppCompatActivity()
             getDeviceLocation()
         }
     }
+    private fun setupNav(){
+
+        val toggle = ActionBarDrawerToggle(
+                this, drawer_nav, constraintLayoutActionBar , R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+
+        drawer_nav.addDrawerListener(toggle)
+        toggle.syncState()
+        nav_view.setNavigationItemSelectedListener(this)
+
+
+
+    }
 
     private fun showParkingDetail(parkingDetail: ParkingDetail?) {
         TransitionManager.beginDelayedTransition(layoutActivityMaps,Explode())
@@ -536,7 +589,7 @@ class MapsActivity : AppCompatActivity()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                buttonMenu.visibility = View.VISIBLE
+                //buttonMenu.visibility = View.VISIBLE
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
