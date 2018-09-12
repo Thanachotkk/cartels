@@ -417,7 +417,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     private fun setupNav(){
 
         val toggle = ActionBarDrawerToggle(
-                this, drawer_nav, constraintLayoutActionBar , R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this, drawer_nav, toolbar , R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 
         drawer_nav.addDrawerListener(toggle)
         toggle.syncState()
@@ -433,7 +433,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         when (parkingDetail!!.Type) {
             "Other" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
-                constraintLayoutActionBar.visibility = View.GONE
+                toolbar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
@@ -470,7 +470,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             }
             "Home" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
-                constraintLayoutActionBar.visibility = View.GONE
+                toolbar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
@@ -506,7 +506,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             }
             "Building" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
-                constraintLayoutActionBar.visibility = View.GONE
+                toolbar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
@@ -550,7 +550,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         TransitionManager.beginDelayedTransition(layoutActivityMaps,Explode())
         constraintLayoutDetail.visibility = View.GONE
         buttonBack.visibility = View.GONE
-        constraintLayoutActionBar.visibility = View.VISIBLE
+        toolbar.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.VISIBLE
         mMap!!.setPadding(48, 0, 48, 24)
 

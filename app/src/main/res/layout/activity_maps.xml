@@ -15,8 +15,6 @@
         android:layout_height="match_parent"
         sothree:context=".Main.MapsActivity">
 
-
-
         <fragment
             android:id="@+id/fragmentMap"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -30,7 +28,7 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/constraintLayoutActionBar"
+            android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginEnd="22dp"
@@ -38,7 +36,6 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_input"
             android:elevation="4dp"
-            android:paddingLeft="16dp"
             android:paddingRight="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +47,7 @@
                 android:layout_height="24dp"
                 android:layout_marginEnd="15dp"
                 android:background="@null"
-                android:dropDownAnchor="@+id/constraintLayoutActionBar"
+                android:dropDownAnchor="@+id/toolbar"
                 android:dropDownHeight="wrap_content"
                 android:dropDownVerticalOffset="5dp"
                 android:hint="I want to park nearby"
@@ -69,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -84,8 +81,8 @@
             android:layout_height="@dimen/input_height"
             android:layout_margin="@dimen/dp_M"
             android:background="@drawable/bg_button_back"
-            android:visibility="gone"
             android:elevation="4dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,8 +98,8 @@
             android:drawSelectorOnTop="true"
             android:elevation="4dp"
             android:popupBackground="@drawable/bg_input"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayoutActionBar"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutActionBar" />
+            app:layout_constraintEnd_toEndOf="@+id/toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 
         <ImageButton
@@ -161,14 +158,14 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="ที่จอดรถ :"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
+                android:text="ที่จอดรถ :"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textViewDistance"
                 app:layout_constraintStart_toEndOf="@+id/imageViewParking"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -337,16 +334,13 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
         android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawermenu"
+        app:menu="@menu/drawermenu" />
 
-        >
-
-    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
 
 

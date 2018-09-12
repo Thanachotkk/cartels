@@ -3,23 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group>
         <item
             android:id="@+id/nav_Payment"
-            android:title="Payment cards" />
+            android:title="Payment cards"
+             />
         <item
             android:id="@+id/nav_vehicle"
-            android:title="My vehicle" />
+            android:title="My vehicle"
+            />
         <item
             android:id="@+id/nav_parking"
-            android:title="My parking" />
+            android:title="My parking"
+            />
         <item
             android:id="@+id/nav_history"
-            android:title="History" />
+            android:title="History"
+            />
 
         <item
             android:id="@+id/nav_logout"
-            android:title="Sign out" />
+            android:title="Sign out"
+            />
     </group>
 
 </menu>
