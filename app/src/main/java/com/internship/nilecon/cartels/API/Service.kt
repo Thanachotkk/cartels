@@ -22,7 +22,7 @@ interface AuthenticationsInterface{
     fun verifyOtpForForgotPassword(@Body userForVerifyOtpDTO: UserForVerifyOtpDTO) : Call<Token>
 
     @POST(" /api/Auth/IsUserExistsBySocial")
-    fun SignUpWithSocial (@Body SignUpSocial : UserForIsUserExistsBySocialDTO ): Call<Void>
+    fun isUserExistsBySocial (@Body userForIsUserExistsBySocialDTO : UserForIsUserExistsBySocialDTO ): Call<Void>
 
     @POST("api/Auth/SignUp")
     fun signUp(@Body userForSignUpDTO: UserForSignUpDTO) : Call<Token>

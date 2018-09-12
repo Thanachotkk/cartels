@@ -189,7 +189,7 @@
         app:srcCompat="@drawable/ic_facebook" />
 
     <com.facebook.login.widget.LoginButton
-        android:id="@+id/facemainlogin"
+        android:id="@+id/buttonFacebookMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />

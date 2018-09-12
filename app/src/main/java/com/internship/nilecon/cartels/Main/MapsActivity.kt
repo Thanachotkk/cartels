@@ -43,7 +43,7 @@ class MapsActivity : AppCompatActivity()
 
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 777
-    private lateinit var mMap: GoogleMap
+    private var mMap: GoogleMap? = null
     private var myLocation: Location? = null
     private var mLocationPermissionsGranted: Boolean? = false
     private var mApi: Any? = null
@@ -65,10 +65,13 @@ class MapsActivity : AppCompatActivity()
     override fun onMapReady(googleMap: GoogleMap) {
 
         mMap = googleMap
-        mMap.uiSettings.isMapToolbarEnabled = false
-        mMap.uiSettings.isZoomControlsEnabled = false
-        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        mMap.setPadding(48, 0, 48, 0)
+        mMap!!.also {
+            it.uiSettings.isMapToolbarEnabled = false
+            it.uiSettings.isMapToolbarEnabled = false
+            it.uiSettings.isZoomControlsEnabled = false
+            it.mapType = GoogleMap.MAP_TYPE_NORMAL
+            it.setPadding(48, 0, 48, 0)
+        }
 
         if (mLocationPermissionsGranted!!) {
 
@@ -80,8 +83,8 @@ class MapsActivity : AppCompatActivity()
                 return
             }
 
-            mMap.isMyLocationEnabled = true
-            mMap.uiSettings.isMyLocationButtonEnabled = false
+            mMap!!.isMyLocationEnabled = true
+            mMap!!.uiSettings.isMyLocationButtonEnabled = false
 
         }
         with(mMap) {
@@ -138,14 +141,14 @@ class MapsActivity : AppCompatActivity()
     }
 
     private fun onCameraChangeListener() {
-        mMap.setOnCameraChangeListener {
-            mMap.clear()
+        mMap!!.setOnCameraChangeListener {
+            mMap!!.clear()
             callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(
                     it.target.latitude,
                     it.target.longitude,
                     1,
                     VehicleType))
-            mMap.addCircle(CircleOptions()
+            mMap!!.addCircle(CircleOptions()
                     .center(LatLng(it.target.latitude, it.target.longitude))
                     .radius(1000.0)
                     .strokeColor(resources.getColor(R.color.colorTheme3))
@@ -236,13 +239,13 @@ class MapsActivity : AppCompatActivity()
 
     private fun moveCamera(latLng: LatLng, zoom: Float, title: String) {
         print("moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
+        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
 
         if (title != "My Location") {
             val options = MarkerOptions()
                     .position(latLng)
                     .title(title)
-            mMap.addMarker(options)
+            mMap!!.addMarker(options)
         }
     }
 
@@ -331,15 +334,15 @@ class MapsActivity : AppCompatActivity()
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                mMap.clear()
+                mMap!!.clear()
                 VehicleType = spinnerFilterVehicleList[position].textViewVehicleType
                 callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(
-                        mMap.cameraPosition.target.latitude,
-                        mMap.cameraPosition.target.longitude,
+                        mMap!!.cameraPosition.target.latitude,
+                        mMap!!.cameraPosition.target.longitude,
                         1,
                         VehicleType))
-                mMap.addCircle(CircleOptions()
-                        .center(LatLng(mMap.cameraPosition.target.latitude, mMap.cameraPosition.target.longitude))
+                mMap!!.addCircle(CircleOptions()
+                        .center(LatLng(mMap!!.cameraPosition.target.latitude, mMap!!.cameraPosition.target.longitude))
                         .radius(1000.0)
                         .strokeColor(resources.getColor(R.color.colorTheme3))
                         .fillColor(resources.getColor(R.color.colorTheme3_opacity20)))
@@ -387,7 +390,7 @@ class MapsActivity : AppCompatActivity()
                 constraintLayoutActionBar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
-                mMap.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
+                mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -418,7 +421,7 @@ class MapsActivity : AppCompatActivity()
                 constraintLayoutActionBar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
-                mMap.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
+                mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -448,7 +451,7 @@ class MapsActivity : AppCompatActivity()
                 constraintLayoutActionBar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
-                mMap.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
+                mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -483,7 +486,7 @@ class MapsActivity : AppCompatActivity()
         buttonBack.visibility = View.GONE
         constraintLayoutActionBar.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.VISIBLE
-        mMap.setPadding(48, 0, 48, 24)
+        mMap!!.setPadding(48, 0, 48, 24)
 
     }
 
@@ -556,7 +559,7 @@ class MapsActivity : AppCompatActivity()
     }
 
     private fun assignToMap(latLng: LatLng) {
-        mMap.apply {
+        mMap!!.apply {
             moveCamera(CameraUpdateFactory.newLatLng(latLng))
             animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.5f))
         }

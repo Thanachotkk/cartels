@@ -13,6 +13,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
 import com.internship.nilecon.cartels.API.*
 import com.internship.nilecon.cartels.Main.MapsActivity
 
@@ -24,11 +32,13 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val GOOGLE_SIGN_IN_REQUEST_CODE = 9001
 
 /**
  * A simple [Fragment] subclass.
@@ -39,11 +49,14 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class SignInFragment : Fragment() {
+class SignInFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var mApi : Any? = null
+    private val mCallbackFacebook = CallbackManager.Factory.create()
+    private var mGoogleApiClient: GoogleApiClient? = null
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,6 +110,42 @@ class SignInFragment : Fragment() {
         super.onDetach()
         listener = null
     }
+
+    override fun onPause() {
+        super.onPause()
+        mGoogleApiClient!!.stopAutoManage(activity!!)
+        mGoogleApiClient!!.disconnect()
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode,  resultCode, data)
+        mCallbackFacebook.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            when (requestCode){
+
+                GOOGLE_SIGN_IN_REQUEST_CODE  -> {
+                    val googleResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+
+                    when(googleResult.isSuccess){
+                        true -> {
+                            callApiSignInForSocial(UserForSignInSocialDTO(
+                                         googleResult.signInAccount!!.id,"Google"))
+                        }
+                        else -> {
+
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -189,6 +238,58 @@ class SignInFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun callApiSignInForSocial(userForSignInSocialDTO: UserForSignInSocialDTO){
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+
+        mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
+                .signInForSocial(userForSignInSocialDTO) //ตั้งค่า Api request
+
+        (mApi as Call<Token>).enqueue(object : Callback<Token> {
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
+                print(t.message)
+            }
+
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
+
+                when(response.code()){
+                    200 ->{
+                        LoginManager.getInstance().logOut()
+
+                        var token = response.body()!!.Token //แปลง Token ที่ได้มาให้เป็น String
+
+                        var perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                                ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                                .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
+                        perfs.putString("Token",token) /*เก็บ Token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                        perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
+                        var intent = Intent(activity!!, MapsActivity::class.java)
+                        startActivity(intent)
+                        activity!!.finishAffinity()
+                    }
+                    400 ->{
+                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
+                    }
+                    401 -> {  //เมื่อ status code : 401 (Unauthorized)
+                        Toast.makeText(activity,"This ${userForSignInSocialDTO.SocialType} account has not been linked with any Cartels account.",Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        })  //ส่งคำร้องขอ Api request ไปที่ Server
     }
 
     private fun callApiForgotPassword(){
@@ -284,15 +385,49 @@ class SignInFragment : Fragment() {
     }
 
     private fun setupButtonGoogle(){
-        buttonGoogle.setOnClickListener {
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
 
+        mGoogleApiClient = GoogleApiClient.Builder(context!!).enableAutoManage(activity!!, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                .build()
+
+        buttonGoogle.setOnClickListener {
+            val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
+            startActivityForResult(intent, GOOGLE_SIGN_IN_REQUEST_CODE)
+            when(mGoogleApiClient!!.isConnected){true -> Auth.GoogleSignInApi.signOut(mGoogleApiClient)}
         }
     }
 
     private fun setupButtonFacebook(){
         buttonFacebook.setOnClickListener {
-
+            buttonFacebookMain.performClick()
         }
+        buttonFacebookMain.setReadPermissions(Arrays.asList("user_photos", "email", "public_profile"))
+        buttonFacebookMain.fragment = this
+        buttonFacebookMain.registerCallback(mCallbackFacebook, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult?) {
+                val parameters = Bundle()
+                parameters.putString("fields", "id,name,link,email,picture")
+                val request = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, _ ->
+                    callApiSignInForSocial(UserForSignInSocialDTO(Profile.getCurrentProfile().id,"Facebook"))
+                }
+                request.parameters = parameters
+                request.executeAsync()
+
+            }
+
+            override fun onCancel() {
+
+            }
+
+            override fun onError(error: FacebookException?) {
+
+            }
+
+        })
+
     }
 
     private fun setupButtonContinue(){

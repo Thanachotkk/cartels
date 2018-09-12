@@ -1,1 +1,10 @@
-{"web":{"client_id":"858091353362-e9ns4q6jhn67avj8rd6i3q59m5d2ci0g.apps.googleusercontent.com","project_id":"cartels-1535442938621","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://www.googleapis.com/oauth2/v3/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"36MNHgIhvjS2RhOJwaSi-oHL"}}
+{
+  "web": {
+    "client_id": "15766517303-h3fhkfvlio4nav2hv3vgles1f3sc0r24.apps.googleusercontent.com",
+    "project_id": "cartels-1536658762741",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://www.googleapis.com/oauth2/v3/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "zvDWhIFZtSRjMDtlZzSiyhf-"
+  }
+}

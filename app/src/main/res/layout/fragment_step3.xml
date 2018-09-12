@@ -168,6 +168,12 @@
             app:layout_constraintTop_toBottomOf="@+id/buttonFacebook"
             app:srcCompat="@drawable/ic_facebook" />
 
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/buttonFacebookMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/textViewFacebook"
             android:layout_width="wrap_content"

@@ -4,6 +4,7 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.TransitionManager
+import com.facebook.login.LoginManager
 import com.internship.nilecon.cartels.API.UserForAddOrReplacePhotoDTO
 import com.internship.nilecon.cartels.API.UserForSignUpDTO
 import com.internship.nilecon.cartels.R
@@ -54,7 +55,9 @@ class SignUpActivity : AppCompatActivity()
             when (fragment) {
                 Step1Fragment().javaClass.simpleName -> textViewActionBar.text = "Step 1 / 4"
                 Step2Fragment().javaClass.simpleName -> textViewActionBar.text = "Step 2 / 4"
-                Step3Fragment().javaClass.simpleName -> textViewActionBar.text = "Step 3 / 4"
+                Step3Fragment().javaClass.simpleName -> {
+                    textViewActionBar.text = "Step 3 / 4"
+                    LoginManager.getInstance().logOut()}
                 Step4Fragment().javaClass.simpleName -> textViewActionBar.text = "Step 4 / 4"
             }
         }
