@@ -301,7 +301,7 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
         buttonFacebook.setOnClickListener {
             buttonFacebookMain.performClick()
         }
-        buttonFacebookMain.setReadPermissions(Arrays.asList("user_photos", "email", "public_profile"))
+        buttonFacebookMain.setReadPermissions(Arrays.asList("email", "public_profile"))
         buttonFacebookMain.fragment = this
         buttonFacebookMain.registerCallback(mCallbackFacebook, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {

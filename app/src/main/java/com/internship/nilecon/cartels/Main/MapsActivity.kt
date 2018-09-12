@@ -58,7 +58,6 @@ class MapsActivity : AppCompatActivity()
         setupButtonMylocation()
         setupLocationPermission()
         setupButtonDirections()
-        setupButtonCall()
         setupSpinnerFilterVehicle()
     }
 
@@ -334,18 +333,20 @@ class MapsActivity : AppCompatActivity()
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                mMap!!.clear()
-                VehicleType = spinnerFilterVehicleList[position].textViewVehicleType
-                callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(
-                        mMap!!.cameraPosition.target.latitude,
-                        mMap!!.cameraPosition.target.longitude,
-                        1,
-                        VehicleType))
-                mMap!!.addCircle(CircleOptions()
-                        .center(LatLng(mMap!!.cameraPosition.target.latitude, mMap!!.cameraPosition.target.longitude))
-                        .radius(1000.0)
-                        .strokeColor(resources.getColor(R.color.colorTheme3))
-                        .fillColor(resources.getColor(R.color.colorTheme3_opacity20)))
+                when(mMap == null){false ->{
+                    mMap!!.clear()
+                    VehicleType = spinnerFilterVehicleList[position].textViewVehicleType
+                    callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(
+                            mMap!!.cameraPosition.target.latitude,
+                            mMap!!.cameraPosition.target.longitude,
+                            1,
+                            VehicleType))
+                    mMap!!.addCircle(CircleOptions()
+                            .center(LatLng(mMap!!.cameraPosition.target.latitude, mMap!!.cameraPosition.target.longitude))
+                            .radius(1000.0)
+                            .strokeColor(resources.getColor(R.color.colorTheme3))
+                            .fillColor(resources.getColor(R.color.colorTheme3_opacity20)))
+                }}
             }
         }
     }
@@ -365,14 +366,6 @@ class MapsActivity : AppCompatActivity()
             startActivity(mapIntent)
         }
 
-    }
-
-    private fun setupButtonCall() {
-        buttonCall.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:0123456789")
-            startActivity(intent)
-        }
     }
 
     private fun setupButtonMylocation() {
@@ -400,7 +393,7 @@ class MapsActivity : AppCompatActivity()
                     longitude = parkingDetail.Longitude!!
                 }
 
-                textViewDistance.text = (myLocation!!.distanceTo(parkingLocation)/1000).toString()
+                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation)/1000)) + " Km."
 
                 textViewAddressValue.text = parkingDetail.Address;textViewAddressValue.isSelected = true
 
@@ -414,6 +407,12 @@ class MapsActivity : AppCompatActivity()
                     if (index == 0) textViewSupportValue.text = s
                     else textViewSupportValue.text = textViewSupportValue.text.toString() + ", $s"
                 };textViewSupportValue.isSelected = true
+
+                buttonCall.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel:${parkingDetail.Tel}")
+                    startActivity(intent)
+                }
 
             }
             "Home" -> {
@@ -431,7 +430,7 @@ class MapsActivity : AppCompatActivity()
                     longitude = parkingDetail.Longitude!!
                 }
 
-                textViewDistance.text = (myLocation!!.distanceTo(parkingLocation)/1000).toString()
+                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation)/1000))+ " Km."
 
                 textViewAddressValue.text = parkingDetail.Address;textViewAddressValue.isSelected = true
 
@@ -445,6 +444,12 @@ class MapsActivity : AppCompatActivity()
                     if (index == 0) textViewSupportValue.text = s
                     else textViewSupportValue.text = textViewSupportValue.text.toString() + ", $s"
                 };textViewSupportValue.isSelected = true
+
+                buttonCall.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel:${parkingDetail.Tel}")
+                    startActivity(intent)
+                }
             }
             "Building" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
@@ -460,7 +465,8 @@ class MapsActivity : AppCompatActivity()
                     latitude = parkingDetail.Latitude!!
                     longitude = parkingDetail.Longitude!!
                 }
-                textViewDistance.text = (myLocation!!.distanceTo(parkingLocation)/1000).toString()
+
+                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation)/1000))+ " Km."
 
                 textViewAddressValue.text = parkingDetail.Address;textViewAddressValue.isSelected = true
 
@@ -474,6 +480,13 @@ class MapsActivity : AppCompatActivity()
                     if (index == 0) textViewSupportValue.text = s
                     else textViewSupportValue.text = textViewSupportValue.text.toString() + ", $s"
                 };textViewSupportValue.isSelected = true
+
+                buttonCall.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel:${parkingDetail.Tel}")
+                    startActivity(intent)
+                }
+
             }
         }
 
