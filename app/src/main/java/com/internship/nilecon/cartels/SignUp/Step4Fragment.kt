@@ -23,6 +23,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import okhttp3.RequestBody
+import okhttp3.MultipartBody
+import java.io.File
+import android.graphics.Bitmap
+import android.media.Image
+import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +50,7 @@ class Step4Fragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var mApi : Any? = null
+    private var mApi: Any? = null
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +92,7 @@ class Step4Fragment : Fragment() {
     override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
         super.onDestroyView()
 
-        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+        if (mApi != null) { // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
             activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
@@ -137,12 +145,12 @@ class Step4Fragment : Fragment() {
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
                 .signUp(UserForSignUpDTO(SIGN_UP.UserForSignUpDTO.MobileNumber
-                        ,SIGN_UP.UserForSignUpDTO.Name
-                        ,SIGN_UP.UserForSignUpDTO.GoogleId
-                        ,SIGN_UP.UserForSignUpDTO.FacebookId
-                        ,SIGN_UP.UserForSignUpDTO.Password))
+                        , SIGN_UP.UserForSignUpDTO.Name
+                        , SIGN_UP.UserForSignUpDTO.GoogleId
+                        , SIGN_UP.UserForSignUpDTO.FacebookId
+                        , SIGN_UP.UserForSignUpDTO.Password))
 
-        (mApi as Call<Token>).enqueue(object : Callback<Token>{
+        (mApi as Call<Token>).enqueue(object : Callback<Token> {
             override fun onFailure(call: Call<Token>, t: Throwable) {
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
@@ -152,31 +160,36 @@ class Step4Fragment : Fragment() {
 
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
 
-                when(response.code()){
-                    200->{
+                when (response.code()) {
+                    200 -> {
 
                         var token = response.body()!!.Token //แปลง Token ที่ได้มาให้เป็น String
 
                         var perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
-                                ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
                                 .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
-                        perfs.putString("Token",token) /*เก็บ Token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                        perfs.putString("Token", token) /*เก็บ Token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
                         perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
 
-                        var intent = Intent(activity!!, MapsActivity::class.java)
-                        startActivity(intent)
-                        activity!!.finishAffinity()
+                        if (SIGN_UP.UserForAddOrReplacePhotoDTO.Photo == null){
+                            var intent = Intent(activity!!, MapsActivity::class.java)
+                            startActivity(intent)
+                            activity!!.finishAffinity()
+                        }
+                        else {
+                            callApiAddOrReplacePhoto(token!!)
+                        }
 
                     }
-                    400->{
-                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+                    400 -> {
+                        when (response.errorBody()!!.contentType()) { //ตรวจ ประเภทของ errorBody
 
                             MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
                                 var jObjError = JSONObject(response.errorBody()!!.string())
                                 print(jObjError.toString()) // error ที่เกิดขึ้น
                             }
 
-                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                            MediaType.parse("text/plain; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท text
                                 print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
                             }
                         }
@@ -187,8 +200,53 @@ class Step4Fragment : Fragment() {
 
     }
 
-    private fun setupEditTextPassword(){
-        editTextPassword.addTextChangedListener(object : TextWatcher{
+    private fun callApiAddOrReplacePhoto(token: String) {
+        activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
+
+        val image = MultipartBody.Part.createFormData(
+                "File",
+                SIGN_UP.UserForAddOrReplacePhotoDTO.Photo!!.name,
+                RequestBody.create(MediaType.parse("multipart/form-data"),
+                        SIGN_UP.UserForAddOrReplacePhotoDTO.Photo))
+
+        mApi = Api().Declaration(activity!!, UsersInterface::class.java)
+                .addOrReplacePhoto("Bearer $token", image)
+
+
+        (mApi as Call<Void>).enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
+                print(t.message)
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
+                when (response.code()) {
+                    200 -> {
+                        var intent = Intent(activity!!, MapsActivity::class.java)
+                        startActivity(intent)
+                        activity!!.finishAffinity()
+                    }
+                    400 -> {
+                        when (response.errorBody()!!.contentType()) { //ตรวจ ประเภทของ errorBody
+
+                            MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
+                                var jObjError = JSONObject(response.errorBody()!!.string())
+                                print(jObjError.toString()) // error ที่เกิดขึ้น
+                            }
+
+                            MediaType.parse("text/plain; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท text
+                                print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setupEditTextPassword() {
+        editTextPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s!!.length !in 4..12) editTextPassword.error = "You must specify password between 4 - 12 characters"
             }
@@ -201,8 +259,8 @@ class Step4Fragment : Fragment() {
         })
     }
 
-    private fun setupEditTextConfirmPassword(){
-        editTextConfirmPassword.addTextChangedListener(object : TextWatcher{
+    private fun setupEditTextConfirmPassword() {
+        editTextConfirmPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (editTextConfirmPassword.text.toString() != editTextPassword.text.toString()) editTextConfirmPassword.error = "Password and confirm password dose not match"
             }
@@ -215,7 +273,7 @@ class Step4Fragment : Fragment() {
         })
     }
 
-    private fun setupButtonNext(){
+    private fun setupButtonNext() {
         buttonNext.setOnClickListener {
             activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
 

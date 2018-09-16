@@ -7,23 +7,27 @@
         <item
             android:id="@+id/nav_Payment"
             android:title="Payment cards"
+            android:icon="@drawable/ic_credit_card_black_24dp"
              />
         <item
             android:id="@+id/nav_vehicle"
             android:title="My vehicle"
+            android:icon="@drawable/ic_car_black_24dp"
             />
         <item
             android:id="@+id/nav_parking"
             android:title="My parking"
+            android:icon="@drawable/ic_local_parking_black_24dp"
             />
         <item
             android:id="@+id/nav_history"
             android:title="History"
+            android:icon="@drawable/ic_history_black_24dp"
             />
-
         <item
             android:id="@+id/nav_logout"
             android:title="Sign out"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
             />
     </group>
 

@@ -1,6 +1,7 @@
 package com.internship.nilecon.cartels.API
 
 import android.graphics.Bitmap
+import android.net.Uri
 import java.io.File
 
 
@@ -17,7 +18,7 @@ data class UserForSignUpDTO(var MobileNumber:String?
                             , var FacebookId : String?
                             , var Password : String?)
 
-data class UserForAddOrReplacePhotoDTO(var Photo : Bitmap?)
+data class UserForAddOrReplacePhotoDTO(var Photo : File?)
 
 data class UserForSignInForMobileNumberDTO(
     var MobileNumber: String?,

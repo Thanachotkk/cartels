@@ -28,8 +28,10 @@
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
 
-        <activity android:name=".SplashScreen.SplashScreenActivity"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".SplashScreen.SplashScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

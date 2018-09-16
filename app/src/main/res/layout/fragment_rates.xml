@@ -9,7 +9,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
@@ -41,11 +41,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Motorcycle (Daily)"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/textViewMobileNumber"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMobileNumber" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewMobileNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"

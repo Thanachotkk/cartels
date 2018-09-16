@@ -27,7 +27,7 @@
             android:layout_marginTop="16dp"
             android:background="@android:color/darker_gray"
             android:foregroundGravity="center"
-            android:src="@drawable/im_cartels_logo"
+            android:src="@drawable/vt_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

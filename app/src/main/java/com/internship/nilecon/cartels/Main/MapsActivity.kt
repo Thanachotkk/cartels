@@ -24,6 +24,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
@@ -61,7 +62,6 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         setupButtonBack()
         setupButtonMylocation()
         setupLocationPermission()
-        setupButtonDirections()
         setupSpinnerFilterVehicle()
         setupNav()
     }
@@ -362,8 +362,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         val spinnerFilterVehicleList = ArrayList<SpinnerFilterVehicle>()
         spinnerFilterVehicleList.add(SpinnerFilterVehicle(R.drawable.ic_local_parking_black_24dp, "All"))
         spinnerFilterVehicleList.add(SpinnerFilterVehicle(R.drawable.ic_car_black_24dp, "Car"))
-        spinnerFilterVehicleList.add(SpinnerFilterVehicle(R.drawable.ic_directions_bike_black_24dp, "Motorcycle"))
-        spinnerFilterVehicleList.add(SpinnerFilterVehicle(R.drawable.ic_motorcycle_black_24dp, "Bigbike"))
+        spinnerFilterVehicleList.add(SpinnerFilterVehicle(R.drawable.ic_motorcycle_black_24dp, "Motorcycle"))
+        spinnerFilterVehicleList.add(SpinnerFilterVehicle(R.drawable.ic_bigbike_black_24dp, "Bigbike"))
 
         spinnerFilterVehicleAdapter.setSpinnerFilterVehicleList(spinnerFilterVehicleList)
 
@@ -398,22 +398,12 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         }
     }
 
-    private fun setupButtonDirections() {
-        buttonDirections.setOnClickListener {
-            val url = "https://www.google.com/maps/dir/Current+Location/760+West+Genesee+Street+Syracuse+NY+13204&mode=driving"
-            val gmmIntentUri = Uri.parse(url)
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            startActivity(mapIntent)
-        }
-
-    }
-
     private fun setupButtonMylocation() {
         buttonMyLocation.setOnClickListener {
             getDeviceLocation()
         }
     }
+
     private fun setupNav(){
 
         val toggle = ActionBarDrawerToggle(
@@ -422,9 +412,6 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         drawer_nav.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
-
-
-
     }
 
     private fun showParkingDetail(parkingDetail: ParkingDetail?) {
@@ -437,6 +424,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
+
+                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewParking)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -467,6 +456,13 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     startActivity(intent)
                 }
 
+                buttonDirections.setOnClickListener {
+                    val gmmIntentUri = Uri.parse("google.navigation:q=${parkingDetail.Latitude},${parkingDetail.Longitude}")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    startActivity(mapIntent)
+                }
+
             }
             "Home" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
@@ -474,6 +470,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
+
+                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewParking)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -502,6 +500,13 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     val intent = Intent(Intent.ACTION_DIAL)
                     intent.data = Uri.parse("tel:${parkingDetail.Tel}")
                     startActivity(intent)
+                }
+
+                buttonDirections.setOnClickListener {
+                    val gmmIntentUri = Uri.parse("google.navigation:q=${parkingDetail.Latitude},${parkingDetail.Longitude}")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    startActivity(mapIntent)
                 }
             }
             "Building" -> {
@@ -511,6 +516,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
 
+                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewParking)
+
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
                 var parkingLocation = Location("")
@@ -540,6 +547,12 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     startActivity(intent)
                 }
 
+                buttonDirections.setOnClickListener {
+                    val gmmIntentUri = Uri.parse("google.navigation:q=${parkingDetail.Latitude},${parkingDetail.Longitude}")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    startActivity(mapIntent)
+                }
             }
         }
 
@@ -581,7 +594,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         val builder = LocationSettingsRequest.Builder()
         builder.addLocationRequest(mLocationRequest)
 
-        searchAdapter = SearchAdapter(this, R.layout.expandable_list_item, mGeoDataClient, null, asiaZone)
+        searchAdapter = SearchAdapter(this, R.layout.view_expandable_item_search, mGeoDataClient, null, asiaZone)
         autoCompleteTextViewSearch.setAdapter(searchAdapter)
         autoCompleteTextViewSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

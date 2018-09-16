@@ -7,11 +7,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorTheme3</item>
         <item name="drawerArrowStyle">@style/DrawerIcon</item>
+        <item name="android:textViewStyle">@style/sukhumvitSetFontStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.SplashScreen">
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <!--Button styles. -->
@@ -45,183 +50,13 @@
         <item name="android:elevation">4dp</item>
     </style>
 
-    <!--Form styles. -->
-    <style name="AppTheme.Form" />
-
-    <style name="AppTheme.Form.Layout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:padding">@dimen/dp_M</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
-
-    <style name="AppTheme.Form.Title"/>
-
-    <style name="AppTheme.Form.Title.LinearLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Title.LinearLayout.DualObjects">
-        <item name="android:weightSum">2</item>
-    </style>
-
-    <style name="AppTheme.Form.Title.Text">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Title.Text.ThemeColor">
-        <item name="android:textSize">@dimen/sp_L</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorTheme3</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="AppTheme.Form.Title.Text.ThemeColor.SingleObject">
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginBottom">0dp</item>
-    </style>
-
-    <style name="AppTheme.Form.Input"/>
-
-    <style name="AppTheme.Form.Input.RelativeLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.RelativeLayout.Button">
-        <item name="android:layout_height">@dimen/input_height</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.RelativeLayout.Button.Google">
-        <item name="android:background">@drawable/bg_button_google</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.RelativeLayout.Button.Facebook">
-        <item name="android:background">@drawable/bg_button_facebook</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.LinearLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.LinearLayout.Horizontal">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.LinearLayout.Horizontal.DualObjects">
-        <item name="android:weightSum">2</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.LinearLayout.Horizontal.TripleObjects">
-        <item name="android:weightSum">3</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.LinearLayout.vertical">
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.ImageView"/>
-
-    <style name="AppTheme.Form.Input.ImageView.Profile">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-        <item name="android:src">@drawable/ic_account_box_black_100dp</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.ImageView.Button">
-        <item name="android:layout_width">@dimen/dp_S</item>
-        <item name="android:layout_height">@dimen/dp_S</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.ImageView.Button.Google">
-        <item name="android:src">@drawable/ic_google</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.ImageView.Button.Facebook">
-        <item name="android:src">@drawable/ic_facebook</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.EditText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/input_height</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.EditText.Insert">
-        <item name="android:background">@drawable/bg_input</item>
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:layout_margin">2dp</item>
-        <item name="android:elevation">4dp</item>
-        <item name="android:gravity">end|center_vertical</item>
-        <item name="android:textSize">@dimen/sp_M</item>
-        <item name="android:paddingRight">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.TextView.Insert">
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:elevation">4dp</item>
-        <item name="android:textSize">@dimen/sp_M</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:layout_marginLeft">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.TextView.Button">
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:layout_marginLeft">@dimen/dp_XXS</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.TextView.Button.Google">
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.TextView.Button.Facebook">
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.Button.FillColorBlue" parent="AppTheme.Button.FillColorBlue">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.Button.FillColorBlue.SingleObject" parent="AppTheme.Button.FillColorBlue">
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.Button.FillColorWhite" parent="AppTheme.Button.FillColorWhite">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.Button.FillColorWhite.SingleObject" parent="AppTheme.Button.FillColorWhite">
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.Button.OutlineColorWhite" parent="AppTheme.Button.OutlineColorWhite">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginBottom">@dimen/dp_M</item>
-    </style>
-
-    <style name="AppTheme.Form.Input.Button.OutlineColorWhite.SingleObject" parent="AppTheme.Button.OutlineColorWhite">
-        <item name="android:layout_weight">1</item>
+    <style name="sukhumvitSetFontStyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/sukhumvit_set</item>
     </style>
 
     <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/colorTheme3</item>
     </style>
+
+
 </resources>

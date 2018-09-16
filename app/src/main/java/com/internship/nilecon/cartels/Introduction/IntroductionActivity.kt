@@ -66,13 +66,16 @@ class IntroductionActivity : AppCompatActivity() {
 
     private fun getIntroductionList() : List<Introduction>{
         val introductionList = ArrayList<Introduction>()
-        introductionList.add(Introduction(R.drawable.im_intro1
+        introductionList.add(Introduction(R.drawable.im_slide1
                 ,"ทำชีวิตคุณง่ายขึ้น"
                 ,"ที่จอดรถง่าย ๆ ผ่าน Cartal"))
-        introductionList.add(Introduction(R.drawable.im_intro1
+        introductionList.add(Introduction(R.drawable.im_slide2
                 ,"ประหยัดเวลามากขึ้น"
                 ,"ไม่ต้องวนหาที่จอด เพิ่มเวลาช้อป เวลาชิว"))
-        introductionList.add(Introduction(R.drawable.im_intro1
+        introductionList.add(Introduction(R.drawable.im_slide3
+                ,"จ่ายง่ายไม่เสียเวลา"
+                ,"เลือกจ่ายได้ไม่ต้องกังวล เพียงเติมเงินหรือหักผ่านบัตรเครดิต"))
+        introductionList.add(Introduction(R.drawable.im_slide4
                 ,"จ่ายง่ายไม่เสียเวลา"
                 ,"เลือกจ่ายได้ไม่ต้องกังวล เพียงเติมเงินหรือหักผ่านบัตรเครดิต"))
         return  introductionList

@@ -31,46 +31,51 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="22dp"
-            android:layout_marginStart="22dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_input"
             android:elevation="4dp"
-            android:paddingRight="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextViewSearch"
-                android:layout_width="200dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="15dp"
-                android:background="@null"
-                android:dropDownAnchor="@+id/toolbar"
-                android:dropDownHeight="wrap_content"
-                android:dropDownVerticalOffset="5dp"
-                android:hint="I want to park nearby"
-                android:popupBackground="@drawable/bg_input"
-                android:singleLine="true"
-                android:textAlignment="textEnd"
-                android:textSize="@dimen/sp_L"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
-                app:layout_constraintStart_toEndOf="@+id/buttonMenu"
-                app:layout_constraintTop_toTopOf="parent" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextViewSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:background="@null"
+                    android:dropDownAnchor="@+id/toolbar"
+                    android:dropDownHeight="wrap_content"
+                    android:dropDownVerticalOffset="5dp"
+                    android:hint="I want to park nearby"
+                    android:popupBackground="@drawable/bg_input"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/sp_L"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-            <ImageButton
-                android:id="@+id/buttonCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_cancel__24dp" />
+                <ImageButton
+                    android:id="@+id/buttonCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_cancel__24dp" />
+            </android.support.constraint.ConstraintLayout>
 
 
         </android.support.v7.widget.Toolbar>
@@ -145,9 +150,8 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@android:color/darker_gray"
                 android:foregroundGravity="center"
-                android:src="@drawable/im_cartels_logo"
+                android:src="@drawable/vt_logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -338,7 +342,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
+        app:headerLayout="@layout/view_nav_header"
         app:menu="@menu/drawermenu" />
 
 </android.support.v4.widget.DrawerLayout>

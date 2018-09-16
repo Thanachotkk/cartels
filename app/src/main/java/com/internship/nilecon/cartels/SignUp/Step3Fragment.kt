@@ -3,6 +3,7 @@ package com.internship.nilecon.cartels.SignUp
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,6 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -33,6 +37,9 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -53,11 +60,10 @@ private const val GOOGLE_SIGN_IN_REQUEST_CODE = 9001
 class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
 
 
-
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var mApi : Any? = null
+    private var mApi: Any? = null
     private val mCallbackFacebook = CallbackManager.Factory.create()
     private var mGoogleApiClient: GoogleApiClient? = null
     private var listener: OnFragmentInteractionListener? = null
@@ -102,7 +108,7 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
     override fun onDestroyView() {  //เมื่อ fragment นี้ปิดตัวลง
         super.onDestroyView()
 
-        if (mApi != null){ // ถ้า Api request ยังไม่สำเร็จ
+        if (mApi != null) { // ถ้า Api request ยังไม่สำเร็จ
             (mApi as Call<Void>).cancel() //ยกเลิก Api request
             activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
         }
@@ -160,40 +166,39 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode,  resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
         mCallbackFacebook.onActivityResult(requestCode, resultCode, data)
-            if(resultCode == Activity.RESULT_OK){
-                when (requestCode){
-                    CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                        val result = CropImage.getActivityResult(data)
-                        SIGN_UP.UserForAddOrReplacePhotoDTO.Photo = result.bitmap
-                        imageViewProfile!!.setImageURI(result.uri)
-                    }
-                    GOOGLE_SIGN_IN_REQUEST_CODE  -> {
-                        val googleResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
 
-                        when(googleResult.isSuccess){
-                            true -> {
-                                callApiIsUserExistsBySocial(
-                                        UserForIsUserExistsBySocialDTO(
-                                                googleResult.signInAccount!!.id,
-                                                "Google"),
-                                        googleResult
-                                )
-                            }
-                            else -> {
+                    SIGN_UP.UserForAddOrReplacePhotoDTO.Photo = File(result.uri.path)
+                    imageViewProfile!!.setImageURI(result.uri)
+                }
+                GOOGLE_SIGN_IN_REQUEST_CODE -> {
+                    val googleResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
 
-                            }
+                    when (googleResult.isSuccess) {
+                        true -> {
+                            callApiIsUserExistsBySocial(
+                                    UserForIsUserExistsBySocialDTO(
+                                            googleResult.signInAccount!!.id,
+                                            "Google"),
+                                    googleResult
+                            )
                         }
+                        else -> {
 
+                        }
                     }
+
                 }
             }
-
-
+        }
     }
 
-    private fun callApiIsUserExistsBySocial(userForIsUserExistsBySocialDTO: UserForIsUserExistsBySocialDTO,userFromSocial: Any){
+    private fun callApiIsUserExistsBySocial(userForIsUserExistsBySocialDTO: UserForIsUserExistsBySocialDTO, userFromSocial: Any) {
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
         SIGN_UP.UserForSignUpDTO.FacebookId = null
         SIGN_UP.UserForSignUpDTO.GoogleId = null
@@ -210,45 +215,79 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
 
-                when(response.code()){
-                    200 ->{
-                        when(userForIsUserExistsBySocialDTO.SocialType){
+                when (response.code()) {
+                    200 -> {
+                        when (userForIsUserExistsBySocialDTO.SocialType) {
                             "Facebook" -> {
                                 SIGN_UP.UserForSignUpDTO.FacebookId = (userFromSocial as Profile).id
                                 SIGN_UP.UserForSignUpDTO.Name = userFromSocial.name
-                                LoginManager.getInstance().logOut()
-                                activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                                        R.anim.enter_from_right,
-                                        R.anim.exit_to_left,
-                                        R.anim.enter_from_left,
-                                        R.anim.exit_to_right)
-                                        .replace(R.id.fragmentSignUp,Step4Fragment())
-                                        .addToBackStack(this.javaClass.name)
-                                        .commit()
+                                Glide
+                                        .with(activity!!)
+                                        .downloadOnly() // notice this is much earlier in the chain
+                                        .load(userFromSocial.getProfilePictureUri(500, 500).toString())
+                                        .into(object : SimpleTarget<File>() {
+                                            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                                                SIGN_UP.UserForAddOrReplacePhotoDTO.Photo = resource
+                                                LoginManager.getInstance().logOut()
+                                                activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+                                                        R.anim.enter_from_right,
+                                                        R.anim.exit_to_left,
+                                                        R.anim.enter_from_left,
+                                                        R.anim.exit_to_right)
+                                                        .replace(R.id.fragmentSignUp, Step4Fragment())
+                                                        .addToBackStack(this.javaClass.name)
+                                                        .commit()
+                                            }
+                                        })
                             }
                             "Google" -> {
                                 SIGN_UP.UserForSignUpDTO.GoogleId = (userFromSocial as GoogleSignInResult).signInAccount!!.id
                                 SIGN_UP.UserForSignUpDTO.Name = userFromSocial.signInAccount!!.displayName
-                                activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
-                                        R.anim.enter_from_right,
-                                        R.anim.exit_to_left,
-                                        R.anim.enter_from_left,
-                                        R.anim.exit_to_right)
-                                        .replace(R.id.fragmentSignUp,Step4Fragment())
-                                        .addToBackStack(this.javaClass.name)
-                                        .commit()
+                                when (userFromSocial.signInAccount!!.photoUrl) {
+                                    null -> {
+                                        SIGN_UP.UserForAddOrReplacePhotoDTO.Photo = null
+                                        activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+                                                R.anim.enter_from_right,
+                                                R.anim.exit_to_left,
+                                                R.anim.enter_from_left,
+                                                R.anim.exit_to_right)
+                                                .replace(R.id.fragmentSignUp, Step4Fragment())
+                                                .addToBackStack(this.javaClass.name)
+                                                .commit()
+                                    }
+                                    else -> {
+                                        Glide
+                                                .with(activity!!)
+                                                .downloadOnly() // notice this is much earlier in the chain
+                                                .load(userFromSocial.signInAccount!!.photoUrl.toString())
+                                                .into(object : SimpleTarget<File>() {
+                                                    override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                                                        SIGN_UP.UserForAddOrReplacePhotoDTO.Photo = resource
+                                                        activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(
+                                                                R.anim.enter_from_right,
+                                                                R.anim.exit_to_left,
+                                                                R.anim.enter_from_left,
+                                                                R.anim.exit_to_right)
+                                                                .replace(R.id.fragmentSignUp, Step4Fragment())
+                                                                .addToBackStack(this.javaClass.name)
+                                                                .commit()
+                                                    }
+                                                })
+                                    }
+                                }
+
                             }
                         }
                     }
-                    400 ->{
-                        when(response.errorBody()!!.contentType()){ //ตรวจ ประเภทของ errorBody
+                    400 -> {
+                        when (response.errorBody()!!.contentType()) { //ตรวจ ประเภทของ errorBody
 
                             MediaType.parse("application/json; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท json
                                 var jObjError = JSONObject(response.errorBody()!!.string())
                                 print(jObjError.toString()) // error ที่เกิดขึ้น
                             }
 
-                            MediaType.parse("text/plain; charset=utf-8") ->{ //เมื่อ errorBody เป็นประเภท text
+                            MediaType.parse("text/plain; charset=utf-8") -> { //เมื่อ errorBody เป็นประเภท text
                                 print(response.errorBody()!!.charStream().readText()) //error ที่เกิดขึ้น
                             }
                         }
@@ -258,12 +297,12 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
         })  //ส่งคำร้องขอ Api request ไปที่ Server
     }
 
-    private fun setupButtonNext(){
+    private fun setupButtonNext() {
         buttonNext.setOnClickListener {
 
             activity!!.hideKeyboard(this!!.view!!) // ปิด keyboard
 
-            if(editTextName.text.isEmpty()) //ถ้า editTextName ไม่มีการกรอกค่า
+            if (editTextName.text.isEmpty()) //ถ้า editTextName ไม่มีการกรอกค่า
                 editTextName.error = "You must specify name or connect with google or facebook" // แจ้ง error ที่ editTextName
             else {
                 SIGN_UP.UserForSignUpDTO.FacebookId = null
@@ -274,13 +313,14 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
                         R.anim.exit_to_left,
                         R.anim.enter_from_left,
                         R.anim.exit_to_right)
-                        .replace(R.id.fragmentSignUp,Step4Fragment())
+                        .replace(R.id.fragmentSignUp, Step4Fragment())
                         .addToBackStack(this.javaClass.name)
-                        .commit()} //ไป Step4Fragment
+                        .commit()
+            } //ไป Step4Fragment
         }
     }
 
-    private fun setupButtonGoogle(){
+    private fun setupButtonGoogle() {
 
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -293,11 +333,12 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
         buttonGoogle.setOnClickListener {
             val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
             startActivityForResult(intent, GOOGLE_SIGN_IN_REQUEST_CODE)
-            when(mGoogleApiClient!!.isConnected){true -> Auth.GoogleSignInApi.signOut(mGoogleApiClient)}
+            when (mGoogleApiClient!!.isConnected) {true -> Auth.GoogleSignInApi.signOut(mGoogleApiClient)
+            }
         }
     }
 
-    private fun setupButtonFacebook(){
+    private fun setupButtonFacebook() {
         buttonFacebook.setOnClickListener {
             buttonFacebookMain.performClick()
         }
@@ -308,7 +349,7 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
                 val parameters = Bundle()
                 parameters.putString("fields", "id,name,link,email,picture")
                 val request = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, _ ->
-                    callApiIsUserExistsBySocial(UserForIsUserExistsBySocialDTO(Profile.getCurrentProfile().id,"Facebook"),Profile.getCurrentProfile())
+                    callApiIsUserExistsBySocial(UserForIsUserExistsBySocialDTO(Profile.getCurrentProfile().id, "Facebook"), Profile.getCurrentProfile())
                 }
                 request.parameters = parameters
                 request.executeAsync()
@@ -327,17 +368,35 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
 
     }
 
-    private fun setupImageViewProfile(){
+    private fun setupImageViewProfile() {
         imageViewProfile.setOnClickListener {
-            CropImage.activity().setAspectRatio(1,1).start(this.context!!,this)
+            CropImage.activity().setAspectRatio(1, 1).start(this.context!!, this)
         }
+    }
+
+    private fun bitmapToFile(bitmap: Bitmap): File {
+        //create a file to write bitmap data
+        var file = File(context!!.cacheDir, "image")
+        file.createNewFile()
+
+        //Convert bitmap to byte array
+        var bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
+        var bitmapdata = bos.toByteArray()
+
+        //write the bytes in file
+        var fos = FileOutputStream(file)
+        fos.write(bitmapdata)
+        fos.flush()
+        fos.close()
+
+        return file
     }
 
     private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
 
 
 }

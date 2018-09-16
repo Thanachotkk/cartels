@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#000099</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">@color/colorTheme4</color>
+    <color name="colorAccent">@color/colorTheme3</color>
     <color name="colorTheme1">#0DFFDA</color>
     <color name="colorTheme2">#0CCDE8</color>
-    <color name="colorTheme3">#009dff</color>
-    <color name="colorTheme3_opacity20">#1F009dff</color>
-    <color name="colorTheme4">#0C59E8</color>
+    <color name="colorTheme3">#00c000</color>
+    <color name="colorTheme3_opacity20">#1F00C000</color>
+    <color name="colorTheme4">#0FAA02</color>
     <color name="colorTheme5">#0D22FF</color>
     <color name="colorFacebook">#3b5998</color>
+
+    <color name="header1">#333333</color>
+    <color name="header2">#556059</color>
+    <color name="paragraph1">#999999</color>
+    <color name="paragraph2">#B3B3B3</color>
 </resources>

@@ -8,10 +8,6 @@ import java.io.File
 
 interface AuthenticationsInterface{
 
-//    @Multipart
-//    @POST("api/Users/AddOrReplacePhoto")
-//    fun upload(@PartMap params :Map<String, RequestBody> ) : Call<PhotoUrl>
-
     @POST("api/Auth/SentOtpSmsForSignUp")
     fun sentOtpSmsForSignUp(@Body userForSentOtpSmsForSignUpDTO: UserForSentOtpSmsForSignUpDTO) : Call<Void>
 
@@ -42,7 +38,10 @@ interface AuthenticationsInterface{
 }
 
 interface UsersInterface{
-
+    @Multipart
+    @POST("api/Users/AddOrReplacePhoto")
+    fun addOrReplacePhoto(@Header("Authorization") token : String,
+                          @Part image : MultipartBody.Part) : Call<Void>
 }
 
 interface ParkingsInterface{
