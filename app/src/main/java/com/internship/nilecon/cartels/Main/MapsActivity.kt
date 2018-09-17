@@ -38,6 +38,7 @@ import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.*
 import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 import com.internship.nilecon.cartels.API.*
 import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
@@ -699,7 +700,19 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             autoCompleteTextViewSearch.setText("")
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, result.contents, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
 
+        }
+    }
     private fun assignToMap(latLng: LatLng) {
         mMap!!.apply {
             moveCamera(CameraUpdateFactory.newLatLng(latLng))
