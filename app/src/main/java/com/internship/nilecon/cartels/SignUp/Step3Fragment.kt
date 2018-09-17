@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -199,6 +200,7 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
     }
 
     private fun callApiIsUserExistsBySocial(userForIsUserExistsBySocialDTO: UserForIsUserExistsBySocialDTO, userFromSocial: Any) {
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
         SIGN_UP.UserForSignUpDTO.FacebookId = null
         SIGN_UP.UserForSignUpDTO.GoogleId = null
@@ -208,11 +210,13 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
 
         (mApi as Call<Void>).enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
 
                 when (response.code()) {

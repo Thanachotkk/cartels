@@ -28,6 +28,7 @@ import okhttp3.MultipartBody
 import java.io.File
 import android.graphics.Bitmap
 import android.media.Image
+import android.transition.TransitionManager
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 
@@ -140,7 +141,7 @@ class Step4Fragment : Fragment() {
     }
 
     private fun callApiSignUp() {
-
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
@@ -152,12 +153,13 @@ class Step4Fragment : Fragment() {
 
         (mApi as Call<Token>).enqueue(object : Callback<Token> {
             override fun onFailure(call: Call<Token>, t: Throwable) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
-
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
 
                 when (response.code()) {
@@ -201,6 +203,7 @@ class Step4Fragment : Fragment() {
     }
 
     private fun callApiAddOrReplacePhoto(token: String) {
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         val image = MultipartBody.Part.createFormData(
@@ -215,11 +218,13 @@ class Step4Fragment : Fragment() {
 
         (mApi as Call<Void>).enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 when (response.code()) {
                     200 -> {

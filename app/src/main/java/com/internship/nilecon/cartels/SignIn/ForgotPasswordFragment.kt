@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -133,7 +134,7 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun callApiForgotPassword(){
-
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
@@ -141,17 +142,20 @@ class ForgotPasswordFragment : Fragment() {
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
             }
         })
     }
 
     private fun callApiVerifyOpt(){
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE
 
         mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
@@ -161,10 +165,12 @@ class ForgotPasswordFragment : Fragment() {
         (mApi as Call<Token>).enqueue(object : Callback<Token>{
             override fun onFailure(call: Call<Token>, t: Throwable) {
                 print(t.message)
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
             }
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE
 
                 when(response.code()){

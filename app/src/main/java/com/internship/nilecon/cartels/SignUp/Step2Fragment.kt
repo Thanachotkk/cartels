@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -135,7 +136,7 @@ class Step2Fragment : Fragment() {
     }
 
     private fun callApiSentOptSmsForSignUp(){
-
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!, AuthenticationsInterface::class.java)
@@ -144,11 +145,13 @@ class Step2Fragment : Fragment() {
         (mApi as Call<Void>).enqueue(object : Callback<Void> {  //ส่งคำร้องขอ Api request ไปที่ Server
 
             override fun onFailure(call: Call<Void>, t: Throwable) { //เมื่อ Server ตอบกลับแบบล้มเหลว
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) { //เมื่อ Server ตอบกลับแบบสำเร็จ.
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 when(response.code()){
                     200->{
@@ -173,7 +176,7 @@ class Step2Fragment : Fragment() {
     }
 
     private fun callApiVerify() {
-
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         mApi = Api().Declaration(activity!!,AuthenticationsInterface::class.java)
@@ -184,11 +187,13 @@ class Step2Fragment : Fragment() {
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
 
                 when(response.code()){ //ตรวจ status code

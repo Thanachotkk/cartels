@@ -1,5 +1,6 @@
 package com.internship.nilecon.cartels.Main
 
+import com.internship.nilecon.cartels.R
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -34,7 +35,7 @@ import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.*
 import com.internship.nilecon.cartels.API.*
-import com.internship.nilecon.cartels.R
+import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
 import retrofit2.Call
@@ -97,6 +98,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         }
 
         onCameraChangeListener()
+        callApiGetParkingPoints(VehicleType)
 
     }
 
@@ -182,17 +184,11 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
 
     private fun onCameraChangeListener() {
         mMap!!.setOnCameraChangeListener {
-            mMap!!.clear()
-            callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(
-                    it.target.latitude,
-                    it.target.longitude,
-                    1,
-                    VehicleType))
-            mMap!!.addCircle(CircleOptions()
-                    .center(LatLng(it.target.latitude, it.target.longitude))
-                    .radius(1000.0)
-                    .strokeColor(resources.getColor(R.color.colorTheme3))
-                    .fillColor(resources.getColor(R.color.colorTheme3_opacity20)))
+//            mMap!!.addCircle(CircleOptions()
+//                    .center(LatLng(it.target.latitude, it.target.longitude))
+//                    .radius(1000.0)
+//                    .strokeColor(resources.getColor(R.color.colorTheme3))
+//                    .fillColor(resources.getColor(R.color.colorTheme3_opacity20)))
         }
     }
 
@@ -213,9 +209,39 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 when (response!!.code()) {
                     200 -> {
                         addMarkersToMapCar(response.body()!!)
+
                     }
                     404 -> {
                         Toast.makeText(this@MapsActivity, "Not found", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun callApiGetParkingPoints(vehicycleType : String) {
+
+        mMap!!.clear()
+        TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
+        constraintLayoutLayoutLoading.visibility = View.VISIBLE
+
+        val prefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+        var token = prefs.getString("Token", null)
+
+        mApi = Api().Declaration(this, ParkingsInterface::class.java)
+                .getParkingPoints("Bearer $token",ParkingForGetParkingPointsDTO(vehicycleType))
+
+        (mApi as Call<List<ParkingPoint>>).enqueue(object : Callback<List<ParkingPoint>> {
+            override fun onFailure(call: Call<List<ParkingPoint>>?, t: Throwable?) {
+                print(t!!.message)
+            }
+
+            override fun onResponse(call: Call<List<ParkingPoint>>?, response: Response<List<ParkingPoint>>?) {
+                TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
+                constraintLayoutLayoutLoading.visibility = View.GONE
+                when (response!!.code()) {
+                    200 -> {
+                        addMarkersToMapCar(response.body()!!)
                     }
                 }
             }
@@ -239,9 +265,6 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 when (response.code()) {
                     200 -> {
                         showParkingDetail(response.body())
-                    }
-                    404 -> {
-
                     }
                 }
             }
@@ -377,16 +400,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 when(mMap == null){false ->{
                     mMap!!.clear()
                     VehicleType = spinnerFilterVehicleList[position].textViewVehicleType
-                    callApiGetParkingPointByLatLng(ParkingForGetParkingPointByLatLngDTO(
-                            mMap!!.cameraPosition.target.latitude,
-                            mMap!!.cameraPosition.target.longitude,
-                            1,
-                            VehicleType))
-                    mMap!!.addCircle(CircleOptions()
-                            .center(LatLng(mMap!!.cameraPosition.target.latitude, mMap!!.cameraPosition.target.longitude))
-                            .radius(1000.0)
-                            .strokeColor(resources.getColor(R.color.colorTheme3))
-                            .fillColor(resources.getColor(R.color.colorTheme3_opacity20)))
+                    callApiGetParkingPoints(VehicleType)
+
                 }}
             }
         }
@@ -425,7 +440,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
 
-                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewParking)
+                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewTitle)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -463,6 +478,12 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     startActivity(mapIntent)
                 }
 
+                buttonMoreDetail.setOnClickListener {
+                    val intent = Intent(this,ParkingDetailActivity::class.java)
+                    intent.putExtra("parkingDetail",parkingDetail)
+                    startActivity(intent)
+                }
+
             }
             "Home" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
@@ -471,7 +492,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
 
-                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewParking)
+                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewTitle)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -507,6 +528,13 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
                     startActivity(mapIntent)
+                }
+
+
+                buttonMoreDetail.setOnClickListener {
+                    val intent = Intent(this,ParkingDetailActivity::class.java)
+                    intent.putExtra("parkingDetail",parkingDetail)
+                    startActivity(intent)
                 }
             }
             "Building" -> {
@@ -516,7 +544,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 spinnerFilterVehicle.visibility = View.GONE
                 mMap!!.setPadding(48, 0, 48, constraintLayoutDetail.height + buttonCall.height + 112)
 
-                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewParking)
+                Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewTitle)
 
                 textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 
@@ -552,6 +580,12 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
                     startActivity(mapIntent)
+                }
+
+                buttonMoreDetail.setOnClickListener {
+                    val intent = Intent(this,ParkingDetailActivity::class.java)
+                    intent.putExtra("parkingDetail",parkingDetail)
+                    startActivity(intent)
                 }
             }
         }

@@ -145,7 +145,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
-                android:id="@+id/imageViewParking"
+                android:id="@+id/imageViewTitle"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="16dp"
@@ -171,7 +171,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textViewDistance"
-                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -184,7 +184,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
 
@@ -202,7 +202,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
                 app:layout_constraintTop_toBottomOf="@+id/textViewOpenAndClose" />
 
             <ImageButton
@@ -226,7 +226,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageViewParking"
+                app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
                 app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
 
             <TextView
@@ -337,6 +337,40 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutLayoutLoading"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorWhite_opacity80"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Now loading"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:textColor="@color/colorTheme3"
+            app:layout_constraintEnd_toStartOf="@+id/progressBar"
+            app:layout_constraintStart_toEndOf="@+id/progressBar"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    </android.support.constraint.ConstraintLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -344,6 +378,8 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/view_nav_header"
         app:menu="@menu/drawermenu" />
+
+
 
 </android.support.v4.widget.DrawerLayout>
 

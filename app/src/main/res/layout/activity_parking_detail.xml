@@ -4,89 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ParkingDetail.ParkingDetailActivity"
-    tools:layout_editor_absoluteY="25dp">
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/buttonCall"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DetailsImage">
-
-        <ImageView
-            android:id="@+id/imageViewParking"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/darker_gray"
-            android:foregroundGravity="center"
-            android:src="@drawable/vt_logo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="ที่จอดรถ :"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toTopOf="@+id/imageViewParking" />
-
-        <TextView
-            android:id="@+id/textViewAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
-            android:text="Address : "
-            android:textIsSelectable="false"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
-
-
-        <TextView
-            android:id="@+id/textViewSupport"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:maxLines="1"
-            android:text="Support :"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toBottomOf="@+id/textViewOpenAndClose" />
-
-        <TextView
-            android:id="@+id/textViewOpenAndClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Open and Close :"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageViewParking"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
-
-    </android.support.constraint.ConstraintLayout>
+    tools:context=".ParkingDetail.ParkingDetailActivity">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/toolbar"
@@ -122,53 +40,189 @@
     </android.support.constraint.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/DetailsImage"
+        android:id="@+id/ImageViewHeader"
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:srcCompat="@drawable/ic_launcher_background" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ImageViewHeader">
+
+        <ImageView
+            android:id="@+id/imageViewTitle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:foregroundGravity="center"
+            android:src="@drawable/vt_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="ที่จอดรถ :"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Address : "
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+        <TextView
+            android:id="@+id/textViewSupport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="Support : "
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOpenAndClose" />
+
+        <TextView
+            android:id="@+id/textViewOpenAndClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Open and Close : "
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
+
+        <TextView
+            android:id="@+id/textViewAddressValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewAddress"
+            app:layout_constraintTop_toTopOf="@+id/textViewAddress" />
+
+        <TextView
+            android:id="@+id/textViewOpenAndCloseValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewOpenAndClose"
+            app:layout_constraintTop_toTopOf="@+id/textViewOpenAndClose" />
+
+        <TextView
+            android:id="@+id/textViewSupportValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewSupport"
+            app:layout_constraintTop_toTopOf="@+id/textViewSupport" />
+
+    </android.support.constraint.ConstraintLayout>
+
     <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/tabLayoutParkingDetail"
         android:layout_width="0dp"
-        android:layout_height="53dp"
+        android:layout_height="50dp"
+        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDetail">
 
         <android.support.design.widget.TabItem
-            android:id="@+id/TabRates"
+            android:id="@+id/tabRates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rates" />
 
         <android.support.design.widget.TabItem
-            android:id="@+id/TabAmenities"
+            android:id="@+id/tabAmenities"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Amenities" />
 
         <android.support.design.widget.TabItem
-            android:id="@+id/TanNearby"
+            android:id="@+id/tabNearby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nearby" />
 
         <android.support.design.widget.TabItem
-            android:id="@+id/TabNote"
+            android:id="@+id/tabNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Note" />
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/container"
+        android:id="@+id/viewPagerParkingDetail"
         android:layout_width="wrap_content"
-        android:layout_height="192dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayoutParkingDetail" />
 
 </android.support.constraint.ConstraintLayout>

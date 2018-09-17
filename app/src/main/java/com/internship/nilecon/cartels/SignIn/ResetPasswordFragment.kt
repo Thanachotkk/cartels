@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -135,7 +136,7 @@ class ResetPasswordFragment : Fragment() {
     }
 
     private fun callApiResetPassword(){
-
+        TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
         activity!!.constraintLayoutLayoutLoading.visibility = View.VISIBLE // เปิด Loading
 
         var perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
@@ -150,13 +151,12 @@ class ResetPasswordFragment : Fragment() {
 
         (mApi as Call<Void>).enqueue(object : Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
                 print(t.message)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                activity!!.constraintLayoutLayoutLoading.visibility = View.GONE // ปิด Loading
-
                 when(response.code()){
                     204->{
                         var intent = Intent(activity!!, MapsActivity::class.java)
@@ -190,6 +190,7 @@ class ResetPasswordFragment : Fragment() {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

@@ -2,6 +2,8 @@ package com.internship.nilecon.cartels.API
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Parcel
+import android.os.Parcelable
 import java.io.File
 
 
@@ -44,6 +46,10 @@ data class ParkingForGetParkingPointByLatLngDTO(
         var VehicleType: String?
 )
 
+data class ParkingForGetParkingPointsDTO(
+        var VehicleType: String?
+)
+
 data class UserForResetPasswordDTO(var MobileNumber:String?, var Password : String?)
 
 
@@ -80,13 +86,91 @@ data class ParkingDetail(
     var Supports: List<String?>?,
     var Rates: List<Rate?>?,
     var Amenities: List<Amenity?>?
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
+            parcel.readValue(Double::class.java.classLoader) as? Double,
+            parcel.readValue(Double::class.java.classLoader) as? Double,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.createStringArrayList(),
+            parcel.createTypedArrayList(Rate),
+            parcel.createTypedArrayList(Amenity)) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(ParkingId)
+        parcel.writeString(Title)
+        parcel.writeValue(Latitude)
+        parcel.writeValue(Longitude)
+        parcel.writeString(Address)
+        parcel.writeString(OpenTime)
+        parcel.writeString(CloseTime)
+        parcel.writeString(Type)
+        parcel.writeString(PhotoTitleUrl)
+        parcel.writeString(PhotoBannerUrl)
+        parcel.writeString(Nearby)
+        parcel.writeString(Note)
+        parcel.writeString(Tel)
+        parcel.writeStringList(Supports)
+        parcel.writeTypedList(Rates)
+        parcel.writeTypedList(Amenities)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ParkingDetail> {
+        override fun createFromParcel(parcel: Parcel): ParkingDetail {
+            return ParkingDetail(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ParkingDetail?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
 
 data class Rate(
     var VehicleType: String?,
     var Daily: Int?,
     var Monthly: Int?
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(VehicleType)
+        parcel.writeValue(Daily)
+        parcel.writeValue(Monthly)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Rate> {
+        override fun createFromParcel(parcel: Parcel): Rate {
+            return Rate(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Rate?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
 
 data class Amenity(
     var EvCharger: Boolean?,
@@ -95,4 +179,36 @@ data class Amenity(
     var Disabled: Boolean?,
     var Restrooms: Boolean?,
     var Security: Boolean?
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(EvCharger)
+        parcel.writeValue(CarWash)
+        parcel.writeValue(AirportShuttle)
+        parcel.writeValue(Disabled)
+        parcel.writeValue(Restrooms)
+        parcel.writeValue(Security)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Amenity> {
+        override fun createFromParcel(parcel: Parcel): Amenity {
+            return Amenity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Amenity?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
