@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_nearby.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,6 +43,11 @@ class NearbyFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_nearby, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupTextViewNearby()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -97,5 +103,9 @@ class NearbyFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    private fun setupTextViewNearby(){
+        textViewNearby.text = PARKING_DETAIL.parkingDetail!!.Nearby
     }
 }

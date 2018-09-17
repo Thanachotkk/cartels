@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewBookingFeeDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="฿100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewBookingTypeDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" (Daily)"
+        app:layout_constraintStart_toEndOf="@+id/textViewVehicycleTypeDaily"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewVehicycleTypeDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Car"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewBookingFeeMonthly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="฿100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBookingFeeDaily" />
+
+    <TextView
+        android:id="@+id/textViewBookingTypeMonthly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=" (Monthly)"
+        app:layout_constraintStart_toEndOf="@+id/textViewVehicycleTypeDaily"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBookingTypeDaily" />
+
+    <TextView
+        android:id="@+id/textViewVehicycleTypeMonthly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Car"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVehicycleTypeDaily" />
+</android.support.constraint.ConstraintLayout>

@@ -4,21 +4,20 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.view.*
 import com.bumptech.glide.Glide
 import com.internship.nilecon.cartels.API.ParkingDetail
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_parking_detail.*
+
+object PARKING_DETAIL {
+    var parkingDetail: ParkingDetail? = null
+}
 
 class ParkingDetailActivity : AppCompatActivity(),
         RatesFragment.OnFragmentInteractionListener,
         AmenitiesFragment.OnFragmentInteractionListener,
         NearbyFragment.OnFragmentInteractionListener,
         NoteFragment.OnFragmentInteractionListener {
-
 
 
     override fun onFragmentInteraction(uri: Uri) {
@@ -29,22 +28,31 @@ class ParkingDetailActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parking_detail)
 
-        val parkingDetail = intent.getParcelableExtra<ParkingDetail>("parkingDetail")
+        var parkingDetail = intent.getParcelableExtra<ParkingDetail>("parkingDetail")
+        PARKING_DETAIL.parkingDetail = parkingDetail
 
+        setupButtonBack()
         setupViewPagerAndTabLayout()
-        setupParkingDetail(parkingDetail)
+        setupParkingDetail(parkingDetail!!)
+    }
+
+    private fun setupButtonBack() {
+        buttonBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setupViewPagerAndTabLayout() {
         viewPagerParkingDetail.adapter = ParkingDeteilFragmentPagerAdapter(supportFragmentManager)
-
         viewPagerParkingDetail.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayoutParkingDetail))
         tabLayoutParkingDetail.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(viewPagerParkingDetail))
     }
 
-    private fun setupParkingDetail(parkingDetail : ParkingDetail){
+    private fun setupParkingDetail(parkingDetail: ParkingDetail) {
 
         Glide.with(this).load(parkingDetail.PhotoTitleUrl).into(imageViewTitle)
+
+        Glide.with(this).load(parkingDetail.PhotoBannerUrl).into(imageViewHeader)
 
         textViewTitle.text = parkingDetail.Title;textViewTitle.isSelected = true
 

@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ParkingDetail.AmenitiesFragment">
@@ -10,57 +9,118 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textViewEvCharger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="EV Charger"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/textViewDisabled"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Disabled"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintStart_toStartOf="@+id/textViewEvCharger"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEvCharger" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/textViewAriportShuttls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Ariport shuttls"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintStart_toStartOf="@+id/textViewDisabled"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDisabled" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/textViewCarWash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Car wash"
-        app:layout_constraintStart_toStartOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintStart_toStartOf="@+id/textViewAriportShuttls"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAriportShuttls" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/textViewRestrooms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Restrooms"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintStart_toStartOf="@+id/textViewCarWash"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCarWash" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/textViewSecurity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Security"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintStart_toStartOf="@+id/textViewRestrooms"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRestrooms" />
+
+    <CheckBox
+        android:id="@+id/checkBoxEvCharger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEvCharger"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewEvCharger" />
+
+    <CheckBox
+        android:id="@+id/checkBoxSecurity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSecurity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewSecurity" />
+
+    <CheckBox
+        android:id="@+id/checkBoxRestrooms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewRestrooms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewRestrooms" />
+
+    <CheckBox
+        android:id="@+id/checkBoxCarWash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCarWash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewCarWash" />
+
+    <CheckBox
+        android:id="@+id/checkBoxAriportShuttls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewAriportShuttls"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewAriportShuttls" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDisabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="false"    
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDisabled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewDisabled" />
 </android.support.constraint.ConstraintLayout>

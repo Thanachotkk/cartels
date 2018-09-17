@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.view.LayoutInflater
 import com.internship.nilecon.cartels.R
-import kotlinx.android.synthetic.main.view_spinner_items_vehicle_type.view.*
+import kotlinx.android.synthetic.main.view_spinner_item_vehicle_type.view.*
 
 
 class SpinnerFilterVehicleAdapter(context: Context) : BaseAdapter() {
@@ -20,7 +20,7 @@ class SpinnerFilterVehicleAdapter(context: Context) : BaseAdapter() {
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var view = LayoutInflater.from(context).inflate(R.layout.view_spinner_items_vehicle_type,null)
+        var view = LayoutInflater.from(context).inflate(R.layout.view_spinner_item_vehicle_type,null)
         var viewHolder = SpinnerItemsVehicleTypeViewHolder(view)
 
         viewHolder.imageViewVehicleType.setImageResource(this.spinnerFilterVehicleList[position].imageViewVehicleType)

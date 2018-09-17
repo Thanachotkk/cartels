@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_amenities.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,6 +43,12 @@ class AmenitiesFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_amenities, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupAmenities()
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -97,5 +104,37 @@ class AmenitiesFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    private fun setupAmenities(){
+        when(PARKING_DETAIL.parkingDetail!!.Amenities!![0]!!.EvCharger){
+            true -> checkBoxEvCharger.isChecked = true
+            false -> checkBoxEvCharger.isChecked = false
+        }
+
+        when(PARKING_DETAIL.parkingDetail!!.Amenities!![0]!!.Disabled){
+            true -> checkBoxDisabled.isChecked = true
+            false -> checkBoxDisabled.isChecked = false
+        }
+
+        when(PARKING_DETAIL.parkingDetail!!.Amenities!![0]!!.AirportShuttle){
+            true -> checkBoxAriportShuttls.isChecked = true
+            false -> checkBoxAriportShuttls.isChecked = false
+        }
+
+        when(PARKING_DETAIL.parkingDetail!!.Amenities!![0]!!.CarWash){
+            true -> checkBoxCarWash.isChecked = true
+            false -> checkBoxCarWash.isChecked = false
+        }
+
+        when(PARKING_DETAIL.parkingDetail!!.Amenities!![0]!!.Restrooms){
+            true -> checkBoxRestrooms.isChecked = true
+            false -> checkBoxRestrooms.isChecked = false
+        }
+
+        when(PARKING_DETAIL.parkingDetail!!.Amenities!![0]!!.Security){
+            true -> checkBoxSecurity.isChecked = true
+            false -> checkBoxSecurity.isChecked = false
+        }
     }
 }

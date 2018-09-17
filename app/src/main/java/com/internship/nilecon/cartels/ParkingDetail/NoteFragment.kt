@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_note.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +45,10 @@ class NoteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_note, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupTextViewNote()
+    }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -97,5 +102,9 @@ class NoteFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    private fun setupTextViewNote(){
+        textViewNote.text = PARKING_DETAIL.parkingDetail!!.Note
     }
 }
