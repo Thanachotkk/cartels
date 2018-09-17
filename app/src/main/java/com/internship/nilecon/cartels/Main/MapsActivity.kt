@@ -24,7 +24,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import com.auth0.android.jwt.JWT
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -34,6 +37,7 @@ import com.google.android.gms.location.places.Places
 import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.*
+import com.google.zxing.integration.android.IntentIntegrator
 import com.internship.nilecon.cartels.API.*
 import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
@@ -65,6 +69,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         setupLocationPermission()
         setupSpinnerFilterVehicle()
         setupNav()
+        setupQrCodeScanner()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -299,7 +304,17 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             print("getDeviceLocation: SecurityException: " + e.message)
         }
     }
-
+    private fun setupQrCodeScanner() {
+        buttonQrCode.setOnClickListener {
+            val integrator = IntentIntegrator(this)
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
+            integrator.setPrompt("Scan")
+            integrator.setCameraId(0)
+            integrator.setBeepEnabled(false)
+            integrator.setBarcodeImageEnabled(false)
+            integrator.initiateScan()
+        }
+    }
     private fun moveCamera(latLng: LatLng, zoom: Float, title: String) {
         print("moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude)
         mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
@@ -313,10 +328,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     }
 
     private fun initMap() {
-
         print("initMap : intialzing map")
         val mapFragment = supportFragmentManager.findFragmentById(R.id.fragmentMap) as SupportMapFragment
-
         mapFragment.getMapAsync(this@MapsActivity)
     }
 
@@ -427,6 +440,22 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         drawer_nav.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
+        //---------------------------- SharePreferences ----------------------------------------
+        val perfs = getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+        val token = perfs.getString("Token",null) //ดึงค่า Token ที่เก็บไว้ ใน SharedPreferences
+        val NameInHeader  = JWT(token).getClaim("Name").asString() //แปลง Token เป็น Name
+        val mobileNumberInHeader  = JWT(token).getClaim("MobileNumber").asString() //แปลง Token เป็น MobileNumber
+        val UrlPictureInHeader  = JWT(token).getClaim("PhotoUrl").asString() //แปลง Token เป็น UrlPicture
+
+        //---------------------------- Put Information Profile ---------------------------------
+        val header = nav_view.getHeaderView(0)
+        (header.findViewById<TextView>(R.id.textViewName)).text = NameInHeader
+        (header.findViewById<TextView>(R.id.textViewMobileNumberValue)).text = mobileNumberInHeader
+        val imageProfile = (header.findViewById<ImageView>(R.id.imageViewProfile))
+        Glide.with(this)
+                .load(UrlPictureInHeader)
+                .into(imageProfile)
     }
 
     private fun showParkingDetail(parkingDetail: ParkingDetail?) {
