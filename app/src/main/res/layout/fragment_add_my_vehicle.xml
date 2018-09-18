@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyVehicle.AddMyVehicleFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:id="@+id/EditTextTypeVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="Car"
+        android:inputType="textPersonName"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/EditTextNameVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Toyota Camry"
+        android:inputType="textPersonName"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/EditTextTypeVehicle"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextTypeVehicle" />
+
+    <EditText
+        android:id="@+id/EditTextProvinceVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Bangkok"
+        android:inputType="textPersonName"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="@+id/EditTextNameVehicle"
+        app:layout_constraintStart_toStartOf="@+id/EditTextNameVehicle"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextNameVehicle" />
+
+    <EditText
+        android:id="@+id/EditTextLicenseVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="กข 1234"
+        android:inputType="textPersonName"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="@+id/EditTextProvinceVehicle"
+        app:layout_constraintStart_toStartOf="@+id/EditTextProvinceVehicle"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextProvinceVehicle" />
+
+    <TextView
+        android:id="@+id/textViewAddVehicleType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Type"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/EditTextTypeVehicle"
+        app:layout_constraintStart_toStartOf="@+id/EditTextTypeVehicle"
+        app:layout_constraintTop_toTopOf="@+id/EditTextTypeVehicle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/TextViewAddVehicleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Vehicle Name"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/EditTextNameVehicle"
+        app:layout_constraintStart_toStartOf="@+id/EditTextNameVehicle"
+        app:layout_constraintTop_toTopOf="@+id/EditTextNameVehicle" />
+
+    <TextView
+        android:id="@+id/TextViewAddVehicleProvince"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Province"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/EditTextProvinceVehicle"
+        app:layout_constraintStart_toStartOf="@+id/EditTextProvinceVehicle"
+        app:layout_constraintTop_toTopOf="@+id/EditTextProvinceVehicle" />
+
+    <TextView
+        android:id="@+id/TextViewAddVehicleLicense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="License Plate"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/EditTextLicenseVehicle"
+        app:layout_constraintStart_toStartOf="@+id/EditTextLicenseVehicle"
+        app:layout_constraintTop_toTopOf="@+id/EditTextLicenseVehicle" />
+
+    <Button
+        style="@style/AppTheme.Button.FillColorBlue"
+        android:id="@+id/buttonAddVehicle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextLicenseVehicle" />
+</android.support.constraint.ConstraintLayout>
