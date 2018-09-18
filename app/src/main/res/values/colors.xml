@@ -14,7 +14,7 @@
     <color name="header1">#333333</color>
     <color name="header2">#556059</color>
     <color name="paragraph1">#999999</color>
-    <color name="paragraph2">#B3B3B3</color>
+    <color name="paragraph2">#b3b3b3</color>
 
     <color name="colorWhite_opacity80">#AFFFFFFF</color>
 </resources>

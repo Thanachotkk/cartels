@@ -9,7 +9,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/RecylcerViewMyVehicle"
+        android:id="@+id/recyclerViewMyVehicle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

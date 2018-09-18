@@ -18,23 +18,37 @@ class MyVehicleActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_vehicle)
-        setupAddVehicle()
+        setupButtonAdd()
         setupButtonBack()
-        setupVehicle()
+        setupMyVehicleFragment()
     }
     private fun setupButtonBack(){
         buttonBack.setOnClickListener {
             onBackPressed()
         }
     }
-    private fun setupVehicle() {
+    private fun setupMyVehicleFragment() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentVehicle, MyVehicleFragment())
                 .commit()
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            var fragment = supportFragmentManager.findFragmentById(R.id.fragmentVehicle).javaClass.simpleName
+            when (fragment) {
+                MyVehicleFragment().javaClass.simpleName -> {
+                    textViewActionBar.text = "My vehicle"
+                    buttonAdd.visibility = View.VISIBLE
+                }
+                AddMyVehicleFragment().javaClass.simpleName -> {
+                    textViewActionBar.text = "Add vehicle"
+                    buttonAdd.visibility = View.GONE
+                }
+            }
+        }
     }
 
-    private fun setupAddVehicle() {
-        buttonAddMyVehicle.setOnClickListener {
+    private fun setupButtonAdd() {
+        buttonAdd.setOnClickListener {
             supportFragmentManager.beginTransaction().setCustomAnimations(
                     R.anim.enter_from_right,
                     R.anim.exit_to_left,
@@ -42,20 +56,7 @@ class MyVehicleActivity : AppCompatActivity(),
                     R.anim.exit_to_right)
                     .replace(R.id.fragmentVehicle, AddMyVehicleFragment())
                     .addToBackStack(this.javaClass.name)
-                    .commit() // ไป AddMyVehicleFragment
-        }
-        supportFragmentManager.addOnBackStackChangedListener {
-            var fragment = supportFragmentManager.findFragmentById(R.id.fragmentVehicle).javaClass.simpleName
-            when (fragment) {
-                MyVehicleFragment().javaClass.simpleName -> {
-                    textViewActionBar.text = "My Vehicle"
-                    buttonAddMyVehicle.visibility = View.VISIBLE
-                }
-                AddMyVehicleFragment().javaClass.simpleName -> {
-                    textViewActionBar.text = "Add Vehicle"
-                    buttonAddMyVehicle.visibility = View.GONE
-                }
-            }
+                    .commit()
         }
     }
 }
