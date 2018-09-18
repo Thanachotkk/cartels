@@ -74,7 +74,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_cancel__24dp" />
+                    app:srcCompat="@drawable/ic_cancel_24dp" />
             </android.support.constraint.ConstraintLayout>
 
 

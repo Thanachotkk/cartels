@@ -41,6 +41,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import com.internship.nilecon.cartels.API.*
 import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
+import com.internship.nilecon.cartels.PaymentCards.PaymentCardsActivity
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
 import retrofit2.Call
@@ -157,7 +158,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
 
         when (item.itemId) {
             R.id.nav_Payment -> {
-                Toast.makeText(this, "paymentCard", Toast.LENGTH_LONG).show()
+                startActivity(Intent(this,PaymentCardsActivity::class.java))
             }
             R.id.nav_vehicle-> {
 
@@ -305,6 +306,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             print("getDeviceLocation: SecurityException: " + e.message)
         }
     }
+
     private fun setupQrCodeScanner() {
         buttonQrCode.setOnClickListener {
             val integrator = IntentIntegrator(this)
@@ -316,6 +318,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             integrator.initiateScan()
         }
     }
+
     private fun moveCamera(latLng: LatLng, zoom: Float, title: String) {
         print("moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude)
         mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
@@ -700,6 +703,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             autoCompleteTextViewSearch.setText("")
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
@@ -713,6 +717,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
 
         }
     }
+
     private fun assignToMap(latLng: LatLng) {
         mMap!!.apply {
             moveCamera(CameraUpdateFactory.newLatLng(latLng))

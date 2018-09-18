@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PaymentCards.AddCardFragment">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Enter your credit card information"
+        android:textColor="@color/paragraph1"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/editTextCardNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="0123 0123 0123 0123"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Card number"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextCardNumber"
+        app:layout_constraintStart_toStartOf="@+id/editTextCardNumber"
+        app:layout_constraintTop_toTopOf="@+id/editTextCardNumber" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="ABC DEFG"
+        android:inputType="textPersonName"
+        android:maxLength="20"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCardNumber" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Name"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextName"
+        app:layout_constraintStart_toStartOf="@+id/editTextName"
+        app:layout_constraintTop_toTopOf="@+id/editTextName" />
+
+    <EditText
+        android:id="@+id/editTextCvv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="123"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toStartOf="@+id/editTextExpiry"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="CVV"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextCvv"
+        app:layout_constraintStart_toStartOf="@+id/editTextCvv"
+        app:layout_constraintTop_toTopOf="@+id/editTextCvv" />
+
+    <EditText
+        android:id="@+id/editTextExpiry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:hint="01/20"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editTextCvv"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Expiry"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextExpiry"
+        app:layout_constraintStart_toStartOf="@+id/editTextExpiry"
+        app:layout_constraintTop_toTopOf="@+id/editTextExpiry" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        style="@style/AppTheme.Button.FillColorBlue"
+        android:layout_width="0dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Next"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCvv" />
+
+
+</android.support.constraint.ConstraintLayout>

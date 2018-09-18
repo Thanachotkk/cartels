@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/im_card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonDelete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:src="@drawable/ic_cancel_white_24dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCard"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCard" />
+
+    <TextView
+        android:id="@+id/textViewBankName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="bank name"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCard"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCard" />
+
+    <TextView
+        android:id="@+id/textViewCardholderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cardholder name"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCardholderNameValue"
+        app:layout_constraintStart_toStartOf="@+id/textViewCardholderNameValue" />
+
+    <TextView
+        android:id="@+id/textViewExpireDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="expire date"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewExpireDateValue"
+        app:layout_constraintStart_toEndOf="@+id/textViewCardholderName" />
+
+    <TextView
+        android:id="@+id/textViewCardholderNameValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Kaveepart watkaew"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCard"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCard" />
+
+    <TextView
+        android:id="@+id/textViewExpireDateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="09 / 2020"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCard"
+        app:layout_constraintStart_toStartOf="@+id/textViewExpireDate" />
+
+    <TextView
+        android:id="@+id/textViewCardNunber1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="••••"
+        android:letterSpacing="0.2"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCard"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCardNunber2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCard"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCard" />
+
+    <TextView
+        android:id="@+id/textViewCardNunber2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="••••"
+        android:letterSpacing="0.2"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCardNunber1"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCardNunber3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewCardNunber1"
+        app:layout_constraintTop_toTopOf="@+id/textViewCardNunber1" />
+
+    <TextView
+        android:id="@+id/textViewCardNunber3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="••••"
+        android:letterSpacing="0.2"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCardNunber2"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCardNunber4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewCardNunber2"
+        app:layout_constraintTop_toTopOf="@+id/textViewCardNunber2" />
+
+    <TextView
+        android:id="@+id/textViewCardNunber4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:text="1234"
+        android:letterSpacing="0.2"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCardNunber3"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCard"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewCardNunber3"
+        app:layout_constraintTop_toTopOf="@+id/textViewCardNunber3" />
+
+
+</android.support.constraint.ConstraintLayout>

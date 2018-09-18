@@ -212,3 +212,5 @@ data class Amenity(
         }
     }
 }
+
+data class PaymentCard(var cardNumber : String, var name :String, var cvv :String,var expiry :String)
