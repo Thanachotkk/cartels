@@ -27,6 +27,7 @@ import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
 import com.auth0.android.jwt.JWT
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.ConnectionResult
@@ -141,16 +142,16 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     }
 
     override fun onBackPressed() {
-        var perfs = this.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
-                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
-                .edit()  // ประกาศใช้ SharedPreferences เพื่อลบ Token
-        perfs.clear()
-        perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
+        MaterialDialog.Builder(this)
+                .title("Exit")
+                .content("Are you sure you want to Exit Cartels?")
+                .positiveText("yes")
+                .onPositive { dialog, which ->
+                    finishAffinity()
+                }
+                .negativeText("No")
+                .show()
 
-        val intent = Intent(this, SplashScreenActivity::class.java)
-        startActivity(intent)
-
-        finishAffinity()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -171,16 +172,24 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             }
             R.id.nav_logout -> {
 
-                var perfs = this.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
-                        , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
-                        .edit()  // ประกาศใช้ SharedPreferences เพื่อลบ Token
-                perfs.clear()
-                perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
+                MaterialDialog.Builder(this)
+                        .title("Sign out")
+                        .content("Are you sure you want to Sign out?")
+                        .positiveText("yes")
+                        .onPositive { dialog, which ->
+                            var perfs = this.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                                    , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                                    .edit()  // ประกาศใช้ SharedPreferences เพื่อลบ Token
+                            perfs.clear()
+                            perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
 
-                val intent = Intent(this, SplashScreenActivity::class.java)
-                startActivity(intent)
+                            val intent = Intent(this, SplashScreenActivity::class.java)
+                            startActivity(intent)
 
-                finishAffinity()
+                            finishAffinity()
+                        }
+                        .negativeText("No")
+                        .show()
 
             }
         }
