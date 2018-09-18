@@ -11,10 +11,21 @@ import kotlinx.android.synthetic.main.view_recycler_view_item_payment_cards.view
 
 class RecyclerViewPaymentCardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var paymentCardList: List<PaymentCard>? = null
+    private var paymentCardList= ArrayList<PaymentCard>()
+    private var listener : OnItemClickListener? = null
 
-    fun setPaymentCardList(paymentCardList: List<PaymentCard>?) {
+    fun setPaymentCardList(paymentCardList :ArrayList<PaymentCard>) {
         this.paymentCardList = paymentCardList
+    }
+
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.listener = onItemClickListener
+    }
+
+    fun removeItem(position: Int){
+        paymentCardList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, itemCount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,6 +41,13 @@ class RecyclerViewPaymentCardAdapter : RecyclerView.Adapter<RecyclerView.ViewHol
         holder.itemView.textViewCardNunber4.text = paymentCardList!![position].cardNumber
         holder.itemView.textViewCardholderNameValue.text = paymentCardList!![position].name
         holder.itemView.textViewExpireDateValue.text = paymentCardList!![position].expiry
+        holder.itemView.buttonDelete.setOnClickListener {
+            listener!!.onItemClick(position)
+        }
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
     }
 }
 

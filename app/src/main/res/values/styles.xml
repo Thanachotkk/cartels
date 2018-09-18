@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorTheme3</item>
         <item name="drawerArrowStyle">@style/DrawerIcon</item>
         <item name="android:textViewStyle">@style/sukhumvitSetFontStyle</item>
+        <item name="md_medium_font">sukhumvit_set_semi_bold.ttf</item>
+        <item name="md_regular_font">sukhumvit_set_medium.ttf</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

@@ -8,11 +8,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
 import com.internship.nilecon.cartels.API.PaymentCard
+import com.internship.nilecon.cartels.API.Token
 
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.fragment_payment_cards.*
 import java.lang.reflect.Array
+import java.text.FieldPosition
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,11 +33,14 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class PaymentCardsFragment : Fragment() {
+class PaymentCardsFragment : Fragment(){
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,29 +115,64 @@ class PaymentCardsFragment : Fragment() {
                     }
                 }
     }
+
+
+
+
     private fun setupRecyclerViewPaymentCard(){
         var recyclerViewPaymentCardAdapter = RecyclerViewPaymentCardAdapter()
+        recyclerViewPaymentCardAdapter.setOnItemClickListener(object : RecyclerViewPaymentCardAdapter.OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                MaterialDialog.Builder(activity!!)
+                        .title("Remove credit card")
+                        .content("Are you sure you want to delete this card?")
+                        .positiveText("yes")
+                        .onPositive { dialog, which ->
+                            recyclerViewPaymentCardAdapter.removeItem(position)
+                        }
+                        .negativeText("No")
+                        .show()
+            }
+        })
         recyclerViewPaymentCardAdapter.setPaymentCardList(getPaymentCardList())
         recyclerViewPaymentCard.layoutManager = LinearLayoutManager(context)
         recyclerViewPaymentCard.adapter= recyclerViewPaymentCardAdapter
     }
 
-    private fun getPaymentCardList() : List<PaymentCard>{
+    private fun getPaymentCardList() : ArrayList<PaymentCard>{
         val paymentCardList = ArrayList<PaymentCard>()
         paymentCardList.add(PaymentCard(
-                "1234",
+                "0000",
                 "kaveepart",
                 "123",
                 "01/20"
         ))
         paymentCardList.add(PaymentCard(
-                "1234",
+                "1111",
                 "kaveepart",
                 "123",
                 "01/20"
         ))
         paymentCardList.add(PaymentCard(
-                "1234",
+                "2222",
+                "kaveepart",
+                "123",
+                "01/20"
+        ))
+        paymentCardList.add(PaymentCard(
+                "3333",
+                "kaveepart",
+                "123",
+                "01/20"
+        ))
+        paymentCardList.add(PaymentCard(
+                "4444",
+                "kaveepart",
+                "123",
+                "01/20"
+        ))
+        paymentCardList.add(PaymentCard(
+                "5555",
                 "kaveepart",
                 "123",
                 "01/20"
