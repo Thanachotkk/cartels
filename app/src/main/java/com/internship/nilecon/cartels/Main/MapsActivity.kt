@@ -530,6 +530,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             }
             "Home" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
+                constraintLayoutBooking.visibility = View.VISIBLE
                 toolbar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
@@ -573,7 +574,6 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     startActivity(mapIntent)
                 }
 
-
                 buttonMoreDetail.setOnClickListener {
                     val intent = Intent(this,ParkingDetailActivity::class.java)
                     intent.putExtra("parkingDetail",parkingDetail)
@@ -582,6 +582,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             }
             "Building" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
+                constraintLayoutBooking.visibility = View.VISIBLE
                 toolbar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
@@ -639,6 +640,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     private fun hideParkingDetail() {
         TransitionManager.beginDelayedTransition(layoutActivityMaps,Explode())
         constraintLayoutDetail.visibility = View.GONE
+        constraintLayoutBooking.visibility = View.GONE
         buttonBack.visibility = View.GONE
         toolbar.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.VISIBLE

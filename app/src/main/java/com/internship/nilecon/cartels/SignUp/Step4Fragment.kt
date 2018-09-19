@@ -216,18 +216,27 @@ class Step4Fragment : Fragment() {
                 .addOrReplacePhoto("Bearer $token", image)
 
 
-        (mApi as Call<Void>).enqueue(object : Callback<Void> {
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+        (mApi as Call<Token>).enqueue(object : Callback<Token> {
+            override fun onFailure(call: Call<Token>, t: Throwable) {
                 TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 print(t.message)
             }
 
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
                 TransitionManager.beginDelayedTransition(activity!!.constraintLayoutLayoutLoading)
                 activity!!.constraintLayoutLayoutLoading.visibility = View.GONE //ปิด Loading
                 when (response.code()) {
                     200 -> {
+
+                        var token = response.body()!!.Token //แปลง Token ที่ได้มาให้เป็น String
+
+                        var perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+                                .edit()  // ประกาศใช้ SharedPreferences เพื่อเก็บ Token
+                        perfs.putString("Token", token) /*เก็บ Token ลง SharedPreferences โดยอ้างชื่อว่า Token*/
+                        perfs.commit() /*ยืนยันการบันทึก SharedPreferences*/
+
                         var intent = Intent(activity!!, MapsActivity::class.java)
                         startActivity(intent)
                         activity!!.finishAffinity()

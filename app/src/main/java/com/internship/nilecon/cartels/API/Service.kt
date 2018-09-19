@@ -41,7 +41,7 @@ interface UsersInterface{
     @Multipart
     @POST("api/Users/AddOrReplacePhoto")
     fun addOrReplacePhoto(@Header("Authorization") token : String,
-                          @Part image : MultipartBody.Part) : Call<Void>
+                          @Part image : MultipartBody.Part) : Call<Token>
 }
 
 interface ParkingsInterface{
