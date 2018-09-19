@@ -215,4 +215,4 @@ data class Amenity(
 
 data class PaymentCard(var cardNumber : String, var name :String, var cvv :String,var expiry :String)
 
-data class Vehicle(var vehicleName: String, var license: String, var province: String,var vehicleType : String)
+data class MyVehicleList(var MyVehicleName: String, var MyVehicleLicense: String, var MyVehicleProvince: String/*,var MyVehicleType : String*/)
