@@ -164,7 +164,6 @@ class Step4Fragment : Fragment() {
 
                 when (response.code()) {
                     200 -> {
-
                         var token = response.body()!!.Token //แปลง Token ที่ได้มาให้เป็น String
 
                         var perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
