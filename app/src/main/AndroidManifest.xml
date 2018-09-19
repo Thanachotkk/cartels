@@ -72,6 +72,8 @@
         <activity
             android:name=".Main.MapsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ParkingDetail.ParkingDetailActivity"></activity>
+        <activity android:name=".PaymentCards.PaymentCardsActivity"></activity>
         <activity
             android:name=".MyVehicle.MyVehicleActivity"
             android:screenOrientation="portrait" />
