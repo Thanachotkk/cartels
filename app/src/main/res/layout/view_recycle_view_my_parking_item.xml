@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/bg_input"
+    android:elevation="4dp"
+    tools:layout_editor_absoluteY="25dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ImageViewMyParking"
+        android:layout_width="159dp"
+        android:layout_height="118dp"
+        android:src="@drawable/vt_logo"
+        app:riv_corner_radius="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewMyParkingName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="บ้านขนม"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/ImageViewMyParking"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewMyParkingTitleZone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zone : "
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="@+id/textViewMyParkingName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMyParkingName" />
+
+    <TextView
+        android:id="@+id/textViewMyParkingZone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewMyParkingTitleZone"
+        app:layout_constraintTop_toTopOf="@+id/textViewMyParkingTitleZone" />
+
+    <TextView
+        android:id="@+id/textViewTitleMyParkingNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:text="Parking Number : "
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewMyParkingZone"
+        app:layout_constraintTop_toTopOf="@+id/textViewMyParkingZone" />
+
+    <TextView
+        android:id="@+id/textViewMyParkingNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A12"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingNumber"
+        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingNumber" />
+
+    <TextView
+        android:id="@+id/textViewTitleMyParkingTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily "
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="@+id/textViewMyParkingTitleZone"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMyParkingTitleZone" />
+
+    <TextView
+        android:id="@+id/textViewMyParkingTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text="01/03/2018 - 05/03/2018"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textViewTitleMyParkingOpenClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open and Close : "
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitleMyParkingTime"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleMyParkingTime"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewMyParkingOpenClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="24 hour"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingOpenClose"
+        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingOpenClose" />
+
+    <TextView
+        android:id="@+id/textViewTitleMyParkingVehicleType"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="8dp"
+        android:text="Type : "
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewMyParkingOpenClose"
+        app:layout_constraintTop_toTopOf="@+id/textViewMyParkingOpenClose" />
+
+    <TextView
+        android:id="@+id/textViewMyParkingVehicleType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Car"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingVehicleType"
+        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingVehicleType" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text=":"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingTime"
+        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingTime" />
+
+    <ImageView
+        android:id="@+id/buttonRemoveMyParking"
+        android:layout_width="18dp"
+        android:layout_height="19dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/places_ic_clear" />
+</android.support.constraint.ConstraintLayout>

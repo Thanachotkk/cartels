@@ -81,6 +81,8 @@
         <activity
             android:name=".PaymentCards.PaymentCardsActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".History.HistoryActivity" />
+        <activity android:name=".MyParking.MyParkingActivity"/>
     </application>
 
 </manifest>

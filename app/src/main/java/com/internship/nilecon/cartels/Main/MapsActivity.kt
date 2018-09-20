@@ -41,6 +41,8 @@ import com.google.android.gms.maps.model.*
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import com.internship.nilecon.cartels.API.*
+import com.internship.nilecon.cartels.History.HistoryActivity
+import com.internship.nilecon.cartels.MyParking.MyParkingActivity
 import com.internship.nilecon.cartels.MyVehicle.MyVehicleActivity
 import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
 import com.internship.nilecon.cartels.PaymentCards.PaymentCardsActivity
@@ -166,10 +168,10 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                 startActivity(Intent(this, MyVehicleActivity::class.java))
             }
             R.id.nav_parking -> {
-
+                startActivity(Intent(this, MyParkingActivity::class.java))
             }
             R.id.nav_history -> {
-
+                startActivity(Intent(this, HistoryActivity::class.java))
             }
             R.id.nav_logout -> {
 
