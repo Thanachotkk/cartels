@@ -419,8 +419,8 @@ class SignInFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
             override fun onSuccess(result: LoginResult?) {
                 val parameters = Bundle()
                 parameters.putString("fields", "id,name,link,email,picture")
-                val request = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, _ ->
-                    callApiSignInForSocial(UserForSignInSocialDTO(Profile.getCurrentProfile().id,"Facebook"))
+                val request = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, ddddd ->
+                    callApiSignInForSocial(UserForSignInSocialDTO(jsonObject.getString("id"),"Facebook"))
                 }
                 request.parameters = parameters
                 request.executeAsync()

@@ -1,13 +1,12 @@
 package com.internship.nilecon.cartels.MyParking
 
-import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_my_parking.*
 
-class MyParkingActivity : AppCompatActivity(),myParkingFragment.OnFragmentInteractionListener {
+class MyParkingActivity : AppCompatActivity(),MyParkingFragment.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -15,8 +14,8 @@ class MyParkingActivity : AppCompatActivity(),myParkingFragment.OnFragmentIntera
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_parking)
-        setMyParkingFragment()
-        setAddMyParking()
+        setupFragmentMyParking()
+        setupAddMyParking()
         setupButtonBack()
     }
 
@@ -26,15 +25,15 @@ class MyParkingActivity : AppCompatActivity(),myParkingFragment.OnFragmentIntera
         }
     }
 
-    private fun setAddMyParking() {
-        buttonAddMyParking.setOnClickListener{
+    private fun setupAddMyParking() {
+        buttonAdd.setOnClickListener{
             onBackPressed()
         }
     }
 
-    private fun setMyParkingFragment() {
+    private fun setupFragmentMyParking() {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentMyParking, myParkingFragment())
+                .replace(R.id.fragmentMyParking, MyParkingFragment())
                 .commit()
     }
 }

@@ -4,148 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="16dp"
+    android:layout_marginLeft="24dp"
+    android:layout_marginRight="24dp"
+    android:layout_marginTop="24dp"
     android:background="@drawable/bg_input"
-    android:elevation="4dp"
-    tools:layout_editor_absoluteY="25dp">
+    android:elevation="4dp">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/ImageViewMyParking"
-        android:layout_width="159dp"
-        android:layout_height="118dp"
-        android:src="@drawable/vt_logo"
-        app:riv_corner_radius="3dp"
+        android:id="@+id/imageViewMyParking"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:riv_corner_radius_bottom_left="5dp"
+        app:riv_corner_radius_top_left="5dp" />
 
     <TextView
         android:id="@+id/textViewMyParkingName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="บ้านขนม"
-        android:textSize="24sp"
+        android:textColor="@color/header2"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/ImageViewMyParking"
+        app:layout_constraintStart_toEndOf="@+id/imageViewMyParking"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/textViewMyParkingTitleZone"
+        android:id="@+id/textViewBookingTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zone : "
-        android:textSize="10dp"
+        android:layout_marginTop="16dp"
+        android:text="Daily : "
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textViewMyParkingName"
         app:layout_constraintTop_toBottomOf="@+id/textViewMyParkingName" />
 
     <TextView
-        android:id="@+id/textViewMyParkingZone"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewBookingTimeValue"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="A"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewMyParkingTitleZone"
-        app:layout_constraintTop_toTopOf="@+id/textViewMyParkingTitleZone" />
-
-    <TextView
-        android:id="@+id/textViewTitleMyParkingNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:text="Parking Number : "
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewMyParkingZone"
-        app:layout_constraintTop_toTopOf="@+id/textViewMyParkingZone" />
-
-    <TextView
-        android:id="@+id/textViewMyParkingNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="A12"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingNumber"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingNumber" />
-
-    <TextView
-        android:id="@+id/textViewTitleMyParkingTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Daily "
-        android:textSize="10dp"
-        app:layout_constraintStart_toStartOf="@+id/textViewMyParkingTitleZone"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMyParkingTitleZone" />
-
-    <TextView
-        android:id="@+id/textViewMyParkingTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="16dp"
         android:text="01/03/2018 - 05/03/2018"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewBookingTime"
+        app:layout_constraintTop_toTopOf="@+id/textViewBookingTime" />
 
     <TextView
-        android:id="@+id/textViewTitleMyParkingOpenClose"
+        android:id="@+id/textViewVehicleType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open and Close : "
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewTitleMyParkingTime"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitleMyParkingTime"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textViewMyParkingOpenClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="24 hour"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingOpenClose"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingOpenClose" />
-
-    <TextView
-        android:id="@+id/textViewTitleMyParkingVehicleType"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="8dp"
         android:text="Type : "
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewMyParkingOpenClose"
-        app:layout_constraintTop_toTopOf="@+id/textViewMyParkingOpenClose" />
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewBookingTime"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBookingTime" />
 
     <TextView
-        android:id="@+id/textViewMyParkingVehicleType"
+        android:id="@+id/textViewVehicleTypeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Car"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingVehicleType"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingVehicleType" />
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewVehicleType"
+        app:layout_constraintTop_toTopOf="@+id/textViewVehicleType" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewZone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:text=":"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleMyParkingTime"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleMyParkingTime" />
+        android:layout_marginBottom="16dp"
+        android:text="Zone : "
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewVehicleType"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVehicleType" />
+
+    <TextView
+        android:id="@+id/textViewZoneValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewZone"
+        app:layout_constraintTop_toTopOf="@+id/textViewZone" />
+
+    <TextView
+        android:id="@+id/textViewPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Position : "
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/textViewZoneValue"
+        app:layout_constraintTop_toTopOf="@+id/textViewZoneValue" />
+
+    <TextView
+        android:id="@+id/textViewPositionValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A12"
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewPosition"
+        app:layout_constraintTop_toTopOf="@+id/textViewPosition" />
 
     <ImageView
-        android:id="@+id/buttonRemoveMyParking"
-        android:layout_width="18dp"
-        android:layout_height="19dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="4dp"
+        android:id="@+id/buttonDelete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/places_ic_clear" />
+        app:srcCompat="@drawable/ic_cancel_24dp" />
 </android.support.constraint.ConstraintLayout>

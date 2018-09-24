@@ -378,24 +378,6 @@ class Step3Fragment : Fragment(), GoogleApiClient.OnConnectionFailedListener {
         }
     }
 
-    private fun bitmapToFile(bitmap: Bitmap): File {
-        //create a file to write bitmap data
-        var file = File(context!!.cacheDir, "image")
-        file.createNewFile()
-
-        //Convert bitmap to byte array
-        var bos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
-        var bitmapdata = bos.toByteArray()
-
-        //write the bytes in file
-        var fos = FileOutputStream(file)
-        fos.write(bitmapdata)
-        fos.flush()
-        fos.close()
-
-        return file
-    }
 
     private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

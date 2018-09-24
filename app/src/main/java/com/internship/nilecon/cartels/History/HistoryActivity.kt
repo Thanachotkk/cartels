@@ -14,17 +14,17 @@ class HistoryActivity : AppCompatActivity() ,HistoryFragment.OnFragmentInteracti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
-        setUpHistory()
-        setButtonBack()
+        setupFragmentHistory()
+        setupButtonBack()
     }
 
-    private fun setButtonBack() {
+    private fun setupButtonBack() {
         buttonBack.setOnClickListener {
             onBackPressed()
         }
     }
 
-    private fun setUpHistory() {
+    private fun setupFragmentHistory() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentHistory, HistoryFragment())
                 .commit()

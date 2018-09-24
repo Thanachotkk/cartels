@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.internship.nilecon.cartels.API.HistoryList
+import com.internship.nilecon.cartels.API.History
 
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.fragment_history.*
@@ -30,7 +30,7 @@ private const val ARG_PARAM2 = "param2"
 class HistoryFragment : Fragment() {
 //    val list: ArrayList<MyVehicleList> = ArrayList()
     // TODO: Rename and change types of parameters
-    val listHistory : ArrayList<HistoryList> = ArrayList()
+    val listHistory : ArrayList<History> = ArrayList()
     var recyclerViewHistoryAdapter = RecyclerViewHistoryAdapter()
     private var param1: String? = null
     private var param2: String? = null
@@ -46,19 +46,12 @@ class HistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        listHistory.add(HistoryList("บ้านปลื้ม","01/01/2018-01/02/2018","500","Car"))
-        listHistory.add(HistoryList("บ้านปลื้ม","01/01/2018-01/02/2018","500","Motorcycle"))
-        listHistory.add(HistoryList("บ้านปลื้ม","01/01/2018-01/02/2018","500","BigBike"))
-
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        recyclerViewHistoryAdapter.setHistory(listHistory)
-        RecyclerViewHistory.layoutManager = LinearLayoutManager(context)
-        RecyclerViewHistory.adapter = recyclerViewHistoryAdapter
+        setupRecyclerViewHistory()
 
     }
     // TODO: Rename method, update argument and hook method into UI event
@@ -114,5 +107,35 @@ class HistoryFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+
+    private fun setupRecyclerViewHistory(){
+        var recyclerViewHistoryAdapter = RecyclerViewHistoryAdapter()
+        recyclerViewHistoryAdapter.setHistoryList(getHistoryList())
+        recyclerViewHistory.layoutManager = LinearLayoutManager(context)
+        recyclerViewHistory.adapter = recyclerViewHistoryAdapter
+
+    }
+
+
+    private fun getHistoryList() : ArrayList<History>{
+        val historyList = ArrayList<History>()
+
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Car"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Bigbike"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Motorcycle"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Car"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Bigbike"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Motorcycle"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Car"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Bigbike"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Motorcycle"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Car"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Bigbike"))
+        historyList.add(History("บ้าน","11/01/2561 - 13/01/2561","Daily","500","Motorcycle"))
+
+
+        return historyList
     }
 }

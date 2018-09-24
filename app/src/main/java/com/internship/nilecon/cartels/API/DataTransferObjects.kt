@@ -213,8 +213,26 @@ data class Amenity(
     }
 }
 
-data class PaymentCard(var cardNumber : String, var name :String, var cvv :String,var expiry :String)
+data class PaymentCard(var cardNumber : String,
+                       var name :String,
+                       var cvv :String,
+                       var expiry :String)
 
-data class Vehicle(var vehicleName: String, var license: String, var province: String,var vehicleType : String)
-data class HistoryList(var HistoryParkName : String,var HistoryTime : String,var HistoryPrice : String,var HistoryVehicleType : String )
-data class MyParkingList(var MyParkingName : String,var MyParkingZone: String,var MyParkingNumber : String,var MyParkingTimeType : String,var MyParkingTime : String,var MyParkingTimeOpenandClose : String,var MyParkingVehicleType:String)
+data class Vehicle(var vehicleName: String,
+                   var license: String,
+                   var province: String,
+                   var vehicleType : String)
+
+data class History(var name : String,
+                   var bookingTime : String,
+                   var bookingType : String,
+                   var price : String,
+                   var vehicleType : String )
+
+data class Parking(var parkingName : String,
+                   var zone: String?,
+                   var position : String?,
+                   var bookingType : String,
+                   var bookingTime : String,
+                   var openAndClose : String,
+                   var vehicleType:String)

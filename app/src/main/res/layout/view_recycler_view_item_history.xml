@@ -8,37 +8,54 @@
 
     <ImageView
         android:id="@+id/imageViewHistoryVehicle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
         android:src="@drawable/vt_circle_car"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewParkNameHistory"
+        android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Tower"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/header2"
         app:layout_constraintStart_toEndOf="@+id/imageViewHistoryVehicle"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewTitleTime"
+        android:id="@+id/textViewBookingTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:text="Monthly : "
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/paragraph1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewHistoryVehicle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParkNameHistory"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewBookingTimeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:text="01/01/2018 - 01/02/2018"
+        android:textColor="@color/paragraph1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewBookingTime"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
     <TextView
         android:id="@+id/textViewPrice"
@@ -46,6 +63,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:text="500"
+        android:includeFontPadding="false"
+        android:textSize="14sp"
+        android:textColor="@color/header2"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewTitlePrice" />
 
@@ -53,22 +74,12 @@
         android:id="@+id/textViewTitlePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:text="THB"
+        android:textSize="10sp"
+        android:textColor="@color/paragraph2"
         app:layout_constraintEnd_toStartOf="@+id/textViewPrice"
-        app:layout_constraintTop_toTopOf="@+id/textViewParkNameHistory" />
-
-    <TextView
-        android:id="@+id/textViewTimeHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="8dp"
-        android:text="01/01/2018 - 01/02/2018"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleTime"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParkNameHistory"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/textViewName" />
 
     <View
         android:layout_width="fill_parent"

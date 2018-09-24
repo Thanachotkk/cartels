@@ -4,7 +4,6 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.internship.nilecon.cartels.API.PaymentCard
 import com.internship.nilecon.cartels.R
 import kotlinx.android.synthetic.main.activity_payment_cards.*
 
@@ -23,12 +22,12 @@ class PaymentCardsActivity : AppCompatActivity()
 
         setupButtonBack()
         setupButtonAddCard()
-        setupPaymentCardsFragment()
+        setupFragmentPaymentCards()
     }
 
 
 
-    private fun setupPaymentCardsFragment(){
+    private fun setupFragmentPaymentCards(){
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentPaymentCards, PaymentCardsFragment())
                 .commit()

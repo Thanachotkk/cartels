@@ -20,14 +20,14 @@ class MyVehicleActivity : AppCompatActivity(),
         setContentView(R.layout.activity_my_vehicle)
         setupButtonAdd()
         setupButtonBack()
-        setupMyVehicleFragment()
+        setupFragmentVehicle()
     }
     private fun setupButtonBack(){
         buttonBack.setOnClickListener {
             onBackPressed()
         }
     }
-    private fun setupMyVehicleFragment() {
+    private fun setupFragmentVehicle() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentVehicle, MyVehicleFragment())
                 .commit()

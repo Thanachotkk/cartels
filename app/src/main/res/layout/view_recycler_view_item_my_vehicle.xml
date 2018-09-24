@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="Toyota"
+        android:textSize="14sp"
         android:textColor="@color/header2"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageViewVehicle"

@@ -145,15 +145,21 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     }
 
     override fun onBackPressed() {
-        MaterialDialog.Builder(this)
-                .title("Exit")
-                .content("Are you sure you want to Exit Cartels?")
-                .positiveText("yes")
-                .onPositive { dialog, which ->
-                    finishAffinity()
-                }
-                .negativeText("No")
-                .show()
+
+        if(constraintLayoutDetail.visibility == View.VISIBLE || constraintLayoutBooking.visibility == View.VISIBLE){
+            hideParkingDetail()
+        }else{
+            MaterialDialog.Builder(this)
+                    .title("Exit")
+                    .content("Are you sure you want to Exit Cartels?")
+                    .positiveText("yes")
+                    .onPositive { dialog, which ->
+                        finishAffinity()
+                    }
+                    .negativeText("No")
+                    .show()
+        }
+
 
     }
 
@@ -239,7 +245,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     }
 
     private fun callApiGetParkingPoints(vehicycleType : String) {
-
+        cancleApi()
         mMap!!.clear()
         TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
         constraintLayoutLayoutLoading.visibility = View.VISIBLE
@@ -252,6 +258,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
 
         (mApi as Call<List<ParkingPoint>>).enqueue(object : Callback<List<ParkingPoint>> {
             override fun onFailure(call: Call<List<ParkingPoint>>?, t: Throwable?) {
+                TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
+                constraintLayoutLayoutLoading.visibility = View.GONE
                 print(t!!.message)
             }
 
@@ -268,7 +276,9 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     }
 
     private fun callApiGetParkingDetail(parkingForGetParkingDetailDTO: ParkingForGetParkingDetailDTO) {
-
+        cancleApi()
+        TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
+        constraintLayoutLayoutLoading.visibility = View.VISIBLE
         val prefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
         var token = prefs.getString("Token", null)
 
@@ -277,10 +287,14 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
 
         (mApi as Call<ParkingDetail>).enqueue(object : Callback<ParkingDetail> {
             override fun onFailure(call: Call<ParkingDetail>, t: Throwable) {
+                TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
+                constraintLayoutLayoutLoading.visibility = View.GONE
                 print(t.message)
             }
 
             override fun onResponse(call: Call<ParkingDetail>, response: Response<ParkingDetail>) {
+                TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
+                constraintLayoutLayoutLoading.visibility = View.GONE
                 when (response.code()) {
                     200 -> {
                         showParkingDetail(response.body())
@@ -460,17 +474,17 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         val perfs = getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
                 ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
         val token = perfs.getString("Token",null) //ดึงค่า Token ที่เก็บไว้ ใน SharedPreferences
-        val NameInHeader  = JWT(token).getClaim("Name").asString() //แปลง Token เป็น Name
+        val nameInHeader  = JWT(token).getClaim("Name").asString() //แปลง Token เป็น name
         val mobileNumberInHeader  = JWT(token).getClaim("MobileNumber").asString() //แปลง Token เป็น MobileNumber
-        val UrlPictureInHeader  = JWT(token).getClaim("PhotoUrl").asString() //แปลง Token เป็น UrlPicture
+        val urlPictureInHeader  = JWT(token).getClaim("PhotoUrl").asString() //แปลง Token เป็น UrlPicture
 
         //---------------------------- Put Information Profile ---------------------------------
         val header = nav_view.getHeaderView(0)
-        (header.findViewById<TextView>(R.id.textViewName)).text = NameInHeader
+        (header.findViewById<TextView>(R.id.textViewName)).text = nameInHeader
         (header.findViewById<TextView>(R.id.textViewMobileNumberValue)).text = mobileNumberInHeader
         val imageProfile = (header.findViewById<ImageView>(R.id.imageViewProfile))
         Glide.with(this)
-                .load(UrlPictureInHeader)
+                .load(urlPictureInHeader)
                 .into(imageProfile)
     }
 
@@ -480,6 +494,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         when (parkingDetail!!.Type) {
             "Other" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
+                constraintLayoutBooking.visibility = View.GONE
                 toolbar.visibility = View.GONE
                 buttonBack.visibility = View.VISIBLE
                 spinnerFilterVehicle.visibility = View.GONE
