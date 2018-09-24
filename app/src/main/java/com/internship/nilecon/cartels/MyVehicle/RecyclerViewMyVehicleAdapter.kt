@@ -40,7 +40,10 @@ class RecyclerViewMyVehicleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.itemView.textViewVehicleProvinceValue.text = vehicleList!![position].province
         holder.itemView.textViewVehicleLicenseValue.text = vehicleList!![position].license
         holder.itemView.buttonDelete.setOnClickListener {
-            listener!!.onItemClick(position)
+            listener!!.onRemoveItemClick(position)
+        }
+        holder.itemView.setOnClickListener {
+            listener!!.onItemClick(vehicleList!![position])
         }
 
         when(vehicleList!![position].vehicleType){
@@ -51,7 +54,8 @@ class RecyclerViewMyVehicleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     interface OnItemClickListener{
-        fun onItemClick(position : Int)
+        fun onRemoveItemClick(position : Int)
+        fun onItemClick(vehicle : Vehicle)
     }
 
 }

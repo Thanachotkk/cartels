@@ -85,8 +85,8 @@ data class ParkingDetail(
     var Tel: String?,
     var Supports: List<String?>?,
     var Rates: List<Rate?>?,
-    var Amenities: List<Amenity?>?
-) : Parcelable {
+    var Amenities: List<Amenity?>?)
+    : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readString(),
@@ -143,8 +143,8 @@ data class ParkingDetail(
 data class Rate(
     var VehicleType: String?,
     var Daily: Int?,
-    var Monthly: Int?
-) : Parcelable {
+    var Monthly: Int?)
+    : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readValue(Int::class.java.classLoader) as? Int,
@@ -178,8 +178,8 @@ data class Amenity(
     var AirportShuttle: Boolean?,
     var Disabled: Boolean?,
     var Restrooms: Boolean?,
-    var Security: Boolean?
-) : Parcelable {
+    var Security: Boolean?)
+    : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
@@ -217,11 +217,72 @@ data class PaymentCard(var cardNumber : String,
                        var name :String,
                        var cvv :String,
                        var expiry :String)
+    : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()) {
+    }
 
-data class Vehicle(var vehicleName: String,
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(cardNumber)
+        parcel.writeString(name)
+        parcel.writeString(cvv)
+        parcel.writeString(expiry)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<PaymentCard> {
+        override fun createFromParcel(parcel: Parcel): PaymentCard {
+            return PaymentCard(parcel)
+        }
+
+        override fun newArray(size: Int): Array<PaymentCard?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
+
+data class Vehicle(var vehicleId : Int,
+                   var vehicleName: String,
                    var license: String,
                    var province: String,
-                   var vehicleType : String)
+                   var vehicleType : String) :
+        Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readInt(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(vehicleId)
+        parcel.writeString(vehicleName)
+        parcel.writeString(license)
+        parcel.writeString(province)
+        parcel.writeString(vehicleType)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Vehicle> {
+        override fun createFromParcel(parcel: Parcel): Vehicle {
+            return Vehicle(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Vehicle?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
 
 data class History(var name : String,
                    var bookingTime : String,

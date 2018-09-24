@@ -42,12 +42,16 @@ class RecyclerViewPaymentCardAdapter : RecyclerView.Adapter<RecyclerView.ViewHol
         holder.itemView.textViewCardholderNameValue.text = paymentCardList!![position].name
         holder.itemView.textViewExpireDateValue.text = paymentCardList!![position].expiry
         holder.itemView.buttonDelete.setOnClickListener {
-            listener!!.onItemClick(position)
+            listener!!.onRemoveItemClick(position)
+        }
+        holder.itemView.setOnClickListener {
+            listener!!.onItemClick(paymentCardList!![position])
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClick(position: Int)
+        fun onRemoveItemClick(position: Int)
+        fun onItemClick(paymentCard: PaymentCard)
     }
 }
 

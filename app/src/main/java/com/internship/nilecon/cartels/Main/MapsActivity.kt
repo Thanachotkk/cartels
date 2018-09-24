@@ -52,18 +52,22 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val VEHICLE_REQUEST_CODE = 1000
+private const val PAYMENT_CARD_REQUEST_CODE = 2000
+private const val LOCATION_PERMISSION_REQUEST_CODE = 777
+
 class MapsActivity : AppCompatActivity()
         , OnMapReadyCallback
         , GoogleApiClient.OnConnectionFailedListener
         , GoogleMap.OnMarkerClickListener
         , NavigationView.OnNavigationItemSelectedListener{
 
-private val LOCATION_PERMISSION_REQUEST_CODE = 777
+
     private var mMap: GoogleMap? = null
     private var myLocation: Location? = null
     private var mLocationPermissionsGranted: Boolean? = false
     private var mApi: Any? = null
-    private var VehicleType = "All"
+    private var mVehicleType = "All"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,8 +87,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         mMap = googleMap
         mMap!!.also {
             it.uiSettings.isMapToolbarEnabled = false
-            it.uiSettings.isMapToolbarEnabled = false
             it.uiSettings.isZoomControlsEnabled = false
+            it.uiSettings.isCompassEnabled = false
             it.mapType = GoogleMap.MAP_TYPE_NORMAL
             it.setPadding(48, 0, 48, 0)
         }
@@ -109,7 +113,7 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
         }
 
         onCameraChangeListener()
-        callApiGetParkingPoints(VehicleType)
+        callApiGetParkingPoints(mVehicleType)
 
     }
 
@@ -442,8 +446,8 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when(mMap == null){false ->{
                     mMap!!.clear()
-                    VehicleType = spinnerFilterVehicleList[position].textViewVehicleType
-                    callApiGetParkingPoints(VehicleType)
+                    mVehicleType = spinnerFilterVehicleList[position].textViewVehicleType
+                    callApiGetParkingPoints(mVehicleType)
 
                 }}
             }
@@ -596,6 +600,16 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     intent.putExtra("parkingDetail",parkingDetail)
                     startActivity(intent)
                 }
+
+                textViewPrice.text = parkingDetail.Rates!!.first { it!!.VehicleType == "Car" || it!!.VehicleType == "Bigbike" ||  it!!.VehicleType == "Motorcycle" }!!.Daily.toString()
+
+                buttonVehicle.setOnClickListener {
+                    startActivityForResult(Intent(this@MapsActivity,MyVehicleActivity::class.java), VEHICLE_REQUEST_CODE)
+                }
+
+                buttonPaymentCard.setOnClickListener {
+                    startActivityForResult(Intent(this@MapsActivity,PaymentCardsActivity::class.java), PAYMENT_CARD_REQUEST_CODE)
+                }
             }
             "Building" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
@@ -647,6 +661,16 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
                     val intent = Intent(this,ParkingDetailActivity::class.java)
                     intent.putExtra("parkingDetail",parkingDetail)
                     startActivity(intent)
+                }
+
+                textViewPrice.text = parkingDetail.Rates!!.first { it!!.VehicleType == "Car" || it!!.VehicleType == "Bigbike" ||  it!!.VehicleType == "Motorcycle" }!!.Daily.toString()
+
+                buttonVehicle.setOnClickListener {
+                    startActivityForResult(Intent(this@MapsActivity,MyVehicleActivity::class.java), VEHICLE_REQUEST_CODE)
+                }
+
+                buttonPaymentCard.setOnClickListener {
+                    startActivityForResult(Intent(this@MapsActivity,PaymentCardsActivity::class.java), PAYMENT_CARD_REQUEST_CODE)
                 }
             }
         }
@@ -734,17 +758,46 @@ private val LOCATION_PERMISSION_REQUEST_CODE = 777
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            if (result.contents == null) {
-                Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, result.contents, Toast.LENGTH_SHORT).show()
+
+        if(resultCode == Activity.RESULT_OK){
+            when(requestCode){
+                IntentIntegrator.REQUEST_CODE -> {
+                    val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+                    if (result != null) {
+                        if (result.contents.isNullOrEmpty()) {
+                            Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, result.contents, Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        super.onActivityResult(requestCode, resultCode, data)
+                    }
+                }
+
+                VEHICLE_REQUEST_CODE -> {
+                    buttonVehicle.tag = data!!.extras["vehicle"]
+                    textViewVehicle.text = (data!!.extras["vehicle"] as Vehicle).license
+                    when((data!!.extras["vehicle"] as Vehicle).vehicleType){
+                        "Car" ->{
+                            imageViewVehicle.setImageResource(R.drawable.ic_car_black_24dp)
+                        }
+                        "Bigbike" -> {
+                            imageViewVehicle.setImageResource(R.drawable.ic_bigbike_black_24dp)
+                        }
+                        "Motorcycle" -> {
+                            imageViewVehicle.setImageResource(R.drawable.ic_motorcycle_black_24dp)
+                        }
+                    }
+                }
+
+                PAYMENT_CARD_REQUEST_CODE -> {
+                    buttonPaymentCard.tag =  data!!.extras["paymentCard"]
+                    textViewPaymentCard.text = (data!!.extras["paymentCard"] as PaymentCard).cardNumber
+                }
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
 
         }
+
     }
 
     private fun assignToMap(latLng: LatLng) {

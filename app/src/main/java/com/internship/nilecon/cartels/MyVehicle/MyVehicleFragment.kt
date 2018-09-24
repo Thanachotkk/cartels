@@ -1,6 +1,8 @@
 package com.internship.nilecon.cartels.MyVehicle
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.internship.nilecon.cartels.API.Vehicle
 
@@ -29,7 +32,6 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class MyVehicleFragment : Fragment() {
-
 
 
     // TODO: Rename and change types of parameters
@@ -54,7 +56,10 @@ class MyVehicleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerViewMyVehicle()
+
+
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -110,10 +115,24 @@ class MyVehicleFragment : Fragment() {
                 }
     }
 
-    private fun setupRecyclerViewMyVehicle(){
+    private fun setupRecyclerViewMyVehicle() {
         var recyclerViewMyVehicleAdapter = RecyclerViewMyVehicleAdapter()
-        recyclerViewMyVehicleAdapter.setOnItemClickListener(object : RecyclerViewMyVehicleAdapter.OnItemClickListener{
-            override fun onItemClick(position: Int) {
+        recyclerViewMyVehicleAdapter.setOnItemClickListener(object : RecyclerViewMyVehicleAdapter.OnItemClickListener {
+            override fun onItemClick(vehicle: Vehicle) {
+                when (activity!!.callingActivity) {
+                    null -> {
+
+                    }
+                    else -> {
+                        var intent = activity!!.intent
+                        intent.putExtra("vehicle",vehicle)
+                        activity!!.setResult(Activity.RESULT_OK,intent)
+                        activity!!.finish()
+                    }
+                }
+            }
+
+            override fun onRemoveItemClick(position: Int) {
                 MaterialDialog.Builder(activity!!)
                         .title("Remove vehicle")
                         .content("Are you sure you want to delete this vehicle?")
@@ -132,15 +151,15 @@ class MyVehicleFragment : Fragment() {
     }
 
 
-    private fun getVehicleList() : ArrayList<Vehicle>{
+    private fun getVehicleList(): ArrayList<Vehicle> {
         val vehicleList = ArrayList<Vehicle>()
 
-        vehicleList.add(Vehicle("Test","AS 5555","Bangkok","Car"))
-        vehicleList.add(Vehicle("Test2","AS 5556","Bangkok","Motorcycle"))
-        vehicleList.add(Vehicle("Test3","AS 5556","Bangkok","Bigbike"))
-        vehicleList.add(Vehicle("Test4","AS 5556","Bangkok","Car"))
-        vehicleList.add(Vehicle("Test5","AS 5556","Bangkok","Motorcycle"))
-        vehicleList.add(Vehicle("Test5","AS 5556","Bangkok","Bigbike"))
+        vehicleList.add(Vehicle(1,"Test", "AS 5555", "Bangkok", "Car"))
+        vehicleList.add(Vehicle(2,"Test2", "AS 5556", "Bangkok", "Motorcycle"))
+        vehicleList.add(Vehicle(3,"Test3", "AS 5556", "Bangkok", "Bigbike"))
+        vehicleList.add(Vehicle(4,"Test4", "AS 5556", "Bangkok", "Car"))
+        vehicleList.add(Vehicle(5,"Test5", "AS 5556", "Bangkok", "Motorcycle"))
+        vehicleList.add(Vehicle(6,"Test5", "AS 5556", "Bangkok", "Bigbike"))
 
         return vehicleList
     }

@@ -1,5 +1,6 @@
 package com.internship.nilecon.cartels.PaymentCards
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -122,7 +123,22 @@ class PaymentCardsFragment : Fragment(){
     private fun setupRecyclerViewPaymentCard(){
         var recyclerViewPaymentCardAdapter = RecyclerViewPaymentCardAdapter()
         recyclerViewPaymentCardAdapter.setOnItemClickListener(object : RecyclerViewPaymentCardAdapter.OnItemClickListener{
-            override fun onItemClick(position: Int) {
+
+            override fun onItemClick(paymentCard: PaymentCard) {
+                when (activity!!.callingActivity) {
+                    null -> {
+
+                    }
+                    else -> {
+                        var intent = activity!!.intent
+                        intent.putExtra("paymentCard",paymentCard)
+                        activity!!.setResult(Activity.RESULT_OK,intent)
+                        activity!!.finish()
+                    }
+                }
+            }
+
+            override fun onRemoveItemClick(position: Int) {
                 MaterialDialog.Builder(activity!!)
                         .title("Remove credit card")
                         .content("Are you sure you want to delete this card?")
