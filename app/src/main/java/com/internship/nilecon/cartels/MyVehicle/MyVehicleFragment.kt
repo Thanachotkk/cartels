@@ -144,7 +144,18 @@ class MyVehicleFragment : Fragment() {
                         .show()
             }
         })
-        recyclerViewMyVehicleAdapter.setVehicleList(getVehicleList())
+
+        when (activity!!.callingActivity) {
+            null -> {
+                recyclerViewMyVehicleAdapter.setVehicleList(getVehicleList())
+            }
+            else -> {
+                recyclerViewMyVehicleAdapter.setVehicleList(getVehicleList().filter {
+                    activity!!.intent.getStringArrayExtra("Filter").any { filter -> filter == it.vehicleType }
+                } as ArrayList<Vehicle>)
+            }
+        }
+
         recyclerViewMyVehicle.layoutManager = LinearLayoutManager(context)
         recyclerViewMyVehicle.adapter = recyclerViewMyVehicleAdapter
 

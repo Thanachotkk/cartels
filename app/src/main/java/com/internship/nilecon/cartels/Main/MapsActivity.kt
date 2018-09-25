@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.transition.Explode
 import android.transition.TransitionManager
@@ -51,6 +52,7 @@ import kotlinx.android.synthetic.main.activity_maps.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.temporal.TemporalAmount
 
 private const val VEHICLE_REQUEST_CODE = 1000
 private const val PAYMENT_CARD_REQUEST_CODE = 2000
@@ -60,7 +62,7 @@ class MapsActivity : AppCompatActivity()
         , OnMapReadyCallback
         , GoogleApiClient.OnConnectionFailedListener
         , GoogleMap.OnMarkerClickListener
-        , NavigationView.OnNavigationItemSelectedListener{
+        , NavigationView.OnNavigationItemSelectedListener {
 
 
     private var mMap: GoogleMap? = null
@@ -68,6 +70,7 @@ class MapsActivity : AppCompatActivity()
     private var mLocationPermissionsGranted: Boolean? = false
     private var mApi: Any? = null
     private var mVehicleType = "All"
+    private var mParkingDetail: ParkingDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,9 +153,9 @@ class MapsActivity : AppCompatActivity()
 
     override fun onBackPressed() {
 
-        if(constraintLayoutDetail.visibility == View.VISIBLE || constraintLayoutBooking.visibility == View.VISIBLE){
+        if (constraintLayoutDetail.visibility == View.VISIBLE || constraintLayoutBooking.visibility == View.VISIBLE) {
             hideParkingDetail()
-        }else{
+        } else {
             MaterialDialog.Builder(this)
                     .title("Exit")
                     .content("Are you sure you want to Exit Cartels?")
@@ -172,9 +175,9 @@ class MapsActivity : AppCompatActivity()
 
         when (item.itemId) {
             R.id.nav_Payment -> {
-                startActivity(Intent(this,PaymentCardsActivity::class.java))
+                startActivity(Intent(this, PaymentCardsActivity::class.java))
             }
-            R.id.nav_vehicle-> {
+            R.id.nav_vehicle -> {
                 startActivity(Intent(this, MyVehicleActivity::class.java))
             }
             R.id.nav_parking -> {
@@ -213,7 +216,7 @@ class MapsActivity : AppCompatActivity()
 
     private fun onCameraChangeListener() {
         mMap!!.setOnCameraChangeListener {
-//            mMap!!.addCircle(CircleOptions()
+            //            mMap!!.addCircle(CircleOptions()
 //                    .center(LatLng(it.target.latitude, it.target.longitude))
 //                    .radius(1000.0)
 //                    .strokeColor(resources.getColor(R.color.colorTheme3))
@@ -248,7 +251,7 @@ class MapsActivity : AppCompatActivity()
         })
     }
 
-    private fun callApiGetParkingPoints(vehicycleType : String) {
+    private fun callApiGetParkingPoints(vehicycleType: String) {
         cancleApi()
         mMap!!.clear()
         TransitionManager.beginDelayedTransition(constraintLayoutLayoutLoading)
@@ -258,7 +261,7 @@ class MapsActivity : AppCompatActivity()
         var token = prefs.getString("Token", null)
 
         mApi = Api().Declaration(this, ParkingsInterface::class.java)
-                .getParkingPoints("Bearer $token",ParkingForGetParkingPointsDTO(vehicycleType))
+                .getParkingPoints("Bearer $token", ParkingForGetParkingPointsDTO(vehicycleType))
 
         (mApi as Call<List<ParkingPoint>>).enqueue(object : Callback<List<ParkingPoint>> {
             override fun onFailure(call: Call<List<ParkingPoint>>?, t: Throwable?) {
@@ -444,12 +447,13 @@ class MapsActivity : AppCompatActivity()
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                when(mMap == null){false ->{
+                when (mMap == null) {false -> {
                     mMap!!.clear()
                     mVehicleType = spinnerFilterVehicleList[position].textViewVehicleType
                     callApiGetParkingPoints(mVehicleType)
 
-                }}
+                }
+                }
             }
         }
     }
@@ -466,21 +470,21 @@ class MapsActivity : AppCompatActivity()
         }
     }
 
-    private fun setupNav(){
+    private fun setupNav() {
 
         val toggle = ActionBarDrawerToggle(
-                this, drawer_nav, toolbar , R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this, drawer_nav, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 
         drawer_nav.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
         //---------------------------- SharePreferences ----------------------------------------
         val perfs = getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
-                ,Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
-        val token = perfs.getString("Token",null) //ดึงค่า Token ที่เก็บไว้ ใน SharedPreferences
-        val nameInHeader  = JWT(token).getClaim("Name").asString() //แปลง Token เป็น name
-        val mobileNumberInHeader  = JWT(token).getClaim("MobileNumber").asString() //แปลง Token เป็น MobileNumber
-        val urlPictureInHeader  = JWT(token).getClaim("PhotoUrl").asString() //แปลง Token เป็น UrlPicture
+                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+        val token = perfs.getString("Token", null) //ดึงค่า Token ที่เก็บไว้ ใน SharedPreferences
+        val nameInHeader = JWT(token).getClaim("Name").asString() //แปลง Token เป็น name
+        val mobileNumberInHeader = JWT(token).getClaim("MobileNumber").asString() //แปลง Token เป็น MobileNumber
+        val urlPictureInHeader = JWT(token).getClaim("PhotoUrl").asString() //แปลง Token เป็น UrlPicture
 
         //---------------------------- Put Information Profile ---------------------------------
         val header = nav_view.getHeaderView(0)
@@ -493,7 +497,8 @@ class MapsActivity : AppCompatActivity()
     }
 
     private fun showParkingDetail(parkingDetail: ParkingDetail?) {
-        TransitionManager.beginDelayedTransition(layoutActivityMaps,Explode())
+        mParkingDetail = parkingDetail
+        TransitionManager.beginDelayedTransition(layoutActivityMaps, Explode())
 
         when (parkingDetail!!.Type) {
             "Other" -> {
@@ -514,7 +519,7 @@ class MapsActivity : AppCompatActivity()
                     longitude = parkingDetail.Longitude!!
                 }
 
-                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation)/1000)) + " Km."
+                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation) / 1000)) + " Km."
 
                 textViewAddressValue.text = parkingDetail.Address;textViewAddressValue.isSelected = true
 
@@ -543,8 +548,8 @@ class MapsActivity : AppCompatActivity()
                 }
 
                 buttonMoreDetail.setOnClickListener {
-                    val intent = Intent(this,ParkingDetailActivity::class.java)
-                    intent.putExtra("parkingDetail",parkingDetail)
+                    val intent = Intent(this, ParkingDetailActivity::class.java)
+                    intent.putExtra("parkingDetail", parkingDetail)
                     startActivity(intent)
                 }
 
@@ -567,7 +572,7 @@ class MapsActivity : AppCompatActivity()
                     longitude = parkingDetail.Longitude!!
                 }
 
-                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation)/1000))+ " Km."
+                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation) / 1000)) + " Km."
 
                 textViewAddressValue.text = parkingDetail.Address;textViewAddressValue.isSelected = true
 
@@ -596,20 +601,93 @@ class MapsActivity : AppCompatActivity()
                 }
 
                 buttonMoreDetail.setOnClickListener {
-                    val intent = Intent(this,ParkingDetailActivity::class.java)
-                    intent.putExtra("parkingDetail",parkingDetail)
+                    val intent = Intent(this, ParkingDetailActivity::class.java)
+                    intent.putExtra("parkingDetail", parkingDetail)
                     startActivity(intent)
                 }
 
-                textViewPrice.text = parkingDetail.Rates!!.first { it!!.VehicleType == "Car" || it!!.VehicleType == "Bigbike" ||  it!!.VehicleType == "Motorcycle" }!!.Daily.toString()
-
                 buttonVehicle.setOnClickListener {
-                    startActivityForResult(Intent(this@MapsActivity,MyVehicleActivity::class.java), VEHICLE_REQUEST_CODE)
+                    startActivityForResult(Intent(this@MapsActivity, MyVehicleActivity::class.java).also {
+                        it.putExtra("Filter", parkingDetail.Supports!!.toTypedArray())
+                    }, VEHICLE_REQUEST_CODE)
+                }
+
+                buttonBookingType.setOnClickListener {
+                    if (buttonVehicle.tag != null) {
+                        MaterialDialog.Builder(this)
+                                .title("Booking type")
+                                .items(
+                                        setOf(
+                                                "Daily (${parkingDetail.Rates!!.first { it!!.VehicleType == (buttonVehicle.tag as Vehicle).vehicleType }!!.Daily.toString()} THB)",
+                                                "Monthly (${parkingDetail.Rates!!.first { it!!.VehicleType == (buttonVehicle.tag as Vehicle).vehicleType }!!.Monthly.toString()} THB)"))
+                                .itemsCallback { dialog, itemView, position, text ->
+                                    when (position) {
+                                        0 -> {
+                                            buttonBookingType.tag = "Daily"
+                                            textViewBookingType.text = "Daily"
+                                            textViewAmountType.text = "Day"
+                                            textViewPrice.text = calculatePrice(
+                                                    "Daily",
+                                                    (buttonVehicle.tag as Vehicle).vehicleType,
+                                                    buttonAmount.tag.toString().toInt()
+                                            ).toString()
+                                        }
+                                        1 -> {
+                                            buttonBookingType.tag = "Monthly"
+                                            textViewBookingType.text = "Monthly"
+                                            textViewAmountType.text = "Month"
+                                            textViewPrice.text = calculatePrice(
+                                                    "Monthly",
+                                                    (buttonVehicle.tag as Vehicle).vehicleType,
+                                                    buttonAmount.tag.toString().toInt()
+                                            ).toString()
+                                        }
+                                    }
+                                }
+                                .show()
+                    } else {
+                        Toast.makeText(this@MapsActivity, "Please choose your vehicle", Toast.LENGTH_LONG).show()
+                    }
+
+                }
+
+                buttonAmount.setOnClickListener {
+                    if (buttonAmount.tag != null) {
+                        MaterialDialog.Builder(this)
+                                .title("Amount of the ${textViewAmountType.text}")
+                                .inputType(InputType.TYPE_CLASS_NUMBER)
+                                .input("Amount","") { dialog, input ->
+                                    buttonAmount.tag = input.toString().toIntOrNull() ?: 1
+                                    textViewAmount.text = (buttonAmount.tag as Int).toString()
+                                    textViewPrice.text = calculatePrice(
+                                            buttonBookingType.tag as String,
+                                            (buttonVehicle.tag as Vehicle).vehicleType,
+                                            buttonAmount.tag.toString().toInt()).toString()
+                                }
+                                .show()
+                    } else {
+                        Toast.makeText(this@MapsActivity, "Please choose your vehicle", Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 buttonPaymentCard.setOnClickListener {
-                    startActivityForResult(Intent(this@MapsActivity,PaymentCardsActivity::class.java), PAYMENT_CARD_REQUEST_CODE)
+                    startActivityForResult(Intent(this@MapsActivity, PaymentCardsActivity::class.java), PAYMENT_CARD_REQUEST_CODE)
                 }
+
+                buttonBooking.setOnClickListener {
+                    if(
+                            buttonVehicle.tag == null ||
+                            buttonBookingType.tag == null ||
+                            buttonAmount.tag == null ||
+                            buttonPaymentCard.tag == null){
+
+                        Toast.makeText(this@MapsActivity,"Please fill in all information.",Toast.LENGTH_LONG).show()
+                    }else{
+
+                    }
+                }
+
+
             }
             "Building" -> {
                 constraintLayoutDetail.visibility = View.VISIBLE
@@ -629,7 +707,7 @@ class MapsActivity : AppCompatActivity()
                     longitude = parkingDetail.Longitude!!
                 }
 
-                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation)/1000))+ " Km."
+                textViewDistance.text = "%.2f".format((myLocation!!.distanceTo(parkingLocation) / 1000)) + " Km."
 
                 textViewAddressValue.text = parkingDetail.Address;textViewAddressValue.isSelected = true
 
@@ -658,19 +736,91 @@ class MapsActivity : AppCompatActivity()
                 }
 
                 buttonMoreDetail.setOnClickListener {
-                    val intent = Intent(this,ParkingDetailActivity::class.java)
-                    intent.putExtra("parkingDetail",parkingDetail)
+                    val intent = Intent(this, ParkingDetailActivity::class.java)
+                    intent.putExtra("parkingDetail", parkingDetail)
                     startActivity(intent)
                 }
 
-                textViewPrice.text = parkingDetail.Rates!!.first { it!!.VehicleType == "Car" || it!!.VehicleType == "Bigbike" ||  it!!.VehicleType == "Motorcycle" }!!.Daily.toString()
 
                 buttonVehicle.setOnClickListener {
-                    startActivityForResult(Intent(this@MapsActivity,MyVehicleActivity::class.java), VEHICLE_REQUEST_CODE)
+                    startActivityForResult(Intent(this@MapsActivity, MyVehicleActivity::class.java).also {
+                        it.putExtra("Filter", parkingDetail.Supports!!.toTypedArray())
+                    }, VEHICLE_REQUEST_CODE)
+                }
+
+                buttonBookingType.setOnClickListener {
+                    if (buttonVehicle.tag != null) {
+                        MaterialDialog.Builder(this)
+                                .title("Booking type")
+                                .items(
+                                        setOf(
+                                                "Daily (${parkingDetail.Rates!!.first { it!!.VehicleType == (buttonVehicle.tag as Vehicle).vehicleType }!!.Daily.toString()} THB)",
+                                                "Monthly (${parkingDetail.Rates!!.first { it!!.VehicleType == (buttonVehicle.tag as Vehicle).vehicleType }!!.Monthly.toString()} THB)"))
+                                .itemsCallback { dialog, itemView, position, text ->
+                                    when (position) {
+                                        0 -> {
+                                            buttonBookingType.tag = "Daily"
+                                            textViewBookingType.text = "Daily"
+                                            textViewAmountType.text = "Day"
+                                            textViewPrice.text = calculatePrice(
+                                                    "Daily",
+                                                    (buttonVehicle.tag as Vehicle).vehicleType,
+                                                    buttonAmount.tag.toString().toInt()
+                                            ).toString()
+                                        }
+                                        1 -> {
+                                            buttonBookingType.tag = "Monthly"
+                                            textViewBookingType.text = "Monthly"
+                                            textViewAmountType.text = "Month"
+                                            textViewPrice.text = calculatePrice(
+                                                    "Monthly",
+                                                    (buttonVehicle.tag as Vehicle).vehicleType,
+                                                    buttonAmount.tag.toString().toInt()
+                                            ).toString()
+                                        }
+                                    }
+                                }
+                                .show()
+                    } else {
+                        Toast.makeText(this@MapsActivity, "Please choose your vehicle", Toast.LENGTH_LONG).show()
+                    }
+
+                }
+
+                buttonAmount.setOnClickListener {
+                    if (buttonAmount.tag != null) {
+                        MaterialDialog.Builder(this)
+                                .title("Amount of the ${textViewAmountType.text}")
+                                .inputType(InputType.TYPE_CLASS_NUMBER)
+                                .input("Amount","") { dialog, input ->
+                                    buttonAmount.tag =  input.toString().toIntOrNull() ?: 1
+                                    textViewAmount.text = (buttonAmount.tag as Int).toString()
+                                    textViewPrice.text = calculatePrice(
+                                            buttonBookingType.tag as String,
+                                            (buttonVehicle.tag as Vehicle).vehicleType,
+                                            buttonAmount.tag.toString().toInt()).toString()
+                                }
+                                .show()
+                    } else {
+                        Toast.makeText(this@MapsActivity, "Please choose your vehicle", Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 buttonPaymentCard.setOnClickListener {
-                    startActivityForResult(Intent(this@MapsActivity,PaymentCardsActivity::class.java), PAYMENT_CARD_REQUEST_CODE)
+                    startActivityForResult(Intent(this@MapsActivity, PaymentCardsActivity::class.java), PAYMENT_CARD_REQUEST_CODE)
+                }
+
+                buttonBooking.setOnClickListener {
+                    if(
+                            buttonVehicle.tag == null ||
+                            buttonBookingType.tag == null ||
+                            buttonAmount.tag == null ||
+                            buttonPaymentCard.tag == null){
+
+                        Toast.makeText(this@MapsActivity,"Please fill in all information.",Toast.LENGTH_LONG).show()
+                    }else{
+
+                    }
                 }
             }
         }
@@ -679,12 +829,26 @@ class MapsActivity : AppCompatActivity()
     }
 
     private fun hideParkingDetail() {
-        TransitionManager.beginDelayedTransition(layoutActivityMaps,Explode())
+        TransitionManager.beginDelayedTransition(layoutActivityMaps, Explode())
         constraintLayoutDetail.visibility = View.GONE
         constraintLayoutBooking.visibility = View.GONE
         buttonBack.visibility = View.GONE
         toolbar.visibility = View.VISIBLE
         spinnerFilterVehicle.visibility = View.VISIBLE
+        buttonVehicle.tag = null
+        buttonBookingType.tag = null
+        buttonAmount.tag = null
+        buttonPaymentCard.tag = null
+
+        imageViewVehicle.setImageResource(R.drawable.ic_car_black_24dp)
+        textViewVehicle.text = "None"
+        textViewBookingType.text = "None"
+        textViewAmount.text = "None"
+        textViewAmountType.text = ""
+        textViewAmountType.visibility = View.GONE
+        textViewPaymentCard.text = "None"
+        textViewPrice.text = "0"
+
         mMap!!.setPadding(48, 0, 48, 24)
 
     }
@@ -759,8 +923,8 @@ class MapsActivity : AppCompatActivity()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if(resultCode == Activity.RESULT_OK){
-            when(requestCode){
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
                 IntentIntegrator.REQUEST_CODE -> {
                     val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
                     if (result != null) {
@@ -777,21 +941,51 @@ class MapsActivity : AppCompatActivity()
                 VEHICLE_REQUEST_CODE -> {
                     buttonVehicle.tag = data!!.extras["vehicle"]
                     textViewVehicle.text = (data!!.extras["vehicle"] as Vehicle).license
-                    when((data!!.extras["vehicle"] as Vehicle).vehicleType){
-                        "Car" ->{
+                    when ((data!!.extras["vehicle"] as Vehicle).vehicleType) {
+                        "Car" -> {
                             imageViewVehicle.setImageResource(R.drawable.ic_car_black_24dp)
+                            buttonBookingType.tag = "Daily"
+                            textViewBookingType.text = "Daily"
+                            textViewAmount.text = "1"
+                            textViewAmountType.visibility = View.VISIBLE
+                            textViewAmountType.text = "Day"
+                            buttonAmount.tag = 1
+                            textViewPrice.text = calculatePrice(
+                                    buttonBookingType.tag as String,
+                                    (data!!.extras["vehicle"] as Vehicle).vehicleType,
+                                    1).toString()
                         }
                         "Bigbike" -> {
                             imageViewVehicle.setImageResource(R.drawable.ic_bigbike_black_24dp)
+                            buttonBookingType.tag = "Daily"
+                            textViewBookingType.text = "Daily"
+                            textViewAmount.text = "1"
+                            textViewAmountType.visibility = View.VISIBLE
+                            textViewAmountType.text = "Day"
+                            buttonAmount.tag = 1
+                            textViewPrice.text = calculatePrice(
+                                    buttonBookingType.tag as String,
+                                    (data!!.extras["vehicle"] as Vehicle).vehicleType,
+                                    1).toString()
                         }
                         "Motorcycle" -> {
                             imageViewVehicle.setImageResource(R.drawable.ic_motorcycle_black_24dp)
+                            buttonBookingType.tag = "Daily"
+                            textViewBookingType.text = "Daily"
+                            textViewAmount.text = "1"
+                            textViewAmountType.visibility = View.VISIBLE
+                            textViewAmountType.text = "Day"
+                            buttonAmount.tag = 1
+                            textViewPrice.text = calculatePrice(
+                                    buttonBookingType.tag as String,
+                                    (data!!.extras["vehicle"] as Vehicle).vehicleType,
+                                    1).toString()
                         }
                     }
                 }
 
                 PAYMENT_CARD_REQUEST_CODE -> {
-                    buttonPaymentCard.tag =  data!!.extras["paymentCard"]
+                    buttonPaymentCard.tag = data!!.extras["paymentCard"]
                     textViewPaymentCard.text = (data!!.extras["paymentCard"] as PaymentCard).cardNumber
                 }
             }
@@ -804,6 +998,18 @@ class MapsActivity : AppCompatActivity()
         mMap!!.apply {
             moveCamera(CameraUpdateFactory.newLatLng(latLng))
             animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.5f))
+        }
+    }
+
+    private fun calculatePrice(bookingType: String, vehicleType: String, amount: Int): Int {
+        return when (bookingType) {
+            "Daily" -> {
+
+                mParkingDetail!!.Rates!!.first { it!!.VehicleType == vehicleType }!!.Daily!! * amount
+            }
+            else -> {
+                mParkingDetail!!.Rates!!.first { it!!.VehicleType == vehicleType }!!.Monthly!! * amount
+            }
         }
     }
 
