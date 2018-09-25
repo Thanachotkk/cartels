@@ -46,6 +46,7 @@ import com.internship.nilecon.cartels.History.HistoryActivity
 import com.internship.nilecon.cartels.MyParking.MyParkingActivity
 import com.internship.nilecon.cartels.MyVehicle.MyVehicleActivity
 import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
+import com.internship.nilecon.cartels.Parkinglist.parkinglist
 import com.internship.nilecon.cartels.PaymentCards.PaymentCardsActivity
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
@@ -83,6 +84,7 @@ class MapsActivity : AppCompatActivity()
         setupSpinnerFilterVehicle()
         setupNav()
         setupQrCodeScanner()
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -470,6 +472,7 @@ class MapsActivity : AppCompatActivity()
         }
     }
 
+
     private fun setupNav() {
 
         val toggle = ActionBarDrawerToggle(
@@ -819,7 +822,7 @@ class MapsActivity : AppCompatActivity()
 
                         Toast.makeText(this@MapsActivity,"Please fill in all information.",Toast.LENGTH_LONG).show()
                     }else{
-
+                        startActivity(Intent(this, parkinglist::class.java))
                     }
                 }
             }
