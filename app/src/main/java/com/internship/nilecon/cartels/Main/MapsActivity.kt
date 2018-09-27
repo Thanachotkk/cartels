@@ -844,12 +844,12 @@ class MapsActivity : AppCompatActivity()
         buttonPaymentCard.tag = null
 
         imageViewVehicle.setImageResource(R.drawable.ic_car_black_24dp)
-        textViewVehicle.text = "None"
-        textViewBookingType.text = "None"
-        textViewAmount.text = "None"
+        textViewVehicle.text = "Vehicle"
+        textViewBookingType.text = "Type"
+        textViewAmount.text = "Amount"
         textViewAmountType.text = ""
         textViewAmountType.visibility = View.GONE
-        textViewPaymentCard.text = "None"
+        textViewPaymentCard.text = "Card"
         textViewPrice.text = "0"
 
         mMap!!.setPadding(48, 0, 48, 24)

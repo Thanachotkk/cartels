@@ -4,11 +4,17 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_add_card.*
+import java.lang.reflect.Type
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,6 +48,12 @@ class AddCardFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_card, container, false)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupEditTextCardNumber()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -97,5 +109,31 @@ class AddCardFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    private fun setupEditTextCardNumber(){
+        editTextCardNumber.inputType = 3
+        editTextCardNumber.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(19))
+        editTextCardNumber.addTextChangedListener(object  : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.isNotEmpty() && s.length % 5 == 0) {
+                    val var2 = s[s.length - 1]
+                    if (Character.isDigit(var2)) {
+                        s.insert(s.length - 1, " ")
+                    } else if (var2 == ' ') {
+                        s.delete(s.length - 1, s.length)
+                    }
+
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
     }
 }

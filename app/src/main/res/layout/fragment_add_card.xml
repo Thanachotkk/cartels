@@ -27,8 +27,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:hint="0123 0123 0123 0123"
-        android:inputType="number"
-        android:maxLength="10"
         android:textAlignment="textEnd"
         android:textColor="@color/header2"
         android:textSize="@dimen/sp_L"
