@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
+
+    <TextView
+        android:id="@+id/textViewOr2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="OR"
+        android:textColor="@color/colorTheme3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPassword" />
+
+    <ImageView
+        android:id="@+id/imageViewHeaderProfile2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/im_header_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imageViewProfile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="104dp"
+        android:elevation="4dp"
+        android:src="@drawable/im_people"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewHeaderProfile2"
+        app:layout_constraintStart_toStartOf="@+id/imageViewHeaderProfile2"
+        app:layout_constraintTop_toTopOf="@+id/imageViewHeaderProfile2"
+        app:riv_border_color="#E6E6E6"
+        app:riv_border_width="3dp"
+        app:riv_oval="true" />
+
+    <TextView
+        android:id="@+id/textViewNameProfile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="?attr/editTextBackground"
+        android:text="Jonh"
+        android:textAlignment="textEnd"
+        android:textAllCaps="false"
+        android:textColor="@color/header2"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
+
+    <TextView
+        android:id="@+id/textViewMobileNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/editTextBackground"
+        android:text="0811866666"
+        android:textAlignment="textEnd"
+        android:textAllCaps="false"
+        android:textColor="@color/header2"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewNameProfile"
+        app:layout_constraintStart_toStartOf="@+id/textViewNameProfile"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNameProfile" />
+
+    <TextView
+        android:id="@+id/textViewPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="?attr/editTextBackground"
+        android:text="**********"
+        android:textAlignment="textEnd"
+        android:textAllCaps="false"
+        android:textColor="@color/header2"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewMobileNumber"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewMobileNumber"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMobileNumber" />
+
+    <Button
+        android:id="@+id/buttonGoogle"
+        style="@style/AppTheme.Button.Google"
+        android:layout_width="160dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/buttonFacebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOr2" />
+
+    <TextView
+        android:id="@+id/textViewGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="5dp"
+        android:text="Google"
+        android:textSize="@dimen/dp_S"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonGoogle"
+        app:layout_constraintEnd_toEndOf="@+id/buttonGoogle"
+        app:layout_constraintHorizontal_bias="0.179"
+        app:layout_constraintStart_toEndOf="@+id/imageViewGoogle"
+        app:layout_constraintTop_toTopOf="@+id/buttonGoogle" />
+
+    <ImageView
+        android:id="@+id/imageViewGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonGoogle"
+        app:layout_constraintStart_toStartOf="@+id/buttonGoogle"
+        app:layout_constraintTop_toTopOf="@+id/buttonGoogle"
+        app:layout_constraintVertical_bias="0.58000004"
+        app:srcCompat="@drawable/ic_google" />
+
+    <Button
+        android:id="@+id/buttonFacebook"
+        style="@style/AppTheme.Button.Facebook"
+        android:layout_width="160dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginEnd="8dp"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonGoogle"
+        app:layout_constraintTop_toTopOf="@+id/buttonGoogle" />
+
+    <ImageView
+        android:id="@+id/imageViewFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonFacebook"
+        app:layout_constraintStart_toStartOf="@+id/buttonFacebook"
+        app:layout_constraintTop_toTopOf="@+id/buttonFacebook"
+        app:layout_constraintVertical_bias="0.571"
+        app:srcCompat="@drawable/ic_facebook" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/buttonFacebookMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textViewFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="5dp"
+        android:text="Facebook"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonFacebook"
+        app:layout_constraintEnd_toEndOf="@+id/buttonFacebook"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toEndOf="@+id/imageViewFacebook"
+        app:layout_constraintTop_toTopOf="@+id/buttonFacebook"
+        app:layout_constraintVertical_bias="0.533" />
+
+    <TextView
+        android:id="@+id/textViewTitleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Name"
+        android:textColor="@color/header2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNameProfile"
+        app:layout_constraintStart_toStartOf="@+id/textViewNameProfile"
+        app:layout_constraintTop_toTopOf="@+id/textViewNameProfile" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/header2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Mobile Number"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewMobileNumber"
+        app:layout_constraintStart_toStartOf="@+id/textViewMobileNumber"
+        app:layout_constraintTop_toTopOf="@+id/textViewMobileNumber" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/header2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Password"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPassword"
+        app:layout_constraintStart_toStartOf="@+id/textViewPassword"
+        app:layout_constraintTop_toTopOf="@+id/textViewPassword" />
+
+</android.support.constraint.ConstraintLayout>

@@ -84,6 +84,7 @@
         <activity android:name=".History.HistoryActivity" />
         <activity android:name=".MyParking.MyParkingActivity"/>
         <activity android:name=".Parkinglist.parkinglist"></activity>
+        <activity android:name=".Profile.ProfileActivity"></activity>
     </application>
 
 </manifest>

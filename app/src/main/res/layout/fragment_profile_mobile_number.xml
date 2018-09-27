@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile.ProfileMobileNumberFragment"
+    tools:layout_editor_absoluteY="25dp">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/buttonNext"
+        style="@style/AppTheme.Button.FillColorBlue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Next"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMobileNumberProfile"
+        app:layout_constraintStart_toStartOf="@+id/editTextMobileNumberProfile"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumberProfile" />
+
+    <TextView
+        android:id="@+id/textViewTitleMobileNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="Mobile number"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextMobileNumberProfile"
+        app:layout_constraintStart_toStartOf="@+id/editTextMobileNumberProfile"
+        app:layout_constraintTop_toTopOf="@+id/editTextMobileNumberProfile"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/editTextMobileNumberProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:hint="0812345678"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textAlignment="textEnd"
+        android:textColor="@color/header2"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:textStyle="bold"
+        android:text="Enter your mobile number"
+        android:textColor="@color/paragraph1"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

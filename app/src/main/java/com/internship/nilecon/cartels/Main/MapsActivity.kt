@@ -48,6 +48,7 @@ import com.internship.nilecon.cartels.MyVehicle.MyVehicleActivity
 import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
 import com.internship.nilecon.cartels.Parkinglist.parkinglist
 import com.internship.nilecon.cartels.PaymentCards.PaymentCardsActivity
+import com.internship.nilecon.cartels.Profile.ProfileActivity
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_maps.*
 import retrofit2.Call
@@ -84,7 +85,7 @@ class MapsActivity : AppCompatActivity()
         setupSpinnerFilterVehicle()
         setupNav()
         setupQrCodeScanner()
-
+        setupProfile()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -1015,7 +1016,13 @@ class MapsActivity : AppCompatActivity()
             }
         }
     }
-
+    private fun setupProfile() {
+        val header = nav_view.getHeaderView(0)
+        val imageProfile = (header.findViewById<ImageView>(R.id.imageViewProfile))
+        imageProfile.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+    }
 }
 
 
