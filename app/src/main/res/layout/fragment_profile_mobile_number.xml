@@ -8,15 +8,25 @@
     tools:layout_editor_absoluteY="25dp">
 
     <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Enter your new mobile number"
+        android:textColor="@color/paragraph1"
+        android:textSize="@dimen/sp_L"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonNext"
         style="@style/AppTheme.Button.FillColorBlue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:text="Next"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
@@ -27,12 +37,11 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumberProfile" />
 
     <TextView
-        android:id="@+id/textViewTitleMobileNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Mobile number"
         android:textColor="@color/header2"
         android:textSize="@dimen/sp_L"
@@ -46,9 +55,9 @@
         android:id="@+id/editTextMobileNumberProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:hint="0812345678"
         android:inputType="number"
         android:maxLength="10"
@@ -59,18 +68,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:textStyle="bold"
-        android:text="Enter your mobile number"
-        android:textColor="@color/paragraph1"
-        android:textSize="@dimen/sp_L"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -36,11 +36,11 @@ class PaymentCardsActivity : AppCompatActivity()
             val fragment = supportFragmentManager.findFragmentById(R.id.fragmentPaymentCards).javaClass.simpleName
             when (fragment) {
                 PaymentCardsFragment().javaClass.simpleName -> {
-                    textViewActionBar.text = "Payment Cards"
+                    textViewActionBar.text = "Payment cards"
                     buttonAdd.visibility = View.VISIBLE
                 }
                 AddCardFragment().javaClass.simpleName -> {
-                    textViewActionBar.text = "Add Card"
+                    textViewActionBar.text = "Add card"
                     buttonAdd.visibility = View.GONE
                 }
             }

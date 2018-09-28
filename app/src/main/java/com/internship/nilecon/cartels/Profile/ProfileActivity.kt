@@ -21,6 +21,7 @@ class ProfileActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteracti
         setFragmentProfile()
         setupButtonBack()
     }
+
     private fun setupButtonBack(){
         buttonBack.setOnClickListener {
             onBackPressed()
@@ -35,8 +36,8 @@ class ProfileActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteracti
         supportFragmentManager.addOnBackStackChangedListener {
             var fragment = supportFragmentManager.findFragmentById(R.id.fragmentProfile).javaClass.simpleName
             when (fragment) {
-                ProfileNameFragment().javaClass.simpleName -> textViewActionBar.text = "Profile Name"
-                ProfileMobileNumberFragment().javaClass.simpleName -> textViewActionBar.text = "Mobile Number"
+                ProfileNameFragment().javaClass.simpleName -> textViewActionBar.text = "Name"
+                ProfileMobileNumberFragment().javaClass.simpleName -> textViewActionBar.text = "Mobile number"
                 ProfilePasswordFragment().javaClass.simpleName -> textViewActionBar.text = "Password"
             }
         }
