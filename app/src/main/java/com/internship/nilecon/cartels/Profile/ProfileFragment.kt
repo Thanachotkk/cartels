@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.auth0.android.jwt.JWT
+import com.bumptech.glide.Glide
 
 import com.internship.nilecon.cartels.R
 import com.theartofdev.edmodo.cropper.CropImage
@@ -55,6 +57,7 @@ class ProfileFragment : Fragment() {
         setupButtonMobileNumber()
         setupButtonName()
         setupButtonPassword()
+        setUpProfile()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -73,7 +76,20 @@ class ProfileFragment : Fragment() {
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-
+    private fun setUpProfile(){
+        //---------------------------- SharePreferences ----------------------------------------
+        val perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+        val token = perfs.getString("Token", null) //ดึงค่า Token ที่เก็บไว้ ใน SharedPreferences
+        val nameInHeader = JWT(token).getClaim("Name").asString() //แปลง Token เป็น name
+        val mobileNumberInHeader = JWT(token).getClaim("MobileNumber").asString() //แปลง Token เป็น MobileNumber
+        val urlPictureInHeader = JWT(token).getClaim("PhotoUrl").asString() //แปลง Token เป็น UrlPicture
+        Glide.with(this)
+                .load(urlPictureInHeader)
+                .into(imageViewProfile)
+        textViewNameProfile.text = nameInHeader
+        textViewMobileNumber.text = mobileNumberInHeader
+    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {

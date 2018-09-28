@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.auth0.android.jwt.JWT
 
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_profile_name.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,6 +44,20 @@ class ProfileNameFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile_name, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpName()
+    }
+
+    private fun setUpName() {
+        //---------------------------- SharePreferences ----------------------------------------
+        val perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+        val token = perfs.getString("Token", null) //ดึงค่า Token ที่เก็บไว้ ใน SharedPreferences
+        val nameInHeader = JWT(token).getClaim("Name").asString() //แปลง Token เป็น name
+        editTextName.hint = nameInHeader
     }
 
     // TODO: Rename method, update argument and hook method into UI event

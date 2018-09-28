@@ -7,8 +7,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.auth0.android.jwt.JWT
 import com.internship.nilecon.cartels.R
+import kotlinx.android.synthetic.main.fragment_profile_mobile_number.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +45,10 @@ class ProfileMobileNumberFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile_mobile_number, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpProfile()
+    }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -78,7 +83,14 @@ class ProfileMobileNumberFragment : Fragment() {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
-
+    private fun setUpProfile(){
+        //---------------------------- SharePreferences ----------------------------------------
+        val perfs = activity!!.getSharedPreferences(getString(R.string.app_name)/*ตั้งชื่อของ SharedPreferences*/
+                , Context.MODE_PRIVATE/*SharedPreferences แบบเห็นได้เฉพาะ app นี้เท่านั้น MODE_PRIVATE*/)
+        val token = perfs.getString("Token", null) //ดึงค่า Token ที่เก็บไว้ ใน SharedPreferences
+        val mobileNumberInHeader = JWT(token).getClaim("MobileNumber").asString() //แปลง Token เป็น MobileNumber
+        editTextMobileNumberProfile.hint = mobileNumberInHeader
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
