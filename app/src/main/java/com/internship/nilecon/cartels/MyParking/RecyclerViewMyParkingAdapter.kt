@@ -37,7 +37,7 @@ class RecyclerViewMyParkingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.textViewMyParkingName.text = parkingList!![position].parkingName
-        holder.itemView.textViewZoneValue.text =  parkingList!![position].zone
+        holder.itemView.textViewZone.text =  parkingList!![position].zone
         holder.itemView.textViewPositionValue.text =  parkingList!![position].position
         holder.itemView.textViewBookingTime.text = parkingList!![position].bookingType  + " : "
         holder.itemView.textViewBookingTimeValue.text =  parkingList!![position].bookingTime
@@ -47,12 +47,12 @@ class RecyclerViewMyParkingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
             listener!!.onItemClick(position)
         }
         if(parkingList!![position].zone.isNullOrEmpty()){
-            holder.itemView.textViewZoneValue.visibility = View.INVISIBLE
+            holder.itemView.textViewZone.visibility = View.INVISIBLE
             holder.itemView.textViewZone.visibility = View.INVISIBLE
             holder.itemView.textViewPositionValue.visibility =View.INVISIBLE
             holder.itemView.textViewPosition.visibility = View.INVISIBLE
         }else{
-            holder.itemView.textViewZoneValue.visibility = View.VISIBLE
+            holder.itemView.textViewZone.visibility = View.VISIBLE
             holder.itemView.textViewZone.visibility = View.VISIBLE
             holder.itemView.textViewPositionValue.visibility =View.VISIBLE
             holder.itemView.textViewPosition.visibility = View.VISIBLE

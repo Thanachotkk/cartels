@@ -5,17 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.internship.nilecon.cartels.History.HistoryFragment
-import com.internship.nilecon.cartels.History.RecyclerViewHistoryAdapter
-import com.internship.nilecon.cartels.Parkinglist.dataclass.Gence
-import com.internship.nilecon.cartels.Parkinglist.dataclass.child
+import com.internship.nilecon.cartels.Parkinglist.DataClass.Gence
+import com.internship.nilecon.cartels.Parkinglist.DataClass.Child
 
 import com.internship.nilecon.cartels.R
-import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_parkinglists.*
 import java.util.ArrayList
 
@@ -33,13 +29,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class parkinglistsFragment : Fragment() {
+class ParkinglistsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var listener: parkinglistsFragment.OnFragmentInteractionListener? = null
+    private var listener: ParkinglistsFragment.OnFragmentInteractionListener? = null
     //variables
-    private var mAdapter: parkinglistAdapter? = null
+    private var mParkinglistAdapter: ExpandableRecyclerViewParkinglistAdapter? = null
     private var genres: MutableList<Gence>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +58,9 @@ class parkinglistsFragment : Fragment() {
 
         getGenres()
 
-        mAdapter = parkinglistAdapter(genres!!)
+        mParkinglistAdapter = ExpandableRecyclerViewParkinglistAdapter(genres!!)
         recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.adapter = mAdapter
+        recycler_view.adapter = mParkinglistAdapter
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -114,7 +110,7 @@ class parkinglistsFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                parkinglistsFragment().apply {
+                ParkinglistsFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
@@ -125,11 +121,11 @@ class parkinglistsFragment : Fragment() {
     private fun getGenres() {
         genres = ArrayList(6)
         for (i in 1..3) {
-            val artists = ArrayList<child>(3)
-            artists.add(child("Motorcycle"))
-            artists.add(child("Motorcycle"))
-            artists.add(child("Motorcycle"))
-            genres!!.add(Gence("Floor $i", artists))
+            val artists = ArrayList<Child>(3)
+            artists.add(Child("Motorcycle"))
+            artists.add(Child("Motorcycle"))
+            artists.add(Child("Motorcycle"))
+            genres!!.add(Gence("$i", artists))
         }
     }
 }

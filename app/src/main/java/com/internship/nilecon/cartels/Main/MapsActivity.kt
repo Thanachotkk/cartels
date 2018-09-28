@@ -46,7 +46,7 @@ import com.internship.nilecon.cartels.History.HistoryActivity
 import com.internship.nilecon.cartels.MyParking.MyParkingActivity
 import com.internship.nilecon.cartels.MyVehicle.MyVehicleActivity
 import com.internship.nilecon.cartels.ParkingDetail.ParkingDetailActivity
-import com.internship.nilecon.cartels.Parkinglist.parkinglist
+import com.internship.nilecon.cartels.Parkinglist.ParkinglistActivity
 import com.internship.nilecon.cartels.PaymentCards.PaymentCardsActivity
 import com.internship.nilecon.cartels.Profile.ProfileActivity
 import com.internship.nilecon.cartels.SplashScreen.SplashScreenActivity
@@ -54,7 +54,6 @@ import kotlinx.android.synthetic.main.activity_maps.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.temporal.TemporalAmount
 
 private const val VEHICLE_REQUEST_CODE = 1000
 private const val PAYMENT_CARD_REQUEST_CODE = 2000
@@ -823,7 +822,7 @@ class MapsActivity : AppCompatActivity()
 
                         Toast.makeText(this@MapsActivity,"Please fill in all information.",Toast.LENGTH_LONG).show()
                     }else{
-                        startActivity(Intent(this, parkinglist::class.java))
+                        startActivity(Intent(this, ParkinglistActivity::class.java))
                     }
                 }
             }
@@ -1016,6 +1015,7 @@ class MapsActivity : AppCompatActivity()
             }
         }
     }
+
     private fun setupProfile() {
         val header = nav_view.getHeaderView(0)
         val imageProfile = (header.findViewById<ImageView>(R.id.imageViewProfile))

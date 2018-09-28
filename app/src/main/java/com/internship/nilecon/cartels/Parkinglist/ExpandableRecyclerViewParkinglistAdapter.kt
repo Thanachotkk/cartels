@@ -1,15 +1,16 @@
 package com.internship.nilecon.cartels.Parkinglist
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import com.internship.nilecon.cartels.Parkinglist.ViewHolder.ChildViewHolder
-import com.internship.nilecon.cartels.Parkinglist.ViewHolder.GenreViewHolder
-import com.internship.nilecon.cartels.Parkinglist.dataclass.child
+import android.widget.TextView
+import com.internship.nilecon.cartels.Parkinglist.DataClass.Child
 import com.internship.nilecon.cartels.R
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
+import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 
-class parkinglistAdapter(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerViewAdapter<GenreViewHolder, ChildViewHolder>(groups) {
+class ExpandableRecyclerViewParkinglistAdapter(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerViewAdapter<GenreViewHolder, ChildViewHolder>(groups) {
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -24,8 +25,8 @@ class parkinglistAdapter(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerV
     }
 
     override fun onBindChildViewHolder(holder: ChildViewHolder, flatPosition: Int, group: ExpandableGroup<*>, childIndex: Int) {
-        val Child = group.items[childIndex] as child
-        holder.setArtistName(Child.name!!)
+        val child = group.items[childIndex] as Child
+        holder.setArtistName(child.name!!)
     }
 
     override fun onBindGroupViewHolder(holder: GenreViewHolder, flatPosition: Int, group: ExpandableGroup<*>) {
@@ -33,3 +34,22 @@ class parkinglistAdapter(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerV
     }
 
 }
+
+class ChildViewHolder (itemView: View) : com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder(itemView) {
+
+    private val artistName: TextView = itemView.findViewById(R.id.textViewType) as TextView
+
+    fun setArtistName(name: String) {
+        artistName.text = name
+    }
+}
+
+class GenreViewHolder(itemView: View) : GroupViewHolder(itemView) {
+
+    private val genreTitle: TextView = itemView.findViewById(R.id.textViewFloorValue) as TextView
+
+    fun setGenreName(name: String) {
+        genreTitle.text = name
+    }
+}
+

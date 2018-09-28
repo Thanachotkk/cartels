@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewVehicleType" />
 
     <TextView
-        android:id="@+id/textViewZoneValue"
+        android:id="@+id/textViewZone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A"
@@ -118,8 +118,8 @@
         android:textColor="@color/paragraph1"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textViewZoneValue"
-        app:layout_constraintTop_toTopOf="@+id/textViewZoneValue" />
+        app:layout_constraintStart_toEndOf="@+id/textViewZone"
+        app:layout_constraintTop_toTopOf="@+id/textViewZone" />
 
     <TextView
         android:id="@+id/textViewPositionValue"
