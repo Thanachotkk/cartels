@@ -17,7 +17,7 @@ class HistoryActivity : AppCompatActivity() ,HistoryFragment.OnFragmentInteracti
         setupFragmentHistory()
         setupButtonBack()
     }
-
+//
     private fun setupButtonBack() {
         buttonBack.setOnClickListener {
             onBackPressed()
